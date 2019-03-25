@@ -1,0 +1,34 @@
+@import "ember-bootstrap/bootstrap";
+@import 'bp-components';
+@import 'country-lv-monitor';
+@import 'mb-top-nav';
+
+body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    // max-width: 1200px;
+}
+
+p {
+    margin: 0;
+}
+
+.mb-page-container {
+    min-height: calc(100vh - 56px);
+    padding: $spacing*2;
+    background-color: $n020;
+
+}
+
+.thin-margin-bottom {
+    margin-bottom: $spacing;
+}
+
+.normal-margin-bottom {
+    margin-bottom: $spacing*2;
+}
+
+div.bg-white {
+    background-color: $n000;
+}

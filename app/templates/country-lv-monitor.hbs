@@ -1,0 +1,49 @@
+{{#bp-layout direction="col" classNames="mb-page-container"}}
+    {{#bp-page-header classNames="bg-white thin-margin-bottom" as |ph|}}
+        {{#ph.body as |body|}}
+            {{#body.left as |left|}}
+                {{#left.item}}
+                    全国层面数据监控
+                {{/left.item}}
+            {{/body.left}}
+            {{#body.right}}
+                {{#bp-button type='primary'}}导出数据{{/bp-button}}
+                {{#bp-button type='primary'}}下载PPT{{/bp-button}}
+            {{/body.right}}
+        {{/ph.body}}
+    {{/bp-page-header}}
+    {{#bp-layout direction="row" cross="center" classNames="country-select-part bg-white normal-margin-bottom"}}
+        {{#bp-layout direction="row" cross="center" classNames="select-label-container"}}
+            <p class="select-label">市场</p>
+            {{bp-dropdown-simple
+                choosedValue=cur_market
+                options=marketArr
+                optionKey='name'}}
+        {{/bp-layout}}
+        {{#bp-layout direction="row" cross="center" classNames="select-label-container"}}
+            <p class="select-label">年月</p>
+            {{bp-dropdown-simple
+                choosedValue=cur_time
+                options=timeArr
+                optionKey='name'}}
+        {{/bp-layout}}
+    {{/bp-layout}}
+    {{#bp-layout direction="row" classNames="country-card-part bg-white normal-margin-bottom"}}
+        <p>asdsada</p>
+    {{/bp-layout}}
+    {{#bp-layout direction="row" classNames="country-double-chart bg-white normal-margin-bottom"}}
+        <p>asdsada</p>
+    {{/bp-layout}}
+    {{#bp-layout direction="row" classNames="country-sale-line-chart bg-white normal-margin-bottom"}}
+        <p>asdsada</p>
+    {{/bp-layout}}
+    {{#bp-layout direction="row" classNames="country-sale-bar-chart bg-white normal-margin-bottom"}}
+        <p>asdsada</p>
+    {{/bp-layout}}
+    {{#bp-layout direction="row" classNames="country-share-line-chart bg-white normal-margin-bottom"}}
+        <p>asdsada</p>
+    {{/bp-layout}}
+    {{#bp-layout direction="row" classNames="country-share-bar-chart bg-white normal-margin-bottom"}}
+        <p>asdsada</p>
+    {{/bp-layout}}
+{{/bp-layout}}

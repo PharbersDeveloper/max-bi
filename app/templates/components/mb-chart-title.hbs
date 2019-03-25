@@ -1,0 +1,9 @@
+{{#bp-layout direction="row" classNames="chart-title-outer"}}
+    {{#if (eq marketName "")}}
+        <p class="market-name">{{marketName}}</p>
+    {{/if}}
+    <p class="title-content">{{title}}</p>
+    <p class="time-content">{{time}}</p>
+    <p class="area-content">{{area}}</p>
+{{/bp-layout}}
+{{yield}}

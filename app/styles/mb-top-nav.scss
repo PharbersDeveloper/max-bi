@@ -1,0 +1,18 @@
+.mb-top-nav-outer {
+    position: fixed;
+    width: 100%;
+    height: 56px;
+    background-color: $primary;
+    padding: $spacing $spacing*2;
+
+    .mb-top-nav-left {
+        p {
+            margin-right: $spacing;
+        }
+    }
+}
+
+.mb-top-nav-content {
+    width: 100%;
+    height: 56px;
+}
