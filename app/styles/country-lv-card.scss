@@ -1,0 +1,43 @@
+.country-lv-card-outer {
+    padding: $spacing*2;
+    min-width: 240px;
+    // max-width: 380px;
+    // width: 380px;
+    margin-right: $spacing*2;
+
+    .country-lv-card-top {
+        margin-top: $spacing*2;
+        margin-bottom: $spacing*2;
+
+        .main-content {
+            @extend %title;
+        }
+    }
+    .country-lv-card-mid {
+        margin-bottom: $spacing;
+
+        .tag-content {
+            @extend %p-primary;
+            margin-right: $spacing;
+            padding: 0 $spacing;
+            background-color: #899ED6;
+            min-width: 40px;
+            color: #FFFFFF;
+            border-radius: 4px;
+        }
+    }
+    .country-lv-card-bottom {
+        .detail-content {
+            @extend %p-primary;
+            margin-right: $spacing;
+        }
+        .detail-red {
+            color: red;
+            margin-right: $spacing*2;
+        }
+        .detail-green {
+            color: green;
+            margin-right: $spacing*2;
+        }
+    }
+}

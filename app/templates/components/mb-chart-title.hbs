@@ -1,9 +1,29 @@
-{{#bp-layout direction="row" classNames="chart-title-outer"}}
-    {{#if (eq marketName "")}}
-        <p class="market-name">{{marketName}}</p>
+{{#bp-layout direction="row" main="between" cross="center" classNames="chart-title-outer"}}
+    {{#bp-layout direction="row" cross="center" classNames="chart-title-left"}}
+        {{#if (not-eq marketName "")}}
+            <p class="market-name">{{marketName}}</p>
+        {{/if}}
+        <p class="title-content">{{title}}</p>
+        <p class="time-content">{{time}}</p>
+        <p class="area-content">·{{area}}</p>
+        {{#if helpFlag}}
+            {{#bp-button 
+                type="primary"
+                iconOnly=true
+                icon="abord"}}
+            {{/bp-button}}
+        {{/if}}
+    {{/bp-layout}}
+    {{#if switchFlag}}
+        {{#bp-layout direction="row" cross="center" classNames="chart-title-right"}}
+            {{#bp-button-group
+                value=buttonGroupValue 
+                type="radio" 
+                onChange=(action (mut buttonGroupValue)) as |bg|}}
+                {{#bg.button type="default" value=1}}Sales{{/bg.button}}
+                {{#bg.button type="default" value=2}}Growth{{/bg.button}}
+            {{/bp-button-group}}
+        {{/bp-layout}}
     {{/if}}
-    <p class="title-content">{{title}}</p>
-    <p class="time-content">{{time}}</p>
-    <p class="area-content">{{area}}</p>
 {{/bp-layout}}
 {{yield}}

@@ -1,0 +1,12 @@
+.chart-title-outer {
+    .market-name, .title-content {
+        @extend %header-medium;
+        padding-right: $spacing;
+    }
+    .time-content {
+        @extend %p-small;
+    }
+    .area-content {
+        @extend %p-small;
+    }
+}

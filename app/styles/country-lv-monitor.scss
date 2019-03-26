@@ -11,10 +11,29 @@
     height: 60px;
 }
 .country-card-part {
-    
+
+    .country-lv-card {
+        flex-grow: 1;
+        margin-right: $spacing*2;
+
+        &:nth-last-child(1) {
+            margin-right: 0;
+        }
+    }
 }
 .country-double-chart {
-    
+    .country-double-chart-mid {
+        background-color: #f4f5f7;
+        width: $spacing*2
+    }
+    .country-double-chart-line {
+        flex-grow: 1;
+        max-width: calc(50% - 12px);
+    }
+    .country-double-chart-pie {
+        flex-grow: 1;
+        max-width: calc(50% - 12px);
+    }
 }
 .country-sale-line-chart {
     
@@ -27,4 +46,7 @@
 }
 .country-share-bar-chart {
     
+}
+.min-h {
+    min-height: fit-content;
 }

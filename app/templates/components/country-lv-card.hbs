@@ -1,13 +1,17 @@
 {{#bp-layout direction="col" classNames="country-lv-card-outer"}}
-
+    {{mb-chart-title title=title time=time area=area}}
     {{#bp-layout direction="row" classNames="country-lv-card-top"}}
-        <p class=""></p>
+        <p class="main-content">{{mainContent}}{{unit}}</p>
     {{/bp-layout}}
     {{#bp-layout direction="row" classNames="country-lv-card-mid"}}
-    
+        <p class="tag-content">{{producer}}</p>
+        <p class="tag-content">{{prodName}}</p>
     {{/bp-layout}}
     {{#bp-layout direction="row" classNames="country-lv-card-bottom"}}
-    
+        <p class="detail-content">同比</p>
+        <p class="detail-content detail-red">{{percentYear}}%</p>
+        <p class="detail-content">环比</p>
+        <p class="detail-content detail-green">{{percentMonth}}%</p>
     {{/bp-layout}}
 {{/bp-layout}}
 {{yield}}
