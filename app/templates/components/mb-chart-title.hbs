@@ -17,11 +17,11 @@
     {{#if switchFlag}}
         {{#bp-layout direction="row" cross="center" classNames="chart-title-right"}}
             {{#bp-button-group
-                value=buttonGroupValue 
+                value=switchValue 
                 type="radio" 
-                onChange=(action (mut buttonGroupValue)) as |bg|}}
-                {{#bg.button type="default" value=1}}Sales{{/bg.button}}
-                {{#bg.button type="default" value=2}}Growth{{/bg.button}}
+                onChange=(action (mut switchValue)) as |bg|}}
+                {{#bg.button type="default" value=0}}Sales{{/bg.button}}
+                {{#bg.button type="default" value=1}}Growth{{/bg.button}}
             {{/bp-button-group}}
         {{/bp-layout}}
     {{/if}}

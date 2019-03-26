@@ -1,5 +1,5 @@
 {{#bp-layout direction="col" classNames="mb-page-container"}}
-    {{#bp-page-header classNames="bg-white thin-margin-bottom" as |ph|}}
+    {{#bp-page-header classNames="country-head-part bg-white thin-margin-bottom" as |ph|}}
         {{#ph.body as |body|}}
             {{#body.left as |left|}}
                 {{#left.item}}
@@ -29,22 +29,20 @@
         {{/bp-layout}}
     {{/bp-layout}}
     {{#bp-layout direction="row" classNames="country-card-part normal-margin-bottom"}}
-        {{country-lv-card classNames="bg-white" title="市场规模" time="2018-4" area="全国" mainContent="32.4" unit="%" producer="生产商" prodName="产品名" percentYear="4.3" percentMonth="4.3"}}
-        {{country-lv-card classNames="bg-white" title="市场规模" time="2018-4" area="全国" mainContent="32.4" unit="%" producer="生产商" prodName="产品名" percentYear="4.3" percentMonth="4.3"}}
-        {{country-lv-card classNames="bg-white" title="市场规模" time="2018-4" area="全国" mainContent="32.4" unit="%" producer="生产商" prodName="产品名" percentYear="4.3" percentMonth="4.3"}}
-        {{country-lv-card classNames="bg-white" title="市场规模" time="2018-4" area="全国" mainContent="32.4" unit="%" producer="生产商" prodName="产品名" percentYear="4.3" percentMonth="4.3"}}
+        {{country-lv-card classNames="bg-white" title="市场规模" time="2018-4" area="全国" mainContent="32.4" unit="%" producer="生产商" prodName="产品名" percentYear="0" percentMonth="4.3"}}
+        {{country-lv-card classNames="bg-white" title="市场规模" time="2018-4" area="全国" mainContent="32.4" unit="%" producer="生产商" prodName="产品名" percentYear="4.3" percentMonth="-4.3"}}
+        {{country-lv-card classNames="bg-white" title="市场规模" time="2018-4" area="全国" mainContent="32.4" unit="%" producer="生产商" prodName="产品名" percentYear="0" percentMonth="4.3"}}
+        {{country-lv-card classNames="bg-white" title="市场规模" time="2018-4" area="全国" mainContent="32.4" unit="%" producer="生产商" prodName="产品名" percentYear="4.3" percentMonth="-4.3"}}
     {{/bp-layout}}
-    {{#bp-layout direction="row" main="between" classNames="country-double-chart bg-white normal-margin-bottom"}}
-        {{#bp-layout direction="col" classNames="country-double-chart-line normal-padding"}}
+    {{#bp-layout direction="row" main="between" classNames="country-double-chart normal-margin-bottom"}}
+        {{#bp-layout direction="col" classNames="country-double-chart-line bg-white normal-padding"}}
             {{mb-chart-title title="市场规模" time="2018-4" area="全国"}}
             {{bp-line
                 xaxisData=xaxisData
                 lineData=lineData
                 lineColor=lineColor}}
         {{/bp-layout}}
-        {{#bp-layout direction="col" classNames="country-double-chart-mid"}}
-        {{/bp-layout}}
-        {{#bp-layout direction="col" classNames="country-double-chart-pie normal-padding"}}
+        {{#bp-layout direction="col" classNames="country-double-chart-pie bg-white normal-padding"}}
             {{mb-chart-title title="市场规模" time="2018-4" area="全国"}}
             {{bp-pie
                 pieData=pieData
@@ -52,27 +50,33 @@
         {{/bp-layout}}
     {{/bp-layout}}
     {{#bp-layout direction="col" classNames="country-sale-line-chart bg-white normal-margin-bottom normal-padding min-h"}}
-        {{mb-chart-title title="市场规模" time="2018-4" area="全国" switchFlag=true}}
-        {{bp-line
-            xaxisData=xaxisData
-            lineData=lineData
-            lineColor=lineColor}}
+        {{mb-chart-title title="市场规模" time="2018-4" area="全国" switchFlag=true switchValue=saleLineSwitch}}
+        {{#if (eq saleLineSwitch 0)}}
+            {{bp-line
+                xaxisData=xaxisData
+                lineData=lineData
+                lineColor=lineColor}}
+        {{else}}
+            {{bp-bar
+                data=barOption
+                barData=barData}}
+        {{/if}}
     {{/bp-layout}}
     {{#bp-layout direction="col" classNames="country-sale-bar-chart bg-white normal-margin-bottom normal-padding min-h"}}
-        {{mb-chart-title title="市场规模" time="2018-4" area="全国" switchFlag=true}}
+        {{mb-chart-title title="市场规模" time="2018-4" area="全国" switchFlag=true switchValue=saleBarSwitch}}
         {{bp-bar
             data=barOption
             barData=barData}}
     {{/bp-layout}}
     {{#bp-layout direction="col" classNames="country-share-line-chart bg-white normal-margin-bottom normal-padding min-h"}}
-        {{mb-chart-title title="市场规模" time="2018-4" area="全国" switchFlag=true}}
+        {{mb-chart-title title="市场规模" time="2018-4" area="全国" switchFlag=true switchValue=shareLineSwitch}}
         {{bp-line
             xaxisData=xaxisData
             lineData=lineData
             lineColor=lineColor}}
     {{/bp-layout}}
-    {{#bp-layout direction="col" classNames="country-share-bar-chart bg-white normal-margin-bottom normal-padding min-h"}}
-        {{mb-chart-title title="市场规模" time="2018-4" area="全国" switchFlag=true}}
+    {{#bp-layout direction="col" classNames="country-share-bar-chart bg-white normal-padding min-h"}}
+        {{mb-chart-title title="市场规模" time="2018-4" area="全国" switchFlag=true switchValue=shareBarSwitch}}
         {{bp-bar
             data=barOption
             barData=barData}}

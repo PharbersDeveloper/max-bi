@@ -9,9 +9,21 @@
     {{/bp-layout}}
     {{#bp-layout direction="row" classNames="country-lv-card-bottom"}}
         <p class="detail-content">同比</p>
-        <p class="detail-content detail-red">{{percentYear}}%</p>
+        {{#if (eq (str2num percentYear) 0)}}
+            <p class="detail-content">{{percentYear}}%</p>
+        {{else if (gt (str2num percentYear) 0)}}
+            <p class="detail-content detail-red"><span class="triangle-up"></span>{{percentYear}}%</p>
+        {{else}}
+            <p class="detail-content detail-green"><span class="triangle-down"></span>{{percentYear}}%</p>
+        {{/if}}
         <p class="detail-content">环比</p>
-        <p class="detail-content detail-green">{{percentMonth}}%</p>
+        {{#if (eq (str2num percentMonth) 0)}}
+            <p class="detail-content">{{percentMonth}}%</p>
+        {{else if (gt (str2num percentMonth) 0)}}
+            <p class="detail-content detail-red"><span class="triangle-up"></span>{{percentMonth}}%</p>
+        {{else}}
+            <p class="detail-content detail-green"><span class="triangle-down"></span>{{percentMonth}}%</p>
+        {{/if}}
     {{/bp-layout}}
 {{/bp-layout}}
 {{yield}}

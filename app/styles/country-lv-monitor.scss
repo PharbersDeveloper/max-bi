@@ -1,3 +1,8 @@
+.country-head-part {
+    .p-btn.primary {
+        margin-left: $spacing*2;
+    }
+}
 .country-select-part {
     padding: $spacing $spacing*2;
     .select-label-container {
@@ -28,11 +33,12 @@
     }
     .country-double-chart-line {
         flex-grow: 1;
-        max-width: calc(50% - 12px);
+        max-width: calc(50% - 8px);
+        margin-right: $spacing*2;
     }
     .country-double-chart-pie {
         flex-grow: 1;
-        max-width: calc(50% - 12px);
+        max-width: calc(50% - 8px);
     }
 }
 .country-sale-line-chart {

@@ -34,10 +34,28 @@
         .detail-red {
             color: red;
             margin-right: $spacing*2;
+
+            .triangle-up{  
+                display:inline-block;  
+                width:0;  
+                height:0;  
+                border-left: 6px solid transparent;  
+                border-right: 6px solid transparent;  
+                border-bottom: 10px solid red;
+            } 
         }
         .detail-green {
             color: green;
             margin-right: $spacing*2;
+
+            .triangle-down{  
+                display:inline-block;  
+                width:0;  
+                height:0;  
+                border-left: 6px solid transparent;  
+                border-right: 6px solid transparent;  
+                border-top: 10px solid green;
+            } 
         }
     }
 }

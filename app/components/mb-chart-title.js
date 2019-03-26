@@ -4,5 +4,11 @@ export default Component.extend({
     marketName: "",
     helpFlag: false,
     switchFlag: false,
-    buttonGroupValue: 1,
+    switchValue: 0,
+
+    // actions: {
+    //     switchValueOnClick(param) {
+    //         window.console.log(param);
+    //     },
+    // }
 });

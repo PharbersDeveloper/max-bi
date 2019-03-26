@@ -65,4 +65,9 @@ export default Controller.extend({
     cur_market: '',
     cur_time: '',
 
+    saleLineSwitch: 0,
+    saleBarSwitch: 0,
+    shareLineSwitch: 1,
+    shareBarSwitch: 1,
+
 });
