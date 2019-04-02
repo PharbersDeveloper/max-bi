@@ -8,6 +8,9 @@ const Router = EmberRouter.extend({
 
 Router.map(function() {
   this.route('country-lv-monitor');
+  this.route('file', function() {
+    this.route('upload');
+  });
 });
 
 export default Router;
