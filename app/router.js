@@ -11,6 +11,7 @@ Router.map(function() {
   this.route('file', function() {
     this.route('upload');
   });
+  this.route('oauth-callback');
 });
 
 export default Router;
