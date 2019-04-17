@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default Route.extend({
 	oauth_service: service(),
-	beforeModel() {
-		this.oauth_service.oauthOperation()
-	}
+	// beforeModel() {
+	// 	this.oauth_service.oauthOperation()
+	// }
 });
