@@ -1,38 +1,73 @@
 import Controller from '@ember/controller';
 import { A } from '@ember/array';
+import EmberObject, { computed } from '@ember/object';
 
 export default Controller.extend({
+	lineData: computed(function() {
+		let lists = [];
+		let market = '';
+		this.set('lineColor', A(['#0070c0', '#c00000']));
+		this.store.query('marketdimension', {'company_id': '5ca069e2eeefcc012918ec73', 'market': 'CNS_R', 'gte[ym]': '201801', 'lte[ym]': '201812'}).then(res => {
+			res.forEach(item => {
+				market = item.market;
+				lists.push(item.salesSom);
+			});
+			this.set('lineData', A([{
+				name: market,
+				date: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05',
+					'2018-06', '2018-07', '2018-08',
+					'2018-09', '2018-10', '2018-11', '2018-12'],
+				data: lists,
+			}]))
+
+		})
+		return A([{
+			name: market,
+			date: [],
+			data: lists,
+		}])
+	}),
+	pieData: computed(function() {
+		let pie = A([]);
+		this.store.query('productdimension', {'company_id': '5ca069e2eeefcc012918ec73', 'market': 'CNS_R', 'ym': '201801', 'lte[sales_rank]': '5'}).then(res => {
+			res.forEach(item => {
+				let pieobj = {
+					value: item.salesSom,
+					name: item.minProduct
+				}
+				pie.pushObject(pieobj)
+			})
+			this.set('pieData', pie)
+		})
+		return [];
+	}),
     init() {
 		this._super(...arguments);
-		this.set('lineData', A([{
-			name: 'MNC',
-			date: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05',
-				'2018-06', '2018-07', '2018-08',
-				'2018-09', '2018-10', '2018-11', '2018-12'],
-			data: [320, 332, 301, 334, 390, 330, 320, 255, 350, 337, 365, 912]
-		},
-		{
-			name: 'ELILILLY GROUP',
-			date: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05',
-				'2018-06', '2018-07', '2018-08',
-				'2018-09', '2018-10', '2018-11', '2018-12'],
-			data: [820, 932, 901, 934, 1290, 1330, 1320, 244, 365, 109, 203, 273]
-		}]));
-        this.set('lineColor', A(['#0070c0', '#c00000']));
+		// this.set('lineData', A([{
+		// 	name: 'MNC',
+		// 	date: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05',
+		// 		'2018-06', '2018-07', '2018-08',
+		// 		'2018-09', '2018-10', '2018-11', '2018-12'],
+		// 	data: [320, 332, 301, 334, 390, 330, 320, 255, 350, 337, 365, 912]
+		// },
+		// {
+		// 	name: 'ELILILLY GROUP',
+		// 	date: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05',
+		// 		'2018-06', '2018-07', '2018-08',
+		// 		'2018-09', '2018-10', '2018-11', '2018-12'],
+		// 	data: [820, 932, 901, 934, 1290, 1330, 1320, 244, 365, 109, 203, 273]
+		// }
+		// ]));
+        // this.set('lineColor', A(['#0070c0', '#c00000']));
         
-        this.set('pieData', [
-			{ value: 32.3, name: 'Lilly Insulin' },
-			{ value: 9.0, name: 'Gemzar' },
-			{ value: 8.4, name: 'Alimta' },
-			{ value: 5.0, name: 'Prozac' },
-			{ value: 6.0, name: 'Cymbalta' },
-			{ value: 10.7, name: 'Zyprexa' },
-			{ value: 2.0, name: 'Strattera' },
-			{ value: 5.0, name: 'Coclor' },
-			{ value: 19.5, name: 'Vancocin' },
-			{ value: 1.9, name: 'Cialis' },
-			{ value: 0.1, name: 'Evista' }
-        ]);
+        // this.set('pieData', [
+		// 	{value: 0.018341049490430403, name: "氯氮平片剂25MG100海尔施生物医药股份有限公司"},
+		// 	{value: 0.6962696147088795, name: "欧兰宁片剂5MG14江苏豪森药业股份有限公司"},
+		// 	{value: 0.2148141405518465, name: "启维片剂100MG30复星集团"},
+		// 	{value: 0.031349721644244335, name: "氯氮平片剂25MG100江苏徐州恩华药业集团有限责任公司"},
+		// 	{value: 0.039225473604599416, name: "氯氮平片剂25MG100上海医药集团股份有限公司"},
+		// ]);
+		
         
         this.set('barData', A([
 			{ prodName: 'Stanley May', value: 1.6861, type: 'MNC' },
@@ -60,7 +95,7 @@ export default Controller.extend({
 		]));
 	},
 
-    marketArr: A([{name: 'INF'}]),
+    marketArr: A([{name: 'INF'}, {name: 'nhwa'}]),
     timeArr: A([{name: '2017/04'}]),
     cur_market: '',
     cur_time: '',
@@ -68,6 +103,14 @@ export default Controller.extend({
     saleLineSwitch: 0,
     saleBarSwitch: 0,
     shareLineSwitch: 1,
-    shareBarSwitch: 1,
+	shareBarSwitch: 1,
+	
+	actions: {
+		refreshData(param) {
+			debugger
+			this.set('line', param)
+		}
+	}
+
 
 });

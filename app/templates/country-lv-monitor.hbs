@@ -29,28 +29,31 @@
         {{/bp-layout}}
     {{/bp-layout}}
     {{#bp-layout direction="row" classNames="country-card-part normal-margin-bottom"}}
-        {{country-lv-card classNames="bg-white" title="市场规模" time="2018-4" area="全国" mainContent="32.4" unit="%" producer="生产商" prodName="产品名" percentYear="0" percentMonth="4.3"}}
-        {{country-lv-card classNames="bg-white" title="市场规模" time="2018-4" area="全国" mainContent="32.4" unit="%" producer="生产商" prodName="产品名" percentYear="4.3" percentMonth="-4.3"}}
-        {{country-lv-card classNames="bg-white" title="市场规模" time="2018-4" area="全国" mainContent="32.4" unit="%" producer="生产商" prodName="产品名" percentYear="0" percentMonth="4.3"}}
-        {{country-lv-card classNames="bg-white" title="市场规模" time="2018-4" area="全国" mainContent="32.4" unit="%" producer="生产商" prodName="产品名" percentYear="4.3" percentMonth="-4.3"}}
+        {{country-lv-card classNames="bg-white" title="市场规模" time=model.marketdimension.firstObject.ym area="全国" mainContent=model.marketdimension.firstObject.salesSom unit="%" percentYear=model.marketdimension.firstObject.salesSomRingGrowth percentMonth=model.marketdimension.firstObject.salesSomYearGrowth}}
+
+        {{country-lv-card classNames="bg-white" title="产品数量" time=model.marketdimension.firstObject.ym area="全国" mainContent=model.marketdimension.firstObject.productCount unit="个" percentYear=model.marketdimension.firstObject.productCountYearGrowth percentMonth=model.marketdimension.firstObject.productCountRingGrowth}}
+
+        {{country-lv-card classNames="bg-white" title="市场集中度" time="2018-4" area="全国" mainContent="32.4" unit="%" percentYear="0" percentMonth="4.3"}}
+
+        {{country-lv-card classNames="bg-white" title="份额最高" time=model.productdimension.firstObject.ym area="全国" mainContent=model.productdimension.firstObject.salesSom unit="%" producer="生产商" prodName="产品名" percentYear=model.productdimension.firstObject.salesYearGrowth percentMonth=model.productdimension.firstObject.salesRingGrowth}}
     {{/bp-layout}}
     {{#bp-layout direction="row" main="between" classNames="country-double-chart normal-margin-bottom"}}
         {{#bp-layout direction="col" classNames="country-double-chart-line bg-white normal-padding"}}
-            {{mb-chart-title title="市场规模" time="2018-4" area="全国"}}
+            {{mb-chart-title title="市场规模趋势" time="2018-4" area="全国"}}
             {{bp-line
                 xaxisData=xaxisData
                 lineData=lineData
                 lineColor=lineColor}}
         {{/bp-layout}}
         {{#bp-layout direction="col" classNames="country-double-chart-pie bg-white normal-padding"}}
-            {{mb-chart-title title="市场规模" time="2018-4" area="全国"}}
+            {{mb-chart-title title="市场产品份额构成" time="2018-4" area="全国"}}
             {{bp-pie
                 pieData=pieData
                 pieColor=pieColor}}
         {{/bp-layout}}
     {{/bp-layout}}
     {{#bp-layout direction="col" classNames="country-sale-line-chart bg-white normal-margin-bottom normal-padding min-h"}}
-        {{mb-chart-title title="市场规模" time="2018-4" area="全国" switchFlag=true switchValue=saleLineSwitch}}
+        {{mb-chart-title title="产品销售额趋势" time="2018-4" area="全国" switchFlag=true switchValue=saleLineSwitch}}
         {{#if (eq saleLineSwitch 0)}}
             {{bp-line
                 xaxisData=xaxisData

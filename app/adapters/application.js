@@ -5,7 +5,7 @@ import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 
 export default DS.JSONAPIAdapter.extend({
-    namespace: 'v0',
+    namespace: 'v2',
 	cookies: service(),
 
 	headers: computed(function() {
