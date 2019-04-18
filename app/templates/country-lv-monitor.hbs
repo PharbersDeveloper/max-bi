@@ -29,21 +29,56 @@
         {{/bp-layout}}
     {{/bp-layout}}
     {{#bp-layout direction="row" classNames="country-card-part normal-margin-bottom"}}
-        {{country-lv-card classNames="bg-white" title="市场规模" time=model.marketdimension.firstObject.ym area="全国" mainContent=model.marketdimension.firstObject.salesSom unit="%" percentYear=model.marketdimension.firstObject.salesSomRingGrowth percentMonth=model.marketdimension.firstObject.salesSomYearGrowth}}
+        {{country-lv-card 
+            classNames="bg-white" 
+            title="市场规模" 
+            time=model.marketdimension.firstObject.ym 
+            area="全国" 
+            mainContent=(percent-num model.marketdimension.firstObject.salesSom)
+            unit="%" 
+            percentYear=model.marketdimension.firstObject.salesSomRingGrowth 
+            percentMonth=model.marketdimension.firstObject.salesSomYearGrowth}}
 
-        {{country-lv-card classNames="bg-white" title="产品数量" time=model.marketdimension.firstObject.ym area="全国" mainContent=model.marketdimension.firstObject.productCount unit="个" percentYear=model.marketdimension.firstObject.productCountYearGrowth percentMonth=model.marketdimension.firstObject.productCountRingGrowth}}
+        {{country-lv-card 
+            classNames="bg-white" 
+            title="产品数量" 
+            time=model.marketdimension.firstObject.ym 
+            area="全国" 
+            mainContent=model.marketdimension.firstObject.productCount 
+            unit="个" 
+            percentYear=model.marketdimension.firstObject.productCountYearGrowth 
+            percentMonth=model.marketdimension.firstObject.productCountRingGrowth}}
 
-        {{country-lv-card classNames="bg-white" title="市场集中度" time="2018-4" area="全国" mainContent="32.4" unit="%" percentYear="0" percentMonth="4.3"}}
+        {{country-lv-card 
+            classNames="bg-white" 
+            title="市场集中度" 
+            time="2018-4" 
+            area="全国" 
+            mainContent=(percent-num "0.24")
+            unit="%" 
+            percentYear="0" 
+            percentMonth="4.3"}}
 
-        {{country-lv-card classNames="bg-white" title="份额最高" time=model.productdimension.firstObject.ym area="全国" mainContent=model.productdimension.firstObject.salesSom unit="%" producer="生产商" prodName="产品名" percentYear=model.productdimension.firstObject.salesYearGrowth percentMonth=model.productdimension.firstObject.salesRingGrowth}}
+        {{country-lv-card 
+            classNames="bg-white" 
+            title="份额最高" 
+            time=model.productdimension.firstObject.ym 
+            area="全国" 
+            mainContent=(percent-num model.productdimension.firstObject.salesSom) 
+            unit="%" 
+            producer="生产商" 
+            prodName="产品名" 
+            percentYear=model.productdimension.firstObject.salesYearGrowth 
+            percentMonth=model.productdimension.firstObject.salesRingGrowth}}
     {{/bp-layout}}
+
     {{#bp-layout direction="row" main="between" classNames="country-double-chart normal-margin-bottom"}}
         {{#bp-layout direction="col" classNames="country-double-chart-line bg-white normal-padding"}}
             {{mb-chart-title title="市场规模趋势" time="2018-4" area="全国"}}
             {{bp-line
                 xaxisData=xaxisData
-                lineData=lineData
-                lineColor=lineColor}}
+                lineData=marketLineData
+                lineColor=marketLineColor}}
         {{/bp-layout}}
         {{#bp-layout direction="col" classNames="country-double-chart-pie bg-white normal-padding"}}
             {{mb-chart-title title="市场产品份额构成" time="2018-4" area="全国"}}
@@ -52,36 +87,70 @@
                 pieColor=pieColor}}
         {{/bp-layout}}
     {{/bp-layout}}
+
     {{#bp-layout direction="col" classNames="country-sale-line-chart bg-white normal-margin-bottom normal-padding min-h"}}
-        {{mb-chart-title title="产品销售额趋势" time="2018-4" area="全国" switchFlag=true switchValue=saleLineSwitch}}
-        {{#if (eq saleLineSwitch 0)}}
+        {{mb-chart-title title="产品销售额趋势" time="2018-4" area="全国" switchFlag=true switchValue=proSaleLineSwitch}}
+        {{#if (eq proSaleLineSwitch 0)}}
             {{bp-line
                 xaxisData=xaxisData
-                lineData=lineData
-                lineColor=lineColor}}
+                lineData=salesLineData
+                lineColor=salesLineColor}}
+        {{else}}
+            {{bp-line
+                xaxisData=xaxisData
+                lineData=salesGrowthLineData
+                lineColor=salesLineColor}}
+        {{/if}}
+    {{/bp-layout}}
+
+    {{#bp-layout direction="col" classNames="country-sale-bar-chart bg-white normal-margin-bottom normal-padding min-h"}}
+        {{mb-chart-title title="产品销售额对比" time="2018-4" area="全国" switchFlag=true switchValue=saleBarSwitch}}
+        {{#if (eq saleBarSwitch 0)}}
+            {{bp-bar
+            data=barOption
+            barData=barData}}
         {{else}}
             {{bp-bar
                 data=barOption
-                barData=barData}}
+                barData=barGrowthData}}
+        {{/if}}
+        
+    {{/bp-layout}}
+
+    {{#bp-layout direction="col" classNames="country-share-line-chart bg-white normal-margin-bottom normal-padding min-h"}}
+        {{mb-chart-title title="产品份额趋势" time="2018-4" area="全国" switchFlag=true switchValue=shareLineSwitch}}
+        {{#if (eq shareLineSwitch 0)}}
+            {{bp-line
+            xaxisData=xaxisData
+            lineData=salesLineData
+            lineColor=salesLineColor}}
+        {{else}}
+            {{bp-line
+            xaxisData=xaxisData
+            lineData=salesGrowthLineData
+            lineColor=salesLineColor}}
         {{/if}}
     {{/bp-layout}}
-    {{#bp-layout direction="col" classNames="country-sale-bar-chart bg-white normal-margin-bottom normal-padding min-h"}}
-        {{mb-chart-title title="市场规模" time="2018-4" area="全国" switchFlag=true switchValue=saleBarSwitch}}
-        {{bp-bar
-            data=barOption
-            barData=barData}}
-    {{/bp-layout}}
-    {{#bp-layout direction="col" classNames="country-share-line-chart bg-white normal-margin-bottom normal-padding min-h"}}
-        {{mb-chart-title title="市场规模" time="2018-4" area="全国" switchFlag=true switchValue=shareLineSwitch}}
-        {{bp-line
-            xaxisData=xaxisData
-            lineData=lineData
-            lineColor=lineColor}}
-    {{/bp-layout}}
+
     {{#bp-layout direction="col" classNames="country-share-bar-chart bg-white normal-padding min-h"}}
-        {{mb-chart-title title="市场规模" time="2018-4" area="全国" switchFlag=true switchValue=shareBarSwitch}}
-        {{bp-bar
+        {{mb-chart-title title="产品份额对比" time="2018-4" area="全国" switchFlag=true switchValue=shareBarSwitch}}
+        {{!-- {{#if (eq shareBarSwitch 0)}}
+           {{bp-bar
             data=barOption
-            barData=barData}}
+            barData=barShareData}}
+        {{else}}
+            {{bp-bar
+            data=barOption1
+            barData=barShareGrowthData}}
+        {{/if}} --}}
+        {{#if (eq shareBarSwitch 0)}}
+            {{bp-bar
+                data=barOption
+                barData=barData}}
+        {{else}}
+            {{bp-bar
+                data=barOption
+                barData=barShareGrowthData}}
+        {{/if}}
     {{/bp-layout}}
 {{/bp-layout}}

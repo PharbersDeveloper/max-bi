@@ -14,5 +14,6 @@ export default DS.Model.extend({
     salesRank: DS.attr('number'),
     salesYearGrowth: DS.attr('number'),
     salesRingGrowth: DS.attr('number'),
-    salesRingGrowthRank: DS.attr('number')
+    salesRingGrowthRank: DS.attr('number'),
+    salesYearOnYear: DS.attr('number')
 });
