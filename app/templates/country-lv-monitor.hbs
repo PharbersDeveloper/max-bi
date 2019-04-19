@@ -15,17 +15,51 @@
     {{#bp-layout direction="row" cross="center" classNames="country-select-part bg-white normal-margin-bottom"}}
         {{#bp-layout direction="row" cross="center" classNames="select-label-container"}}
             <p class="select-label">市场</p>
-            {{bp-dropdown-simple
+            {{!-- {{bp-dropdown-simple
                 choosedValue=cur_market
                 options=marketArr
-                optionKey='name'}}
+                optionKey='name'}} --}}
+            {{#bp-dropdown as |dd|}}
+                {{#dd.button }}
+                    {{#if marketValue.id}}
+                        <p>{{marketValue.market}}</p>
+                    {{else}}
+                        请选择
+                    {{/if}}
+                    {{bp-icon icon='down'}}
+                {{/dd.button}}
+                {{#dd.menu as |menu|}}
+                    {{#each marketArr as |item|}}
+                        {{#menu.option value=item onClick=(action (mut marketValue))}}
+                            {{item.market}}
+                        {{/menu.option}}
+                    {{/each}}
+                {{/dd.menu}}
+            {{/bp-dropdown}}
         {{/bp-layout}}
         {{#bp-layout direction="row" cross="center" classNames="select-label-container"}}
             <p class="select-label">年月</p>
-            {{bp-dropdown-simple
-                choosedValue=cur_time
+            {{!-- {{bp-dropdown-simple
+                choosedValue=cur_ym
                 options=timeArr
-                optionKey='name'}}
+                optionKey='key'}} --}}
+            {{#bp-dropdown as |dd|}}
+                {{#dd.button }}
+                    {{#if timeArr.firstObject.id}}
+                        <p>{{ymValue}}</p>
+                    {{else}}
+                        请选择
+                    {{/if}}
+                    {{bp-icon icon='down'}}
+                {{/dd.button}}
+                {{#dd.menu as |menu|}}
+                    {{#each timeArr as |item|}}
+                        {{#menu.option value=item.ym onClick=(action 'ymChange')}}
+                            {{item.ym}}
+                        {{/menu.option}}
+                    {{/each}}
+                {{/dd.menu}}
+            {{/bp-dropdown}}
         {{/bp-layout}}
     {{/bp-layout}}
     {{#bp-layout direction="row" classNames="country-card-part normal-margin-bottom"}}
@@ -77,7 +111,7 @@
             {{mb-chart-title title="市场规模趋势" time="2018-4" area="全国"}}
             {{bp-line
                 xaxisData=xaxisData
-                lineData=marketLineData
+                lineData=lineData
                 lineColor=marketLineColor}}
         {{/bp-layout}}
         {{#bp-layout direction="col" classNames="country-double-chart-pie bg-white normal-padding"}}
@@ -134,23 +168,10 @@
 
     {{#bp-layout direction="col" classNames="country-share-bar-chart bg-white normal-padding min-h"}}
         {{mb-chart-title title="产品份额对比" time="2018-4" area="全国" switchFlag=true switchValue=shareBarSwitch}}
-        {{!-- {{#if (eq shareBarSwitch 0)}}
-           {{bp-bar
-            data=barOption
-            barData=barShareData}}
-        {{else}}
-            {{bp-bar
-            data=barOption1
-            barData=barShareGrowthData}}
-        {{/if}} --}}
         {{#if (eq shareBarSwitch 0)}}
-            {{bp-bar
-                data=barOption
-                barData=barData}}
+            {{bp-bar barData=barData2}}
         {{else}}
-            {{bp-bar
-                data=barOption
-                barData=barShareGrowthData}}
+            {{bp-bar barData=barShareGrowthData}}
         {{/if}}
     {{/bp-layout}}
 {{/bp-layout}}
