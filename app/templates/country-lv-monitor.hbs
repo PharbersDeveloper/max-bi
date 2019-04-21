@@ -66,27 +66,27 @@
         {{country-lv-card 
             classNames="bg-white" 
             title="市场规模" 
-            time=model.marketdimension.firstObject.ym 
+            time=marketdimension.firstObject.ym 
             area="全国" 
-            mainContent=(percent-num model.marketdimension.firstObject.salesSom)
+            mainContent=(percent-num marketdimension.firstObject.salesSom)
             unit="%" 
-            percentYear=model.marketdimension.firstObject.salesSomRingGrowth 
-            percentMonth=model.marketdimension.firstObject.salesSomYearGrowth}}
+            percentYear=marketdimension.firstObject.salesSomRingGrowth 
+            percentMonth=marketdimension.firstObject.salesSomYearGrowth}}
 
         {{country-lv-card 
             classNames="bg-white" 
             title="产品数量" 
-            time=model.marketdimension.firstObject.ym 
+            time=marketdimension.firstObject.ym 
             area="全国" 
-            mainContent=model.marketdimension.firstObject.productCount 
+            mainContent=marketdimension.firstObject.productCount 
             unit="个" 
-            percentYear=model.marketdimension.firstObject.productCountYearGrowth 
-            percentMonth=model.marketdimension.firstObject.productCountRingGrowth}}
+            percentYear=marketdimension.firstObject.productCountYearGrowth 
+            percentMonth=marketdimension.firstObject.productCountRingGrowth}}
 
         {{country-lv-card 
             classNames="bg-white" 
             title="市场集中度" 
-            time="2018-4" 
+            time=productdimension.firstObject.ym 
             area="全国" 
             mainContent=(percent-num "0.24")
             unit="%" 
@@ -96,14 +96,14 @@
         {{country-lv-card 
             classNames="bg-white" 
             title="份额最高" 
-            time=model.productdimension.firstObject.ym 
+            time=productdimension.firstObject.ym 
             area="全国" 
-            mainContent=(percent-num model.productdimension.firstObject.salesSom) 
+            mainContent=(percent-num productdimension.firstObject.salesSom) 
             unit="%" 
             producer="生产商" 
             prodName="产品名" 
-            percentYear=model.productdimension.firstObject.salesYearGrowth 
-            percentMonth=model.productdimension.firstObject.salesRingGrowth}}
+            percentYear=(percent-num productdimension.firstObject.salesYearOnYear)
+            percentMonth=(percent-num productdimension.firstObject.salesRingGrowth)}}
     {{/bp-layout}}
 
     {{#bp-layout direction="row" main="between" classNames="country-double-chart normal-margin-bottom"}}
@@ -169,7 +169,7 @@
     {{#bp-layout direction="col" classNames="country-share-bar-chart bg-white normal-padding min-h"}}
         {{mb-chart-title title="产品份额对比" time="2018-4" area="全国" switchFlag=true switchValue=shareBarSwitch}}
         {{#if (eq shareBarSwitch 0)}}
-            {{bp-bar barData=barData2}}
+            {{bp-bar barData=barShareData}}
         {{else}}
             {{bp-bar barData=barShareGrowthData}}
         {{/if}}
