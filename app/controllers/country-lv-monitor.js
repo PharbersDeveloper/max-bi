@@ -26,6 +26,17 @@ export default Controller.extend({
 	// }),
 
 	allData: observer('marketValue' ,'ymValue', 'refreshFlag', function () {
+		let dealdate = this.ymValue.toString().slice(0,4) + '-' + this.ymValue.toString().slice(4,6);
+		let d = new Date(dealdate);
+		let result = [dealdate];
+		for(var i = 0; i < 12; i++) {
+			d.setMonth(d.getMonth() - 1);
+			var m = d.getMonth() + 1;
+			m = m < 10 ? "0" + m : m;
+			result.push(d.getFullYear() + "-" + m);
+		}
+		result.reverse()
+
 
 		this.store.query('marketdimension', {'company_id': '5ca069e2eeefcc012918ec73', 'market': this.marketValue.market, 'ym': this.ymValue})
 			.then(res => {
@@ -46,14 +57,16 @@ export default Controller.extend({
 		}]))
 		let ymlated = Number(this.ymValue) - 100;
 		this.store.query('marketdimension', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': this.marketValue.market, 'gte[ym]': String(ymlated), 'lte[ym]': this.ymValue}).then(res => {
+			let len = 13 - res.length;
+			for( let i = 0; i < len; i++  ){ lists.push( '0' ); }
 			res.forEach(item => {
 				market = item.market;
-				date.push(item.ym);
+				// date.push(item.ym);
 				lists.push(item.sales);
 			});
 			this.set('lineData', A([{
 				name: market,
-				date: date,
+				date: result,
 				data: lists,
 			}]))
 		})
@@ -114,74 +127,105 @@ export default Controller.extend({
 		let sharegrowtharr = [];
 		let sales = [];
 		let marketline = '';
-		let dateline = [];
+		// let dateline = [];
+
+		
 		// let ymlated = Number(this.ymValue) - 100;
+
 		this.set('salesLineColor', A(['#0070c0', '#c00000', '#eedd00', '#ee6738', '#112233']));
 		this.store.query('productdimension', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': this.marketValue.market, 'gte[ym]': String(ymlated), 'lte[ym]': this.ymValue, 'lt[sales_rank]': '10' }).then(res => {
 			res.forEach(item => {
 				arr.push(item);
 			});
-			for (let i = 0, len = arr.length; i < len; i += 12) {
-				salesarritem.push(arr.slice(i, i + 12))
-				growtharritem.push(arr.slice(i, i + 12))
-				sharearr.push(arr.slice(i, i + 12))
-				sharegrowtharr.push(arr.slice(i, i + 12))
+			var map = {},
+				dest = [];
+			for(var i = 0; i < arr.length; i++){
+				var ai = arr[i];
+				if(!map[ai.minProduct]){
+					dest.push({
+						minProduct: ai.minProduct,
+						item: [ai]
+					});
+					map[ai.minProduct] = ai;
+				}else{
+					for(var j = 0; j < dest.length; j++){
+						var dj = dest[j];
+						if(dj.minProduct== ai.minProduct){
+							dj.item.push(ai);
+							break;
+						}
+					}
+				}
 			}
-			for (let i = 0; i < salesarritem.length; i++) {
-				salesarritem[i].forEach(yeararr => {
+			
+			// for (let i = 0, len = arr.length; i < len; i += 12) {
+			// 	salesarritem.push(arr.slice(i, i + 12))
+			// 	growtharritem.push(arr.slice(i, i + 12))
+			// 	sharearr.push(arr.slice(i, i + 12))
+			// 	sharegrowtharr.push(arr.slice(i, i + 12))
+			// }
+			let len = 13 - dest[0].item.length;
+			for( let i = 0; i < len; i++  ){ sales.push( '0' ); }
+
+			for (let i = 0; i < dest.length; i++) {
+				dest[i].item.forEach(yeararr => {
 					marketline = yeararr.market
-					dateline.push(yeararr.ym)
+					// dateline.push(yeararr.ym)
 					sales.push(yeararr.sales)
 				})
 				salesarritem[i] = {
 					name: marketline,
-					date: dateline,
+					date: result,
 					data: sales
 				}
 				sales = [];
-				dateline = [];
+				let len = 13 - dest[0].item.length;
+				for( let i = 0; i < len; i++  ){ sales.push( '0' ); }
 			}
-			for (let i = 0; i < growtharritem.length; i++) {
-				growtharritem[i].forEach(yeararr => {
+			for (let i = 0; i < dest.length; i++) {
+				dest[i].item.forEach(yeararr => {
 					marketline = yeararr.market
 					sales.push(yeararr.salesSom)
-					dateline.push(yeararr.ym)
+					// dateline.push(yeararr.ym)
 				})
 				growtharritem[i] = {
 					name: marketline,
-					date: dateline,
+					date: result,
 					data: sales
 				}
 				sales = [];
-				dateline = [];
+				let len = 13 - dest[0].item.length;
+				for( let i = 0; i < len; i++  ){ sales.push( '0' ); }
 			}
-			for (let i = 0; i < sharearr.length; i++) {
-				sharearr[i].forEach(yeararr => {
+			for (let i = 0; i < dest.length; i++) {
+				dest[i].item.forEach(yeararr => {
 					marketline = yeararr.market
-					dateline.push(yeararr.ym)
+					// dateline.push(yeararr.ym)
 					sales.push(yeararr.salesYearOnYear)
 				})
 				sharearr[i] = {
 					name: marketline,
-					date: dateline,
+					date: result,
 					data: sales
 				}
 				sales = [];
-				dateline = [];
+				let len = 13 - dest[0].item.length;
+				for( let i = 0; i < len; i++  ){ sales.push( '0' ); }
 			}
-			for (let i = 0; i < sharegrowtharr.length; i++) {
-				sharegrowtharr[i].forEach(yeararr => {
+			for (let i = 0; i < dest.length; i++) {
+				dest[i].item.forEach(yeararr => {
 					marketline = yeararr.market
-					dateline.push(yeararr.ym)
+					// dateline.push(yeararr.ym)
 					sales.push(yeararr.salesRingGrowthRank)
 				})
 				sharegrowtharr[i] = {
 					name: marketline,
-					date: dateline,
+					date: result,
 					data: sales
 				}
 				sales = [];
-				dateline = [];
+				let len = 13 - dest[0].item.length;
+				for( let i = 0; i < len; i++  ){ sales.push( '0' ); }
 			}
 			this.set('salesLineData', salesarritem)
 			this.set('salesGrowthLineData', growtharritem)
@@ -189,7 +233,6 @@ export default Controller.extend({
 			this.set('shareGrowthLineData', sharegrowtharr)
 		})
 	}),
-
 	salesLineData: computed(function () {
 		let arr = [];
 		let salesarritem = [];
@@ -200,73 +243,107 @@ export default Controller.extend({
 		let sales = [];
 		let marketline = '';
 		let dateline = [];
+
 		let ymlated = Number(this.ymValue) - 100;
+
+		let dealdate = this.ymValue.toString().slice(0,4) + '-' + this.ymValue.toString().slice(4,6);
+		let d = new Date(dealdate);
+		let result = [dealdate];
+		for(var i = 0; i < 12; i++) {
+			d.setMonth(d.getMonth() - 1);
+			var m = d.getMonth() + 1;
+			m = m < 10 ? "0" + m : m;
+			result.push(d.getFullYear() + "-" + m);
+		}
+		result.reverse()
 		this.set('salesLineColor', A(['#0070c0', '#c00000', '#eedd00', '#ee6738', '#112233']));
 		this.store.query('productdimension', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': this.marketValue.market, 'gte[ym]': String(ymlated), 'lte[ym]': this.ymValue, 'lt[sales_rank]': '10' }).then(res => {
 			res.forEach(item => {
 				arr.push(item);
 			});
-			for (let i = 0, len = arr.length; i < len; i += 12) {
-				salesarritem.push(arr.slice(i, i + 12))
-				growtharritem.push(arr.slice(i, i + 12))
-				sharearr.push(arr.slice(i, i + 12))
-				sharegrowtharr.push(arr.slice(i, i + 12))
+			
+			var map = {},
+				dest = [];
+			for(var i = 0; i < arr.length; i++){
+				var ai = arr[i];
+				if(!map[ai.minProduct]){
+					dest.push({
+						minProduct: ai.minProduct,
+						item: [ai]
+					});
+					map[ai.minProduct] = ai;
+				}else{
+					for(var j = 0; j < dest.length; j++){
+						var dj = dest[j];
+						if(dj.minProduct== ai.minProduct){
+							dj.item.push(ai);
+							break;
+						}
+					}
+				}
 			}
-			for (let i = 0; i < salesarritem.length; i++) {
-				salesarritem[i].forEach(yeararr => {
+			// for (let i = 0, len = arr.length; i < len; i += 12) {
+			// 	salesarritem.push(arr.slice(i, i + 12))
+			// 	growtharritem.push(arr.slice(i, i + 12))
+			// 	sharearr.push(arr.slice(i, i + 12))
+			// 	sharegrowtharr.push(arr.slice(i, i + 12))
+			// }
+
+			for (let i = 0; i < dest.length; i++) {
+				dest[i].item.forEach(yeararr => {
 					marketline = yeararr.market
-					dateline.push(yeararr.ym)
+					// dateline.push(yeararr.ym)
 					sales.push(yeararr.sales)
 				})
 				salesarritem[i] = {
 					name: marketline,
-					date: dateline,
+					date: result,
 					data: sales
 				}
 				sales = [];
-				dateline = [];
+				// dateline = [];
 			}
-			for (let i = 0; i < growtharritem.length; i++) {
-				growtharritem[i].forEach(yeararr => {
+			for (let i = 0; i < dest.length; i++) {
+				dest[i].item.forEach(yeararr => {
 					marketline = yeararr.market
 					sales.push(yeararr.salesSom)
-					dateline.push(yeararr.ym)
+					// dateline.push(yeararr.ym)
 				})
 				growtharritem[i] = {
 					name: marketline,
-					date: dateline,
+					date: result,
 					data: sales
 				}
 				sales = [];
-				dateline = [];
+				// dateline = [];
 			}
-			for (let i = 0; i < sharearr.length; i++) {
-				sharearr[i].forEach(yeararr => {
+			for (let i = 0; i < dest.length; i++) {
+				dest[i].item.forEach(yeararr => {
 					marketline = yeararr.market
-					dateline.push(yeararr.ym)
+					// dateline.push(yeararr.ym)
 					sales.push(yeararr.salesYearOnYear)
 				})
 				sharearr[i] = {
 					name: marketline,
-					date: dateline,
+					date: result,
 					data: sales
 				}
 				sales = [];
-				dateline = [];
+				// dateline = [];
 			}
-			for (let i = 0; i < sharegrowtharr.length; i++) {
-				sharegrowtharr[i].forEach(yeararr => {
+			for (let i = 0; i < dest.length; i++) {
+				dest[i].item.forEach(yeararr => {
 					marketline = yeararr.market
-					dateline.push(yeararr.ym)
+					// dateline.push(yeararr.ym)
 					sales.push(yeararr.salesRingGrowthRank)
 				})
 				sharegrowtharr[i] = {
 					name: marketline,
-					date: dateline,
+					date: result,
 					data: sales
 				}
 				sales = [];
-				dateline = [];
+				// dateline = [];
 			}
 			this.set('salesLineData', salesarritem)
 			this.set('salesGrowthLineData', growtharritem)
