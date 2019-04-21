@@ -13,17 +13,6 @@ export default Controller.extend({
 	shareLineSwitch: 0,
 	saleBarSwitch: 0,
 	shareBarSwitch: 0,
-	
-	// timeArr: computed('marketValue', function () {
-	// 	if(isEmpty(this.marketsArr)) {
-	// 		return []
-	// 	}
-	// 	let arrval = this.marketsArr.filter(item => {
-	// 		return item.market === this.marketValue.market;
-	// 	})
-	// 	this.set('ymValue', arrval.firstObject.ym);
-	// 	return arrval;
-	// }),
 
 	allData: observer('marketValue' ,'ymValue', 'refreshFlag', function () {
 		let dealdate = this.ymValue.toString().slice(0,4) + '-' + this.ymValue.toString().slice(4,6);
@@ -47,7 +36,6 @@ export default Controller.extend({
 		})
 
 		let lists = [];
-		let date  = [];
 		let market = '';
 		this.set('marketLineColor', A(['#0070c0', '#c00000']));
 		this.set('lineData', A([{
