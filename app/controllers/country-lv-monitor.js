@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { A } from '@ember/array';
 import { computed, observer } from '@ember/object';
-import {isEmpty} from '@ember/utils';
+// import {isEmpty} from '@ember/utils';
 
 export default Controller.extend({
 	market: A([]),
@@ -107,6 +107,87 @@ export default Controller.extend({
 			this.set('barShareGrowthData', barShareGrowth)
 		})
 		
+		let arr = [];
+		let salesarritem = [];
+		let growtharritem = [];
+		let sharearr = [];
+		let sharegrowtharr = [];
+		let sales = [];
+		let marketline = '';
+		let dateline = [];
+		// let ymlated = Number(this.ymValue) - 100;
+		this.set('salesLineColor', A(['#0070c0', '#c00000', '#eedd00', '#ee6738', '#112233']));
+		this.store.query('productdimension', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': this.marketValue.market, 'gte[ym]': String(ymlated), 'lte[ym]': this.ymValue, 'lt[sales_rank]': '10' }).then(res => {
+			res.forEach(item => {
+				arr.push(item);
+			});
+			for (let i = 0, len = arr.length; i < len; i += 12) {
+				salesarritem.push(arr.slice(i, i + 12))
+				growtharritem.push(arr.slice(i, i + 12))
+				sharearr.push(arr.slice(i, i + 12))
+				sharegrowtharr.push(arr.slice(i, i + 12))
+			}
+			for (let i = 0; i < salesarritem.length; i++) {
+				salesarritem[i].forEach(yeararr => {
+					marketline = yeararr.market
+					dateline.push(yeararr.ym)
+					sales.push(yeararr.sales)
+				})
+				salesarritem[i] = {
+					name: marketline,
+					date: dateline,
+					data: sales
+				}
+				sales = [];
+				dateline = [];
+			}
+			for (let i = 0; i < growtharritem.length; i++) {
+				growtharritem[i].forEach(yeararr => {
+					marketline = yeararr.market
+					sales.push(yeararr.salesSom)
+					dateline.push(yeararr.ym)
+				})
+				growtharritem[i] = {
+					name: marketline,
+					date: dateline,
+					data: sales
+				}
+				sales = [];
+				dateline = [];
+			}
+			for (let i = 0; i < sharearr.length; i++) {
+				sharearr[i].forEach(yeararr => {
+					marketline = yeararr.market
+					dateline.push(yeararr.ym)
+					sales.push(yeararr.salesYearOnYear)
+				})
+				sharearr[i] = {
+					name: marketline,
+					date: dateline,
+					data: sales
+				}
+				sales = [];
+				dateline = [];
+			}
+			for (let i = 0; i < sharegrowtharr.length; i++) {
+				sharegrowtharr[i].forEach(yeararr => {
+					marketline = yeararr.market
+					dateline.push(yeararr.ym)
+					sales.push(yeararr.salesRingGrowthRank)
+				})
+				sharegrowtharr[i] = {
+					name: marketline,
+					date: dateline,
+					data: sales
+				}
+				sales = [];
+				dateline = [];
+			}
+			this.set('salesLineData', salesarritem)
+			this.set('salesGrowthLineData', growtharritem)
+			this.set('shareLineData', salesarritem)
+			this.set('shareGrowthLineData', sharegrowtharr)
+		})
 	}),
 
 	salesLineData: computed(function () {
