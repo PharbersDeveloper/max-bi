@@ -12,7 +12,7 @@
             {{/body.right}}
         {{/ph.body}}
     {{/bp-page-header}}
-    {{#bp-layout direction="row" cross="center" classNames="country-select-part bg-white normal-margin-bottom"}}
+    {{#bp-layout direction="row" cross="center" classNames="country-select-part bg-white mb-4"}}
         {{#bp-layout direction="row" cross="center" classNames="select-label-container"}}
             <p class="select-label mr-4">市 场</p>
             {{#bp-dropdown as |dd|}}
@@ -54,7 +54,7 @@
             {{/bp-dropdown}}
         {{/bp-layout}}
     {{/bp-layout}}
-    {{#bp-layout direction="row" classNames="country-card-part normal-margin-bottom"}}
+    {{#bp-layout direction="row" classNames="country-card-part mb-4"}}
         {{country-lv-card 
             classNames="bg-white" 
             title="市场规模" 
@@ -62,8 +62,8 @@
             area="全国" 
             mainContent=(percent-num marketdimension.firstObject.salesSom)
             unit="%" 
-            percentYear=marketdimension.firstObject.salesSomRingGrowth 
-            percentMonth=marketdimension.firstObject.salesSomYearGrowth}}
+            percentYear=marketdimension.firstObject.salesSomYearGrowth 
+            percentMonth=marketdimension.firstObject.salesSomRingGrowth}}
 
         {{country-lv-card 
             classNames="bg-white" 
@@ -82,7 +82,7 @@
             area="全国" 
             mainContent=(percent-num "0.24")
             unit="%" 
-            percentYear="0" 
+            percentYear="-50" 
             percentMonth="4.3"}}
 
         {{country-lv-card 
@@ -92,9 +92,9 @@
             area="全国" 
             mainContent=(percent-num productdimension.firstObject.salesSom) 
             unit="%" 
-            producer="生产商" 
-            prodName="产品名" 
-            percentYear=(percent-num productdimension.firstObject.salesYearOnYear)
+            producer=productdimension.firstObject.market
+            prodName=productdimension.firstObject.minProduct 
+            percentYear=(percent-num productdimension.firstObject.salesYearGrowth)
             percentMonth=(percent-num productdimension.firstObject.salesRingGrowth)}}
     {{/bp-layout}}
 

@@ -1,13 +1,13 @@
 .country-lv-card-outer {
-    padding: $spacing*2;
+    // padding: $spacing*2;
     min-width: 240px;
     // max-width: 380px;
-    // width: 380px;
-    margin-right: $spacing*2;
+    height: 174px;
+    // margin-right: $spacing*2;
 
     .country-lv-card-top {
-        margin-top: $spacing*2;
-        margin-bottom: $spacing*2;
+        // margin-top: $spacing*2;
+        // margin-bottom: $spacing*2;
 
         .main-content {
             @extend %title;
@@ -21,9 +21,14 @@
             margin-right: $spacing;
             padding: 0 $spacing;
             background-color: #899ED6;
-            min-width: 40px;
+            width: 80px;
             color: #FFFFFF;
             border-radius: 4px;
+            text-align: center;
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+                        
         }
     }
     .country-lv-card-bottom {
@@ -45,7 +50,7 @@
             } 
         }
         .detail-green {
-            color: green;
+            color: #57D9A3;
             margin-right: $spacing*2;
 
             .triangle-down{  

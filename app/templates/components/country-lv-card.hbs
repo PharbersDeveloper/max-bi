@@ -1,29 +1,34 @@
-{{#bp-layout direction="col" classNames="country-lv-card-outer"}}
-    {{mb-chart-title title=title time=time area=area cardTitle=true}}
-    {{#bp-layout direction="row" classNames="country-lv-card-top"}}
-        <p class="main-content">{{mainContent}}{{unit}}</p>
+{{#bp-layout direction="col" main='between' classNames="country-lv-card-outer p-4"}}
+    {{#bp-layout direction='col'}}
+        {{mb-chart-title title=title time=time area=area cardTitle=true}}
+        {{#bp-layout direction="row" classNames="country-lv-card-top mt-2"}}
+            <p class="main-content">{{mainContent}}{{unit}}</p>
+        {{/bp-layout}}
     {{/bp-layout}}
-    {{#bp-layout direction="row" classNames="country-lv-card-mid"}}
-        <p class="tag-content">{{producer}}</p>
-        <p class="tag-content">{{prodName}}</p>
-    {{/bp-layout}}
-    {{#bp-layout direction="row" classNames="country-lv-card-bottom"}}
-        <p class="detail-content mr-2">同比</p>
-        {{#if (eq (str2num percentYear) 0)}}
-            <p class="detail-content">{{percentYear}}%</p>
-        {{else if (gt (str2num percentYear) 0)}}
-            <p class="detail-content detail-red"><span class="triangle-up"></span>{{percentYear}}%</p>
-        {{else}}
-            <p class="detail-content detail-green"><span class="triangle-down"></span>{{percentYear}}%</p>
-        {{/if}}
-        <p class="detail-content mr-2 ml-4">环比</p>
-        {{#if (eq (str2num percentMonth) 0)}}
-            <p class="detail-content">{{percentMonth}}%</p>
-        {{else if (gt (str2num percentMonth) 0)}}
-            <p class="detail-content detail-red"><span class="triangle-up"></span>{{percentMonth}}%</p>
-        {{else}}
-            <p class="detail-content detail-green"><span class="triangle-down"></span>{{percentMonth}}%</p>
-        {{/if}}
+    
+    {{#bp-layout direction='col' main='end'}}
+         {{#bp-layout direction="row" classNames="country-lv-card-mid"}}
+            <p class="tag-content">{{producer}}</p>
+            <p class="tag-content">{{prodName}}</p>
+        {{/bp-layout}}
+        {{#bp-layout direction="row" classNames="country-lv-card-bottom"}}
+            <p class="detail-content mr-2">同比</p>
+            {{#if (eq (str2num percentYear) 0)}}
+                <p class="detail-content">{{percentYear}}%</p>
+            {{else if (gt (str2num percentYear) 0)}}
+                <p class="detail-content detail-green">{{bp-icon icon='priority-high'}}{{percentYear}}%</p>
+            {{else}}
+                <p class="detail-content detail-red">{{bp-icon icon='priority-low'}}{{percentYear}}%</p>
+            {{/if}}
+            <p class="detail-content mr-2 ml-4">环比</p>
+            {{#if (eq (str2num percentMonth) 0)}}
+                <p class="detail-content">{{percentMonth}}%</p>
+            {{else if (gt (str2num percentMonth) 0)}}
+                <p class="detail-content detail-green">{{bp-icon icon='priority-high'}}{{percentMonth}}%</p>
+            {{else}}
+                <p class="detail-content detail-red">{{bp-icon icon='priority-low'}}{{percentMonth}}%</p>
+            {{/if}}
+        {{/bp-layout}}
     {{/bp-layout}}
 {{/bp-layout}}
 {{yield}}
