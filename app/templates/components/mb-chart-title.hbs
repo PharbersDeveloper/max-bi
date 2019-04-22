@@ -3,9 +3,21 @@
         {{#if (not-eq marketName "")}}
             <p class="market-name">{{marketName}}</p>
         {{/if}}
-        <p class="title-content">{{title}}</p>
-        <p class="time-content">{{time}}</p>
-        <p class="area-content">·{{area}}</p>
+
+        {{#if cardTitle}}
+            {{#bp-layout direction='row' main='between' classNames='chart-title-top-content'}}
+                <p class="title-content">{{title}}</p>
+                {{#bp-layout direction='row'}}
+                    <p class="time-content">{{year-month time}}</p>
+                    <p class="area-content">·{{area}}</p>
+                {{/bp-layout}}
+            {{/bp-layout}}
+        {{else}}
+            <p class="title-content">{{title}}</p>
+            <p class="time-content">{{year-month time}}</p>
+            <p class="area-content">·{{area}}</p>
+        {{/if}}
+        
         {{#if helpFlag}}
             {{#bp-button 
                 type="primary"

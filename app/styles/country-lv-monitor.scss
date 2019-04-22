@@ -11,12 +11,13 @@
 
         .select-label {
             margin-right: $spacing;
+            @extend %p-primary;
         }
     }
     height: 60px;
 }
 .country-card-part {
-
+    height: 174px;
     .country-lv-card {
         flex-grow: 1;
         margin-right: $spacing*2;

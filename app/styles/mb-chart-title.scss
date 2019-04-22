@@ -4,9 +4,15 @@
         padding-right: $spacing;
     }
     .time-content {
-        @extend %p-small;
+        @extend %p-secondary;
     }
     .area-content {
-        @extend %p-small;
+        @extend %p-secondary;
+    }
+    .chart-title-left {
+        width: 100%;
+        .chart-title-top-content {
+            width: 100%;
+        }
     }
 }
