@@ -1,8 +1,11 @@
 @import "ember-bootstrap/bootstrap";
 @import 'bp-components';
-@import 'country-lv-monitor';
+
 @import 'mb-top-nav';
 @import 'mb-chart-title';
+
+@import 'index';
+@import 'country-lv-monitor';
 @import 'country-lv-card';
 
 body {
@@ -10,10 +13,17 @@ body {
     height: 100%;
     width: 100%;
     min-width: 1200px;
+
+    & > .ember-view {
+        height: 100%;
+    }
 }
 
 p {
     margin: 0;
+}
+.mb-full-page-outer {
+    height: 100vh;
 }
 .mb-page-outer {
     height: calc(100vh - 56px);

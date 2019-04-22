@@ -1,0 +1,71 @@
+.login-page-warper {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    min-height: 400px;
+    
+    .login-page {
+        width: 100%;
+        .login-sub-container {
+            width: 50%;
+        }
+        .login-area {
+            width: 320px;
+
+            .title {
+                margin-bottom: $spacing;
+                @extend %title;
+            }
+            .subtitle {
+                margin-bottom: $spacing*7;
+                @extend %header-medium;
+            }
+            .error-line {
+                margin-bottom: 16px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                img.error {
+                    margin-right: 4px;
+                    width: 16px;
+                    height: 16px;
+                }
+                .error-info {
+                    font-family: PingFangSC-Regular;
+                    font-size: 14px;
+                    color: #DE350B;
+                }
+            }
+            .login-button {
+                margin-top: 8px;
+                width: 320px;
+                height: 48px;
+    
+                display: inline-block;
+                white-space: nowrap;
+                vertical-align: middle;
+                text-align: center;
+                outline:none;
+            }
+        }
+        .img-area {
+            background: #FFFFFF;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                max-width:960px;
+                max-height:1080px;
+            }
+        }
+
+        .bp-input {
+            input {
+                width: 100%;
+            }
+        }
+        .p-btn.primary {
+            height: 48px;
+        }
+    }
+}

@@ -6,21 +6,24 @@ export default Service.extend({
     ajax: service(),
     router: service(),
 
-    clientId: "5cac3206d23dc25e3bbb1ffe",
-    clientSecret: '5c90db71eeefcc082c0823b2',
-    redirectUri: 'http://192.168.200.27:4200/oauth-callback',
-    // redirectUri: 'http://maxbi.pharbers.com/oauth-callback',
-    scope: "APP/System",
     version: 'v0',
     scopeResult: "",
+    clientId: "5cbd2aa6ceb3c45854b80d6a",
+    clientSecret: '5c90db71eeefcc082c0823b2',
+    redirectUri: 'http://192.168.0.100:4200/oauth-callback',
+    host: 'http://192.168.100.174:20190',
+    scope: "APP/System:[MAXBI]",
+    // redirectUri: 'http://maxbi.pharbers.com/oauth-callback',
+    // host: 'http://maxbi:8081',
+    // scope: "APP/System:[MAXBI]",
 
     oauthOperation() {
         let cookies = this.get('cookies'),
 			token = cookies.read('token');
 
 		if (!token) {
-			let host = 'http://192.168.100.116:31417',
-                // host = 'http://report.pharbers.com',
+            const ajax = this.get('ajax')
+			let host = `${this.get('host')}`,
 				version = `${this.get('version')}`,
 				resource = 'GenerateUserAgent',
 				url = '';
@@ -31,9 +34,17 @@ export default Service.extend({
 						&redirect_uri=${this.get('redirectUri')}`.
 				replace(/\n/gm, '').
 				replace(/ /gm, '').
-				replace(/\t/gm, '');
-            localStorage.setItem('needRedirect', false);
-			window.location = [host, version, resource, url].join('/');
+                replace(/\t/gm, '');
+            ajax.request([version, resource, url].join('/'))
+                .then(response => {
+                    window.console.log(response);
+                    return response;
+                })
+                .catch(err => {
+                    window.console.log('error');
+                    window.console.log(err);
+                })
+            // window.location = [host, version, resource, url].join('/');
 		} else {
             this.get('router').transitionTo('country-lv-monitor');
         }
@@ -73,8 +84,10 @@ export default Service.extend({
 					cookies.write('refresh_token', response.refresh_token, options);
                     cookies.write('token_type', response.token_type, options);
                     cookies.write('scope', response.scope, options);
-					cookies.write('expiry', response.expiry, options);
-                    localStorage.setItem('needRedirect', true);
+                    cookies.write('expiry', response.expiry, options);
+                    window.console.log(cookies.read('scope'));
+                    
+                    // localStorage.setItem('needRedirect', true);
 					this.get('router').transitionTo('country-lv-monitor');
 				});
 		} else {
@@ -89,7 +102,8 @@ export default Service.extend({
         this.cookies.clear("refresh_token")
         this.cookies.clear("token_type")
         this.cookies.clear("scope")
-        localStorage.removeItem('needRedirect')
+        this.cookies.clear("expiry")
+        // localStorage.removeItem('needRedirect')
     }
 
 });
