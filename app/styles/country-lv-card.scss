@@ -29,7 +29,7 @@
     .country-lv-card-bottom {
         .detail-content {
             @extend %p-primary;
-            margin-right: $spacing;
+            // margin-right: $spacing;
         }
         .detail-red {
             color: red;

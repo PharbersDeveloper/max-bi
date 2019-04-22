@@ -11,6 +11,7 @@
 
         .select-label {
             margin-right: $spacing;
+            @extend %p-primary;
         }
     }
     height: 60px;

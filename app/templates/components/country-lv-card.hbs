@@ -1,5 +1,5 @@
 {{#bp-layout direction="col" classNames="country-lv-card-outer"}}
-    {{mb-chart-title title=title time=time area=area}}
+    {{mb-chart-title title=title time=time area=area cardTitle=true}}
     {{#bp-layout direction="row" classNames="country-lv-card-top"}}
         <p class="main-content">{{mainContent}}{{unit}}</p>
     {{/bp-layout}}
@@ -8,7 +8,7 @@
         <p class="tag-content">{{prodName}}</p>
     {{/bp-layout}}
     {{#bp-layout direction="row" classNames="country-lv-card-bottom"}}
-        <p class="detail-content">同比</p>
+        <p class="detail-content mr-2">同比</p>
         {{#if (eq (str2num percentYear) 0)}}
             <p class="detail-content">{{percentYear}}%</p>
         {{else if (gt (str2num percentYear) 0)}}
@@ -16,7 +16,7 @@
         {{else}}
             <p class="detail-content detail-green"><span class="triangle-down"></span>{{percentYear}}%</p>
         {{/if}}
-        <p class="detail-content">环比</p>
+        <p class="detail-content mr-2 ml-4">环比</p>
         {{#if (eq (str2num percentMonth) 0)}}
             <p class="detail-content">{{percentMonth}}%</p>
         {{else if (gt (str2num percentMonth) 0)}}
