@@ -5,7 +5,7 @@ export default Component.extend({
     templateHtml: null,
 
     didInsertElement() {
-        this._super(...arguments);
-        $('auth').append(`${this.get('content')}`)
+        // this._super(...arguments);
+        $('#auth').append(`${this.get('content')}`)
     }
 });

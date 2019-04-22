@@ -8,10 +8,11 @@ export default Service.extend({
 
     version: 'v0',
     scopeResult: "",
-    clientId: "5cbd2aa6ceb3c45854b80d6a",
+    clientId: "5cbd9f94f4ce4352ecb082a0",
     clientSecret: '5c90db71eeefcc082c0823b2',
+    status: "self",
     redirectUri: 'http://192.168.0.100:4200/oauth-callback',
-    host: 'http://192.168.100.174:20190',
+    host: 'http://192.168.100.116:9097',
     scope: "APP/System:[MAXBI]",
     // redirectUri: 'http://maxbi.pharbers.com/oauth-callback',
     // host: 'http://maxbi:8081',
@@ -25,19 +26,20 @@ export default Service.extend({
             const ajax = this.get('ajax')
 			let host = `${this.get('host')}`,
 				version = `${this.get('version')}`,
-				resource = 'GenerateUserAgent',
+				resource = 'ThirdParty',
 				url = '';
 
 			url = `?client_id=${this.get('clientId')}
                         &client_secret=${this.get('clientSecret')}
                         &scope=${this.get('scope')}
+                        &status=${this.get('status')}
 						&redirect_uri=${this.get('redirectUri')}`.
 				replace(/\n/gm, '').
 				replace(/ /gm, '').
                 replace(/\t/gm, '');
-            ajax.request([version, resource, url].join('/'))
-                .then(response => {
-                    window.console.log(response);
+            return ajax.request([host, version, resource, url].join('/'), {
+                dataType: 'text'
+                }).then(response => {
                     return response;
                 })
                 .catch(err => {
@@ -51,7 +53,8 @@ export default Service.extend({
     },
 
     oauthCallback(transition) {
-		let version = `${this.get('version')}`,
+        let version = `${this.get('version')}`,
+            host = `${this.get('host')}`,
 			resource = 'GenerateAccessToken',
 			url = '',
 			cookies = this.get('cookies');
@@ -69,7 +72,7 @@ export default Service.extend({
 				replace(/\n/gm, '').
 				replace(/ /gm, '').
 				replace(/\t/gm, '');
-			ajax.request([version, resource, url].join('/'))
+			ajax.request([host, version, resource, url].join('/'))
 				.then(response => {
                     let expiry = new Date(response.expiry);
                     let options = {
@@ -78,16 +81,12 @@ export default Service.extend({
                         expires: expiry
                     }
                     cookies.write('token', response.access_token, options);
-
 					cookies.write('account_id', response.account_id, options);
 					cookies.write('access_token', response.access_token, options);
 					cookies.write('refresh_token', response.refresh_token, options);
                     cookies.write('token_type', response.token_type, options);
                     cookies.write('scope', response.scope, options);
                     cookies.write('expiry', response.expiry, options);
-                    window.console.log(cookies.read('scope'));
-                    
-                    // localStorage.setItem('needRedirect', true);
 					this.get('router').transitionTo('country-lv-monitor');
 				});
 		} else {
@@ -95,15 +94,58 @@ export default Service.extend({
 		}
     },
 
+    judgeAuth() {
+        let tokenFlag = false;
+        let scopeFlag = false;
+		let token = this.get('cookies').read('token');
+		let scope = this.get('cookies').read('scope');
+		
+		if(token != undefined && token != null && token != '') {
+            window.console.log("have token");
+            tokenFlag = true;
+		} else {
+            window.console.log("no token");
+		}
+
+		if(scope != undefined && scope != null && scope != '') {
+			let result = scope.match(/\[(.+)\]/);
+
+			if(result == null || result.length < 2) {
+				window.console.log("scope do not contained current project");
+			} else {
+                let scopes = result[1].split(",")
+                scopes.forEach(elem => {
+                    if(elem === "MAXBI") {
+                        window.console.log("scope contained current project");
+                        scopeFlag = true;
+                    } else {
+                        window.console.log("scope do not contained current project");
+                    }
+                })
+            }
+        } else {
+            window.console.log("no scope");
+        }
+        
+        if(tokenFlag && scopeFlag) {
+            return true;
+		} else {
+            return false;
+        }
+	},
+
     removeAuth() {
-        this.cookies.clear("token")
-        this.cookies.clear("account_id")
-        this.cookies.clear("access_token")
-        this.cookies.clear("refresh_token")
-        this.cookies.clear("token_type")
-        this.cookies.clear("scope")
-        this.cookies.clear("expiry")
-        // localStorage.removeItem('needRedirect')
-    }
+        let options = {
+            // domain: '.pharbers.com',
+            // path: '/',
+        }
+        this.cookies.clear("token", options)
+        this.cookies.clear("account_id", options)
+        this.cookies.clear("access_token", options)
+        this.cookies.clear("refresh_token", options)
+        this.cookies.clear("token_type", options)
+        this.cookies.clear("scope", options)
+        this.cookies.clear("expiry", options)
+    },
 
 });

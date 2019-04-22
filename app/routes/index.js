@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
+import RSVP from 'rsvp';
 
 export default Route.extend({
 	oauth_service: service(),
@@ -10,6 +11,8 @@ export default Route.extend({
 	},
 
 	model() {
-		return this.oauth_service.oauthOperation()
+		return RSVP.hash({
+			page: this.oauth_service.oauthOperation()
+        })
 	}
 });
