@@ -8,7 +8,7 @@ export default Service.extend({
 
     version: 'v0',
     scopeResult: "",
-    clientId: "5cbd9f94f4ce4352ecb082a0",
+    clientId: "5cb995a882a4a74375fa4201",
     clientSecret: '5c90db71eeefcc082c0823b2',
     status: "self",
     redirectUri: 'http://192.168.0.100:4200/oauth-callback',
