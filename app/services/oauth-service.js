@@ -10,12 +10,11 @@ export default Service.extend({
     clientId: "5cb995a882a4a74375fa4201",
     clientSecret: '5c90db71eeefcc082c0823b2',
     status: "self",
-    redirectUri: 'http://maxview.pharbers.com:4200/oauth-callback',
-    host: 'http://192.168.100.116:9097',
     scope: "APP/System:[MAXBI]",
-    // redirectUri: 'http://192.168.0.100:4200/oauth-callback',
-    // host: 'http://oauth.pharbers.com',
-    // scope: "APP/System:[MAXBI]",
+    redirectUri: 'http://maxview.pharbers.com/oauth-callback',
+    // redirectUri: 'http://maxview.pharbers.com:4200/oauth-callback',
+    host: 'http://oauth.pharbers.com',
+    // host: 'http://192.168.100.116:9097',
 
     oauthOperation() {
         const ajax = this.get('ajax')
@@ -133,6 +132,7 @@ export default Service.extend({
         this.cookies.clear("token_type", options)
         this.cookies.clear("scope", options)
         this.cookies.clear("expiry", options)
+        window.console.log("clear cookies!");
     },
 
 });
