@@ -66,6 +66,7 @@ export default Service.extend({
 				replace(/\t/gm, '');
 			ajax.request([host, version, resource, url].join('/'))
 				.then(response => {
+                    this.removeAuth();
                     let expiry = new Date(response.expiry);
                     let options = {
                         domain: '.pharbers.com',
@@ -95,8 +96,6 @@ export default Service.extend({
 		if(token != undefined && token != null && token != '') {
             window.console.log("have token");
             tokenFlag = true;
-		} else {
-            window.console.log("no token");
 		}
 
 		if(scope != undefined && scope != null && scope != '') {
@@ -110,13 +109,9 @@ export default Service.extend({
                     if(elem === "MAXBI") {
                         window.console.log("scope contained current project");
                         scopeFlag = true;
-                    } else {
-                        window.console.log("scope do not contained current project");
                     }
                 })
             }
-        } else {
-            window.console.log("no scope");
         }
         
         if(tokenFlag && scopeFlag) {

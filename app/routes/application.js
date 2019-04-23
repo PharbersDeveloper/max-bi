@@ -6,17 +6,19 @@ export default Route.extend({
 	oauth_service: service(),
 
 	beforeModel({ targetName }) {
-		window.console.log(targetName);
+		window.console.log("target route:" + targetName);
 		if(targetName === 'oauth-callback') {
 			return;
 		}
-		
+
 		if(this.oauth_service.judgeAuth()) {
 			window.console.log("have auth");
+			if(targetName === 'index') {
+				this.transitionTo('country-lv-monitor');
+			}
 		} else {
-			window.console.log("no auth");
+			window.console.log("no auth!");
 			this.transitionTo('index');
 		}
 	}
-	
 });
