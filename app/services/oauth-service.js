@@ -18,37 +18,30 @@ export default Service.extend({
     // scope: "APP/System:[MAXBI]",
 
     oauthOperation() {
-        let cookies = this.get('cookies'),
-			token = cookies.read('token');
+        const ajax = this.get('ajax')
+        let host = `${this.get('host')}`,
+            version = `${this.get('version')}`,
+            resource = 'ThirdParty',
+            url = '';
 
-		if (!token) {
-            const ajax = this.get('ajax')
-			let host = `${this.get('host')}`,
-				version = `${this.get('version')}`,
-				resource = 'ThirdParty',
-				url = '';
-
-			url = `?client_id=${this.get('clientId')}
-                        &client_secret=${this.get('clientSecret')}
-                        &scope=${this.get('scope')}
-                        &status=${this.get('status')}
-						&redirect_uri=${this.get('redirectUri')}`.
-				replace(/\n/gm, '').
-				replace(/ /gm, '').
-                replace(/\t/gm, '');
-            return ajax.request([host, version, resource, url].join('/'), {
-                dataType: 'text'
-                }).then(response => {
-                    return response;
-                })
-                .catch(err => {
-                    window.console.log('error');
-                    window.console.log(err);
-                })
-            // window.location = [host, version, resource, url].join('/');
-		} else {
-            this.get('router').transitionTo('country-lv-monitor');
-        }
+        url = `?client_id=${this.get('clientId')}
+                    &client_secret=${this.get('clientSecret')}
+                    &scope=${this.get('scope')}
+                    &status=${this.get('status')}
+                    &redirect_uri=${this.get('redirectUri')}`.
+            replace(/\n/gm, '').
+            replace(/ /gm, '').
+            replace(/\t/gm, '');
+        return ajax.request([host, version, resource, url].join('/'), {
+            dataType: 'text'
+            }).then(response => {
+                return response;
+            })
+            .catch(err => {
+                window.console.log('error');
+                window.console.log(err);
+            })
+        // window.location = [host, version, resource, url].join('/');
     },
 
     oauthCallback(transition) {
