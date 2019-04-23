@@ -1,6 +1,12 @@
-{{#bp-layout direction="col"}}
-    {{mb-top-nav}}
-    {{#bp-layout direction="col" classNames="mb-page-outer"}}
+{{#if showNavbar}}
+    {{#bp-layout direction="col"}}
+        {{mb-top-nav logOut=(action 'exitSystem')}}
+        {{#bp-layout direction="col" classNames="mb-page-outer"}}
+            {{outlet}}
+        {{/bp-layout}}
+    {{/bp-layout}}
+{{else}}
+    {{#bp-layout direction="col" classNames="mb-full-page-outer"}}
         {{outlet}}
     {{/bp-layout}}
-{{/bp-layout}}
+{{/if}}

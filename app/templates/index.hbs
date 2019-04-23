@@ -1,1 +1,27 @@
-{{outlet}}
+{{#bp-layout direction='row' main='center' classNames='login-page-warper'}}
+    {{#bp-layout direction='row' classNames='login-page'}}
+        {{#bp-layout direction='row' main="center" classNames='login-sub-container'}}
+            {{#bp-layout direction='col' main='center' classNames='login-area'}}
+                <p class="title">MAX BI</p>
+                <p class="subtitle">不止于数据，让决策更精彩</p>
+                {{returned-page content=model.page}}
+                {{!-- {{#if errorInfo}}
+                    {{#bp-layout direction='row' class='error-line'}}
+                        <img class="error" src={{model.errorImg}} alt="">
+                        <p class="error-info">用户名或密码错误</p>
+                    {{/bp-layout}}
+                {{/if}}
+                {{bp-input placeholder="账号" value=account size='large' classNames='mb-2'}}
+                {{bp-input type="password" placeholder="密码" value=password size='large' classNames='mb-3'}}
+                {{#bp-button type="primary" click=(action 'accountLogin') classNames=""}}
+                    登录
+                {{/bp-button}} --}}
+            {{/bp-layout}}
+        {{/bp-layout}}
+        {{#bp-layout direction='row' classNames='login-sub-container'}}
+            {{#bp-layout direction='col' main='center' classNames='img-area'}}
+                <img src="/images/img_pharbers-login.png" alt="">
+            {{/bp-layout}}
+        {{/bp-layout}}
+    {{/bp-layout}}
+{{/bp-layout}}
