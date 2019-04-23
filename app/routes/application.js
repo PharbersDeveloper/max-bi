@@ -10,12 +10,17 @@ export default Route.extend({
 		if(targetName === 'oauth-callback') {
 			return;
 		}
-		
-		if(this.oauth_service.judgeAuth()) {
-			window.console.log("have auth");
+
+		if(targetName === 'index') {
+			return;
 		} else {
-			window.console.log("no auth");
-			this.transitionTo('index');
+			if(this.oauth_service.judgeAuth()) {
+				window.console.log("have auth");
+			} else {
+				window.console.log("no auth!");
+				this.oauth_service.removeAuth();
+				this.transitionTo('index');
+			}
 		}
 	}
 	
