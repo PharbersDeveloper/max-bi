@@ -7,15 +7,14 @@ export default Service.extend({
     router: service(),
 
     version: 'v0',
-    scopeResult: "",
     clientId: "5cb995a882a4a74375fa4201",
     clientSecret: '5c90db71eeefcc082c0823b2',
     status: "self",
-    redirectUri: 'http://192.168.0.100:4200/oauth-callback',
+    redirectUri: 'http://maxview.pharbers.com:4200/oauth-callback',
     host: 'http://192.168.100.116:9097',
     scope: "APP/System:[MAXBI]",
-    // redirectUri: 'http://maxbi.pharbers.com/oauth-callback',
-    // host: 'http://maxbi:8081',
+    // redirectUri: 'http://192.168.0.100:4200/oauth-callback',
+    // host: 'http://oauth.pharbers.com',
     // scope: "APP/System:[MAXBI]",
 
     oauthOperation() {
@@ -76,8 +75,8 @@ export default Service.extend({
 				.then(response => {
                     let expiry = new Date(response.expiry);
                     let options = {
-                        // domain: '.pharbers.com',
-                        // path: '/',
+                        domain: '.pharbers.com',
+                        path: '/',
                         expires: expiry
                     }
                     cookies.write('token', response.access_token, options);
@@ -136,8 +135,8 @@ export default Service.extend({
 
     removeAuth() {
         let options = {
-            // domain: '.pharbers.com',
-            // path: '/',
+            domain: '.pharbers.com',
+            path: '/',
         }
         this.cookies.clear("token", options)
         this.cookies.clear("account_id", options)
