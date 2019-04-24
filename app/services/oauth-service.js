@@ -68,7 +68,7 @@ export default Service.extend({
                     this.removeAuth();
                     let expiry = new Date(response.expiry);
                     let options = {
-                        domain: '.pharbers.com',
+                        domain: 'maxview.pharbers.com',
                         path: '/',
                         expires: expiry
                     }
@@ -122,7 +122,7 @@ export default Service.extend({
 
     removeAuth() {
         let options = {
-            domain: '.pharbers.com',
+            domain: 'maxview.pharbers.com',
             path: '/',
         }
         this.cookies.clear("token", options)
@@ -132,6 +132,17 @@ export default Service.extend({
         this.cookies.clear("token_type", options)
         this.cookies.clear("scope", options)
         this.cookies.clear("expiry", options)
+
+        let options1 = {
+            domain: '.pharbers.com',
+            path: '/',
+        }
+        let scopesList = this.get('cookies').read('scopes_list');
+        if (scopesList !== undefined) {
+            scopesList = scopesList.replace('MAXBI', '');
+            this.cookies.write('scopes_list', scopesList, options1);
+        }
+        
         window.console.log("clear cookies!");
     },
 
