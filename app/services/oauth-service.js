@@ -10,12 +10,11 @@ export default Service.extend({
     clientId: "5cb995a882a4a74375fa4201",
     clientSecret: '5c90db71eeefcc082c0823b2',
     status: "self",
-    redirectUri: 'http://maxview.pharbers.com:4200/oauth-callback',
-    host: 'http://192.168.100.116:9097',
     scope: "APP/System:[MAXBI]",
-    // redirectUri: 'http://192.168.0.100:4200/oauth-callback',
-    // host: 'http://oauth.pharbers.com',
-    // scope: "APP/System:[MAXBI]",
+    redirectUri: 'http://maxview.pharbers.com/oauth-callback',
+    // redirectUri: 'http://maxview.pharbers.com:4200/oauth-callback',
+    host: 'http://oauth.pharbers.com',
+    // host: 'http://192.168.100.116:9097',
 
     oauthOperation() {
         const ajax = this.get('ajax')
@@ -69,7 +68,7 @@ export default Service.extend({
                     this.removeAuth();
                     let expiry = new Date(response.expiry);
                     let options = {
-                        domain: '.pharbers.com',
+                        domain: 'maxview.pharbers.com',
                         path: '/',
                         expires: expiry
                     }
@@ -123,7 +122,7 @@ export default Service.extend({
 
     removeAuth() {
         let options = {
-            domain: '.pharbers.com',
+            domain: 'maxview.pharbers.com',
             path: '/',
         }
         this.cookies.clear("token", options)
@@ -133,6 +132,18 @@ export default Service.extend({
         this.cookies.clear("token_type", options)
         this.cookies.clear("scope", options)
         this.cookies.clear("expiry", options)
+
+        let options1 = {
+            domain: '.pharbers.com',
+            path: '/',
+        }
+        let scopesList = this.get('cookies').read('scopes_list');
+        if (scopesList !== undefined) {
+            scopesList = scopesList.replace('MAXBI', '');
+            this.cookies.write('scopes_list', scopesList, options1);
+        }
+        
+        window.console.log("clear cookies!");
     },
 
 });
