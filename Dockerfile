@@ -19,14 +19,15 @@ RUN npm update && \
 
 WORKDIR /app
 
-LABEL maxview.version=0.0.2
+LABEL maxview.version=0.0.4
 
 RUN git clone https://github.com/PharbersDeveloper/max-bi.git && \
 	git clone https://github.com/PharbersDeveloper/BP-Components.git 
 	
 WORKDIR /app/BP-Components
 
-RUN npm install && \
+RUN git checkout -b frank origin/frank && \
+	npm install && \
 	npm link
 
 WORKDIR /app/max-bi
