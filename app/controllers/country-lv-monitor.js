@@ -21,9 +21,9 @@ export default Controller.extend({
 			salesGrowthLineData: A([]),
 			shareLineData: A([]),
 			shareGrowthLineData: A([]),
-			salesLineColor: A(['#57D9A3', '#79E2F2', '#FFE380', '#8777D9 ']),
+			// salesLineColor: A(['#57D9A3', '#79E2F2', '#FFE380', '#8777D9 ']),
 			marketLineColor: A(['#007ACA']),
-			pieColor: A(['#579AFF', '#007ACA']),
+			pieColor: A(['#8777D9', '#579AFF', '#FFE380',  '#36B37E', '#79F2C0'],),
 		})
 	},
 
@@ -54,11 +54,10 @@ export default Controller.extend({
 		//单个折线图
 		this.store.query('marketdimension', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': this.marketValue.market, 'gte[ym]': String(ymlated), 'lte[ym]': this.ymValue}).then(res => {
 			let lists = [];
-			let market = '';
+			let market = '销售额';
 			let len = 13 - res.length;
 			for( let i = 0; i < len; i++  ){ lists.push( '0' ); }
 			res.forEach(item => {
-				market = item.market;
 				lists.push(item.sales);
 			});
 			this.set('lineData', A([{
@@ -144,14 +143,13 @@ export default Controller.extend({
 					}
 				}
 			}
-			
 			//横轴长度为13,缺少项补0
 			let len = 13 - dest[0].item.length;
 			for( let i = 0; i < len; i++  ){ sales.push( '0' ); }
 
 			for (let i = 0; i < dest.length; i++) {
 				dest[i].item.forEach(yeararr => {
-					marketline = yeararr.market
+					marketline = yeararr.minProduct
 					// dateline.push(yeararr.ym)
 					sales.push(yeararr.sales)
 				})
@@ -166,7 +164,7 @@ export default Controller.extend({
 			}
 			for (let i = 0; i < dest.length; i++) {
 				dest[i].item.forEach(yeararr => {
-					marketline = yeararr.market
+					marketline = yeararr.minProduct
 					sales.push(yeararr.salesSom)
 					// dateline.push(yeararr.ym)
 				})
@@ -181,7 +179,7 @@ export default Controller.extend({
 			}
 			for (let i = 0; i < dest.length; i++) {
 				dest[i].item.forEach(yeararr => {
-					marketline = yeararr.market
+					marketline = yeararr.minProduct
 					// dateline.push(yeararr.ym)
 					sales.push(yeararr.salesYearOnYear)
 				})
@@ -196,7 +194,7 @@ export default Controller.extend({
 			}
 			for (let i = 0; i < dest.length; i++) {
 				dest[i].item.forEach(yeararr => {
-					marketline = yeararr.market
+					marketline = yeararr.minProduct
 					// dateline.push(yeararr.ym)
 					sales.push(yeararr.salesRingGrowthRank)
 				})
