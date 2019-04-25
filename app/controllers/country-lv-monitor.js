@@ -126,7 +126,7 @@ export default Controller.extend({
 		})
 		
 		//折线图	
-		this.store.query('productdimension', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': this.marketValue.market, 'gte[ym]': String(ymlated), 'lte[ym]': this.ymValue, 'lte[sales_rank]': '10' }).then(res => {
+		this.store.query('productdimension', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': this.marketValue.market, 'gt[ym]': String(ymlated - 1), 'lte[ym]': this.ymValue, 'lte[sales_rank]': '10' }).then(res => {
 			let arr = [], salesarritem = [], growtharritem = [], sharearr = [], sharegrowtharr = [], sales = [], marketline = '', map = {}, dest = [];
 			res.forEach(item => {
 				arr.push(item);
@@ -153,8 +153,8 @@ export default Controller.extend({
 			//横轴长度为13,缺少项补0
 			let len = 13 - dest[0].item.length;
 			for( let i = 0; i < len; i++  ){ sales.push( '0' ); }
-			debugger
-			console.log(dest.length)
+			// debugger
+			// console.log(dest.length)
 			for (let i = 0; i < dest.length; i++) {
 				dest[i].item.forEach(yeararr => {
 					marketline = yeararr.minProduct
