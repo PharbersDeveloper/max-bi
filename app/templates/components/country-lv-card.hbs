@@ -14,19 +14,19 @@
         {{#bp-layout direction="row" classNames="country-lv-card-bottom"}}
             <p class="detail-content mr-2">同比</p>
             {{#if (eq (str2num percentYear) 0)}}
-                <p class="detail-content">{{percentYear}}%</p>
+                <p class="detail-content">{{str2num (percent-num percentYear)}}%</p>
             {{else if (gt (str2num percentYear) 0)}}
-                <p class="detail-content detail-green">{{bp-icon icon='priority-high'}}{{percentYear}}%</p>
+                <p class="detail-content detail-green">{{bp-icon icon='priority-high'}}{{str2num (percent-num percentYear)}}%</p>
             {{else}}
-                <p class="detail-content detail-red">{{bp-icon icon='priority-low'}}{{percentYear}}%</p>
+                <p class="detail-content detail-red">{{bp-icon icon='priority-low'}}{{str2num (percent-num percentYear)}}%</p>
             {{/if}}
             <p class="detail-content mr-2 ml-4">环比</p>
             {{#if (eq (str2num percentMonth) 0)}}
-                <p class="detail-content">{{percentMonth}}%</p>
+                <p class="detail-content">{{str2num (percent-num percentMonth)}}%</p>
             {{else if (gt (str2num percentMonth) 0)}}
-                <p class="detail-content detail-green">{{bp-icon icon='priority-high'}}{{percentMonth}}%</p>
+                <p class="detail-content detail-green">{{bp-icon icon='priority-high'}}{{str2num (percent-num percentMonth)}}%</p>
             {{else}}
-                <p class="detail-content detail-red">{{bp-icon icon='priority-low'}}{{percentMonth}}%</p>
+                <p class="detail-content detail-red">{{bp-icon icon='priority-low'}}{{str2num (percent-num percentMonth)}}%</p>
             {{/if}}
         {{/bp-layout}}
     {{/bp-layout}}

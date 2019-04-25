@@ -8,6 +8,7 @@ export default Controller.extend({
 	marketArr: A({}),
 	marketsArr: A([]),
 	marketValue: '',
+	ymValue: '',
 	proSaleLineSwitch: 0,
 	shareLineSwitch: 0,
 	saleBarSwitch: 0,
@@ -28,6 +29,12 @@ export default Controller.extend({
 	},
 
 	allData: observer('marketValue' ,'ymValue', function () {
+		if(this.marketValue == '') {
+			return
+		} 
+		if(this.ymValue == '') {
+			return
+		} 
 		// 获取当前选择月份的前12个月
 		let dealdate = this.ymValue.toString().slice(0,4) + '-' + this.ymValue.toString().slice(4,6);
 		let d = new Date(dealdate);
@@ -119,7 +126,7 @@ export default Controller.extend({
 		})
 		
 		//折线图	
-		this.store.query('productdimension', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': this.marketValue.market, 'gte[ym]': String(ymlated), 'lte[ym]': this.ymValue, 'lt[sales_rank]': '10' }).then(res => {
+		this.store.query('productdimension', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': this.marketValue.market, 'gte[ym]': String(ymlated), 'lte[ym]': this.ymValue, 'lte[sales_rank]': '10' }).then(res => {
 			let arr = [], salesarritem = [], growtharritem = [], sharearr = [], sharegrowtharr = [], sales = [], marketline = '', map = {}, dest = [];
 			res.forEach(item => {
 				arr.push(item);
@@ -146,7 +153,8 @@ export default Controller.extend({
 			//横轴长度为13,缺少项补0
 			let len = 13 - dest[0].item.length;
 			for( let i = 0; i < len; i++  ){ sales.push( '0' ); }
-
+			debugger
+			console.log(dest.length)
 			for (let i = 0; i < dest.length; i++) {
 				dest[i].item.forEach(yeararr => {
 					marketline = yeararr.minProduct

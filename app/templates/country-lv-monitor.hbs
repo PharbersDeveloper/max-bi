@@ -80,10 +80,10 @@
             title="市场集中度" 
             time=productdimension.firstObject.ym 
             area="全国" 
-            mainContent=(percent-num "0.24")
+            mainContent=(percent-num marketdimension.firstObject.concentratedSom)
             unit="%" 
-            percentYear="-50" 
-            percentMonth="4.3"}}
+            percentYear=marketdimension.firstObject.concentratedYearGrowth  
+            percentMonth=marketdimension.firstObject.concentratedRingGrowth }}
 
         {{country-lv-card 
             classNames="bg-white" 
@@ -93,9 +93,11 @@
             mainContent=(percent-num productdimension.firstObject.salesSom) 
             unit="%" 
             producer=productdimension.firstObject.market
-            prodName=productdimension.firstObject.minProduct 
-            percentYear=(percent-num productdimension.firstObject.salesYearGrowth)
-            percentMonth=(percent-num productdimension.firstObject.salesRingGrowth)}}
+            prodName=productdimension.firstObject.productName 
+            percentYear=productdimension.firstObject.salesYearGrowth
+            percentMonth=productdimension.firstObject.salesRingGrowth}}
+            {{log marketdimension.firstObject}}
+            {{log marketdimension.firstObject.salesYearGrowth}}
     {{/bp-layout}}
 
     {{#bp-layout direction="row" main="between" classNames="country-double-chart normal-margin-bottom"}}
