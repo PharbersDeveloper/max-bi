@@ -80,7 +80,7 @@ export default Controller.extend({
 			res.forEach(item => {
 				let pieobj = {
 					value: item.salesSom,
-					name: item.minProduct
+					name: item.productName
 				}
 				pie.pushObject(pieobj)
 			})
@@ -95,22 +95,22 @@ export default Controller.extend({
 			let barShareGrowth = [];
 			res.forEach(item => {
 				let barobj = {
-					prodName: item.minProduct,
+					prodName: item.productName,
 					value: item.sales,
 					type: 'Local'
 				}
 				let bargrowthobj = {
-					prodName: item.minProduct,
+					prodName: item.productName,
 					value: item.salesSom,
 					type: 'MNC'
 				}
 				let shareobj = {
-					prodName: item.minProduct,
-					value: item.salesYearOnYear,
+					prodName: item.productName,
+					value: item.salesYearGrowth,
 					type: 'MNC'
 				}
 				let shareGrowthObj = {
-					prodName: item.minProduct,
+					prodName: item.productName,
 					value: item.salesRingGrowth,
 					type: 'MNC'
 				}
@@ -134,16 +134,16 @@ export default Controller.extend({
 			//将大数组根据某项值分成若干小数组
 			for(let i = 0; i < arr.length; i++){
 				var ai = arr[i];
-				if(!map[ai.minProduct]){
+				if(!map[ai.productId]){
 					dest.push({
-						minProduct: ai.minProduct,
+						productId: ai.productId,
 						item: [ai]
 					});
-					map[ai.minProduct] = ai;
+					map[ai.productId] = ai;
 				}else{
 					for(let j = 0; j < dest.length; j++){
 						var dj = dest[j];
-						if(dj.minProduct == ai.minProduct){
+						if(dj.productId == ai.productId){
 							dj.item.push(ai);
 							break;
 						}
@@ -153,11 +153,9 @@ export default Controller.extend({
 			//横轴长度为13,缺少项补0
 			let len = 13 - dest[0].item.length;
 			for( let i = 0; i < len; i++  ){ sales.push( '0' ); }
-			// debugger
-			// console.log(dest.length)
 			for (let i = 0; i < dest.length; i++) {
 				dest[i].item.forEach(yeararr => {
-					marketline = yeararr.minProduct
+					marketline = yeararr.productName
 					// dateline.push(yeararr.ym)
 					sales.push(yeararr.sales)
 				})
@@ -172,7 +170,7 @@ export default Controller.extend({
 			}
 			for (let i = 0; i < dest.length; i++) {
 				dest[i].item.forEach(yeararr => {
-					marketline = yeararr.minProduct
+					marketline = yeararr.productName
 					sales.push(yeararr.salesSom)
 					// dateline.push(yeararr.ym)
 				})
@@ -187,9 +185,9 @@ export default Controller.extend({
 			}
 			for (let i = 0; i < dest.length; i++) {
 				dest[i].item.forEach(yeararr => {
-					marketline = yeararr.minProduct
+					marketline = yeararr.productName
 					// dateline.push(yeararr.ym)
-					sales.push(yeararr.salesYearOnYear)
+					sales.push(yeararr.salesYearGrowth)
 				})
 				sharearr[i] = {
 					name: marketline,
@@ -202,7 +200,7 @@ export default Controller.extend({
 			}
 			for (let i = 0; i < dest.length; i++) {
 				dest[i].item.forEach(yeararr => {
-					marketline = yeararr.minProduct
+					marketline = yeararr.productName
 					// dateline.push(yeararr.ym)
 					sales.push(yeararr.salesRingGrowthRank)
 				})
