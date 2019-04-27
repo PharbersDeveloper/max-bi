@@ -40,6 +40,11 @@
     .country-double-chart-pie {
         flex-grow: 1;
         max-width: calc(50% - 8px);
+
+        .circle-container {
+            width: 100%;
+            height: 400px;
+        }
     }
 }
 .country-sale-line-chart {

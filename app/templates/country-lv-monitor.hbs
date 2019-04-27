@@ -108,10 +108,12 @@
         {{/bp-layout}}
         {{#bp-layout direction="col" classNames="country-double-chart-pie bg-white normal-padding"}}
             {{mb-chart-title title="市场产品份额构成" time=productdimension.firstObject.ym area="全国"}}
-            {{bp-circle
-                widthSize="auto"
-                circleData=pieData
-                circleColor=pieColor}}
+            {{#bp-layout direction="col" classNames="circle-container"}}
+                {{bp-circle
+                    eid="circleShare"
+                    circleData=pieData
+                    circleColor=pieColor}}
+            {{/bp-layout}}
         {{/bp-layout}}
     {{/bp-layout}}
 
