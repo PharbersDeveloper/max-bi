@@ -1,12 +1,14 @@
 {{#bp-layout direction="row" main="between" classNames="mb-top-nav-outer"}}
     {{#bp-layout direction="row" cross="center" classNames="mb-top-nav-left"}}
         <img src="http://pharbers-images.oss-cn-beijing.aliyuncs.com/pharbers-max/logo_max.png" alt="" class="logo">
-        <p>MAX</p>
+        <p>MAX View</p>
     {{/bp-layout}}
     {{#bp-layout direction="row" cross="center" classNames="mb-top-nav-right"}}
+        <p>公司：</p>
+        <p>{{oauthService.groupName}}</p>
         {{#bp-button click=(action 'logOut')}}注销{{/bp-button}}
         {{!-- {{#bp-button}}头像{{/bp-button}} --}}
-         <img src="" alt="" class="logo">
+        {{!-- <img src="" alt="" class="logo"> --}}
     {{/bp-layout}}
 {{/bp-layout}}
 {{!-- {{#bp-layout direction="row" classNames="mb-top-nav-content"}}

@@ -6,11 +6,12 @@ export default Service.extend({
     ajax: service(),
     router: service(),
 
+    groupName: '',
     version: 'v0',
     clientId: "5cb995a882a4a74375fa4201",
     clientSecret: '5c90db71eeefcc082c0823b2',
     status: "self",
-    scope: "APP/System:[MAXBI]",
+    scope: "APP/MAXBI",
     redirectUri: 'http://maxview.pharbers.com/oauth-callback',
     // redirectUri: 'http://maxview.pharbers.com:4200/oauth-callback',
     host: 'http://oauth.pharbers.com',
@@ -79,6 +80,9 @@ export default Service.extend({
                     cookies.write('token_type', response.token_type, options);
                     cookies.write('scope', response.scope, options);
                     cookies.write('expiry', response.expiry, options);
+
+                    this.set('groupName', response.scope.split("/")[1].split(":")[1]);
+
 					this.get('router').transitionTo('country-lv-monitor');
 				});
 		} else {
@@ -97,21 +101,28 @@ export default Service.extend({
             tokenFlag = true;
 		}
 
-		if(scope != undefined && scope != null && scope != '') {
-			let result = scope.match(/\[(.+)\]/);
-
-			if(result == null || result.length < 2) {
-				window.console.log("scope do not contained current project");
-			} else {
-                let scopes = result[1].split(",")
-                scopes.forEach(elem => {
-                    if(elem === "MAXBI") {
-                        window.console.log("scope contained current project");
-                        scopeFlag = true;
-                    }
-                })
+        if(scope != undefined && scope != null && scope != '') {
+            let scopeString = scope.split("/")[1];
+            let scopeGroup = scopeString.split(":")[0];
+            if(scopeGroup == "MAXBI") {
+                scopeFlag = true;
             }
         }
+		// if(scope != undefined && scope != null && scope != '') {
+		// 	let result = scope.match(/\[(.+)\]/);
+
+		// 	if(result == null || result.length < 2) {
+		// 		window.console.log("scope do not contained current project");
+		// 	} else {
+        //         let scopes = result[1].split(",")
+        //         scopes.forEach(elem => {
+        //             if(elem === "MAXBI") {
+        //                 window.console.log("scope contained current project");
+        //                 scopeFlag = true;
+        //             }
+        //         })
+        //     }
+        // }
         
         if(tokenFlag && scopeFlag) {
             return true;
@@ -121,6 +132,7 @@ export default Service.extend({
 	},
 
     removeAuth() {
+        this.set('groupName', '');
         let options = {
             domain: 'maxview.pharbers.com',
             path: '/',
@@ -139,7 +151,7 @@ export default Service.extend({
         }
         let scopesList = this.get('cookies').read('scopes_list');
         if (scopesList !== undefined) {
-            scopesList = scopesList.replace('MAXBI', '');
+            scopesList = scopesList.replace('MAXBI;', '');
             this.cookies.write('scopes_list', scopesList, options1);
         }
         
