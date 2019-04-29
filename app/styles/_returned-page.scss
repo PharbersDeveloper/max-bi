@@ -1,0 +1,23 @@
+#auth {
+    input {
+        height: 40px !important;
+
+        &:focus {
+            outline: 0;
+            border-color: #3172E0;
+        }
+    }
+    button {
+        height: 40px !important;
+        background-color: #615C6A;
+        font-size: 14px;
+        color: #FFF;
+        font-weight: 600;
+        border: none;
+
+        &:focus {
+            outline: none;
+            box-shadow: none;
+        }
+    }
+}

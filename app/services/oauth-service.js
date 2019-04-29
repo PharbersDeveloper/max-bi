@@ -81,13 +81,13 @@ export default Service.extend({
                     cookies.write('scope', response.scope, options);
                     cookies.write('expiry', response.expiry, options);
                     
-                    response.scope.split("/")[1].split(",").forEach(elem => {
-                        let appScope = elem.split(":")[0];
-                        let scopeGroup = elem.split(":")[1];
-                        if(appScope == 'MAXBI' && scopeGroup != "" && scopeGroup != undefined) {
-                            this.set('groupName', scopeGroup);
-                        }
-                    });
+                    // response.scope.split("/")[1].split(",").forEach(elem => {
+                    //     let appScope = elem.split(":")[0];
+                    //     let scopeGroup = elem.split(":")[1];
+                    //     if(appScope == 'MAXBI' && scopeGroup != "" && scopeGroup != undefined) {
+                    //         this.set('groupName', scopeGroup);
+                    //     }
+                    // });
 
 					this.get('router').transitionTo('country-lv-monitor');
 				});
@@ -114,6 +114,13 @@ export default Service.extend({
                 let scopeGroup = elem.split(":")[1];
                 if(appScope == 'MAXBI' && scopeGroup != "" && scopeGroup != undefined) {
                     scopeFlag = true;
+                }
+            });
+            scope.split("/")[1].split(",").forEach(elem => {
+                let appScope = elem.split(":")[0];
+                let scopeGroup = elem.split(":")[1];
+                if(appScope == 'MAXBI' && scopeGroup != "" && scopeGroup != undefined) {
+                    this.set('groupName', scopeGroup.split('#')[0]);
                 }
             });
         }
