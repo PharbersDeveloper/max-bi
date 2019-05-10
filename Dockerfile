@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y && \
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
 	apt-get install -y nodejs
 
-ENV EMBERVERSION 3.4.4
+ENV EMBERVERSION 3.4.3
 ENV	BOWERVERSION 1.8.4
 
 RUN npm update && \
@@ -19,7 +19,7 @@ RUN npm update && \
 
 WORKDIR /app
 
-LABEL maxview.version=0.0.4
+LABEL maxview.version=0.0.9
 
 RUN git clone https://github.com/PharbersDeveloper/max-bi.git && \
 	git clone https://github.com/PharbersDeveloper/BP-Components.git 
