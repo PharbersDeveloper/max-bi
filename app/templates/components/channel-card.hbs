@@ -1,0 +1,15 @@
+{{#bp-layout direction="col" classNames="channel-content"}}
+    <p class="card-title mb-4">{{cardData.title}}</p>
+    {{#bp-layout direction="row" classNames="data-time mb-3"}}
+        <p class="time-title mr-3">数据更新时间</p>
+        <p class="time-content">{{timehelper/time2fullformat cardData.updateTime}}</p>
+    {{/bp-layout}}
+    {{#bp-layout direction="row" classNames="data-time"}}
+        <p class="time-title mr-3">数据覆盖周期</p>
+        <p class="time-content">{{timehelper/time2ym cardData.timeRangeStart}} ~ {{timehelper/time2ym cardData.timeRangeEnd}}</p>
+    {{/bp-layout}}
+    {{#bp-layout direction="row" main='end' classNames="card-btn-outer"}}
+        {{#bp-button type='default' classNames='card-btn' click=(action "btnClick" cardData.title)}}进入{{/bp-button}}
+    {{/bp-layout}}
+{{/bp-layout}}
+{{yield}}

@@ -1,0 +1,11 @@
+.mb-page-container.choose-channel {
+    padding: 24px 80px;
+
+    .page-title {
+        @extend %header-large;
+        margin-bottom: 40px;
+    }
+    .card-list-container {
+        flex: auto;
+    }
+}

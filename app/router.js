@@ -21,6 +21,8 @@ Router.map(function() {
     this.route('upload');
   });
   this.route('oauth-callback');
+  this.route('choose-channel');
+  this.route('analysis');
 });
 
 export default Router;

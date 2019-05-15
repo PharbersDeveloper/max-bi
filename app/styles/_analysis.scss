@@ -1,0 +1,17 @@
+.mb-page-container.analysis {
+    padding: 0;
+
+    .analysis-top {
+        padding: $spacing*3;
+    }
+    .return-btn {
+        font-family: PingFangSC-Medium;
+        font-size: 12px;
+        color: #6B778C;
+        line-height: 16px;
+        width: 40px;
+    }
+    .analysis-header {
+        height: 105px;
+    }
+}

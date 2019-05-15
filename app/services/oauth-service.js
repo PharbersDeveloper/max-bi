@@ -89,10 +89,10 @@ export default Service.extend({
                     //     }
                     // });
 
-					this.get('router').transitionTo('country-lv-monitor');
+					this.get('router').transitionTo('choose-channel');
 				});
 		} else {
-			this.get('router').transitionTo('country-lv-monitor');
+			this.get('router').transitionTo('choose-channel');
 		}
     },
 
