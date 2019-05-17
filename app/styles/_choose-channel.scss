@@ -4,6 +4,7 @@
     .page-title {
         @extend %header-large;
         margin-bottom: 40px;
+        font-weight: bold;
     }
     .card-list-container {
         flex: auto;

@@ -2,7 +2,8 @@
     padding: 0;
 
     .analysis-top {
-        padding: $spacing*3;
+        padding-top: 24px;
+        padding-left: 24px;
     }
     .return-btn {
         font-family: PingFangSC-Medium;
@@ -11,7 +12,68 @@
         line-height: 16px;
         width: 40px;
     }
-    .analysis-header {
-        height: 105px;
+    .analysis {
+        padding: 24px;
+        // height: 105px;
+        .bp-page-header {
+            padding-top: 24px;
+            padding-bottom: 16px;
+        }
+        .header-content-area {
+            width: 100%;
+            .header-title {
+                @extend %title;
+                color: #172B4D;
+            }
+            .header-content {
+                height: 309px;
+                margin-bottom: 8px;
+                .header-content-sub {
+                    width: 50%;
+                }
+            }
+        }
+        .bp-nav.flex-column {
+            padding: 0;
+            width: 100%;
+            .bp-nav-dropdown .dd-title {
+                padding-left: 18px;
+                color: #5E6C84;
+                // font-weight: bold;
+                width: 100px;
+                overflow: hidden;
+            }
+            .bp-nav-dropdown.hidden-child-list .dd-title::after {
+                right: unset;
+                margin-left: -74px;
+            }
+            .bp-nav-dropdown.show-child-list .dd-title::after {
+                right: auto;
+                margin-left: -80px;
+            }
+        }
+        .right-content-area {
+            width: 100%;
+        }
+        .market-size-area {
+            flex: 1;
+        }
+        .pro-show {
+            min-height: 197px;
+            // background: #fff;
+            // flex: 1;
+        }
+        .line-area {
+            height: 463px;
+        }
+        .region-show {
+            height: 428px;
+        }
+        .province-show {
+            height: 407px;
+        }
+        .city-show {
+            height: 378px;
+        }
     }
 }

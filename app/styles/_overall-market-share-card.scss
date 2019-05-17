@@ -1,0 +1,37 @@
+.market-share-card {
+    height: 264px;
+    background: #fff;
+    .market-share-card-title {
+        @extend %p-primary;
+        font-weight: bold;
+    }
+    .num-text {
+        @extend %title;
+        font-weight: bold;
+    }
+    .num-help-text {
+        margin-bottom: 12px;
+        margin-left: 2px;
+        @extend %p-small;
+        color: #7A869A;
+    }
+    .help-text {
+        @extend %p-small;
+        color: #7A869A;
+    }
+    .ranking {
+        .rank {
+            @extend %p-small;
+            color: #6B778C;
+            font-weight: bold;
+        }
+        .name {
+            @extend %p-primary;
+            color: #344563;
+        }
+        .con {
+            @extend %p-primary;
+            color: #7A869A;
+        }
+    }
+}

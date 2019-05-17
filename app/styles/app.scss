@@ -11,6 +11,9 @@
 @import 'returned-page';
 @import 'choose-channel';
 @import 'analysis';
+@import 'page-left-menu';
+@import 'overall-market-share-card';
+@import 'overall-market-size-card';
 
 body {
     margin: 0;
@@ -55,4 +58,7 @@ p {
 
 div.bg-white {
     background-color: $n000;
+}
+.charts {
+    background: #FFB377;;
 }

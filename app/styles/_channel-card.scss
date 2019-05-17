@@ -13,6 +13,7 @@
 
     .card-title {
         @extend %header-medium;
+        font-weight: bold;
     }
     .data-time {
 

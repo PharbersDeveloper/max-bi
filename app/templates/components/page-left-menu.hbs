@@ -1,0 +1,62 @@
+{{#bp-layout direction='col' classNames="left-menu-card mr-4 mt-4"}}
+    {{#bp-layout direction='row' main='center'}}
+        {{#bp-button classNames='reser-btn mb-4'}}重置{{/bp-button}}
+    {{/bp-layout}}
+    {{#bp-layout direction='col' classNames='market-sel-area pb-3 mb-3'}}
+        {{bp-dropdown-simple
+            title='Market'
+            valueId=modelId
+            options=keyName
+            optionKey='name'
+            classNames='market-select'}}
+    {{/bp-layout}}
+    {{#bp-layout direction='col' classNames='date-sel-area pb-3 mb-3'}}
+        <p class="sel-title">时间区间</p>
+        {{#bp-layout direction='row'}}
+            {{#bp-button classNames='date-btn mr-1'}}YTD{{/bp-button}}
+            {{#bp-button classNames='date-btn'}}MAT{{/bp-button}}
+        {{/bp-layout}}
+        <input type="text" class="mt-2">
+    {{/bp-layout}}
+    {{#bp-layout direction='col' classNames='measure-sel-area'}}
+        <p class="sel-title">Measure</p>
+        {{#bp-layout direction='row'}}
+            {{bp-dropdown-simple
+				valueId=modelId
+				options=keyName
+				optionKey='name'
+                classNames='measure-select mr-2'}}
+            {{bp-dropdown-simple
+				valueId=modelId
+				options=keyName
+				optionKey='name'
+                classNames='measure-select'}}
+        {{/bp-layout}}
+    {{/bp-layout}}
+    {{#if regional}}
+        {{#bp-layout direction='col' classNames='region-sel-area mt-3 pt-3'}}
+            {{bp-dropdown-simple
+                title='Region'
+                valueId=modelId
+                options=keyName
+                optionKey='name'
+                classNames='market-select'}}
+        {{/bp-layout}}
+        {{#if province}}
+            {{bp-dropdown-simple
+                title='Province'
+                valueId=modelId
+                options=keyName
+                optionKey='name'
+                classNames='market-select mt-3'}}
+            {{#if city}}
+                {{bp-dropdown-simple
+                title='City'
+                valueId=modelId
+                options=keyName
+                optionKey='name'
+                classNames='market-select mt-3'}}
+            {{/if}}
+        {{/if}}
+    {{/if}}
+{{/bp-layout}}

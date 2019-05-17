@@ -1,0 +1,61 @@
+.left-menu-card {
+    padding: 24px;
+    max-width: 240px;
+    min-height: 369px;
+    background: #fff;
+    margin-left: -24px;
+    .reser-btn {
+        min-width: 80px;
+        min-height: 32px;
+    }
+    .sel-title {
+        margin-bottom: 6px;
+        @extend %p-small;
+        color: #6B778C;
+        font-weight: bold;
+    }
+    .market-sel-area {
+        border-bottom: 1px solid rgba(9,30,66,0.08);
+    }
+    .region-sel-area {
+        border-top: 1px solid rgba(9,30,66,0.08);
+    }
+    .market-select {
+        .btn-group {
+            width: 192px;
+            max-height: 32px;
+        }
+        .btn-group button:last-child {
+            max-height: 32px;
+        }
+        .bp-dropdown-simple-title {
+            font-size: 12px;
+            color: #6B778C;
+            font-weight: bold;
+        }
+    }
+    .date-sel-area {
+        border-bottom: 1px solid rgba(9,30,66,0.08);
+        .date-btn {
+            min-width: 80px;
+        }
+       
+    }
+    .measure-sel-area {
+        .measure-select {
+            .btn-group {
+                width: 92px;
+                max-height: 32px;
+            }
+            .btn-group button:last-child {
+                max-height: 32px;
+            }
+            .bp-dropdown-simple-title {
+                font-size: 12px;
+                color: #6B778C;
+                font-weight: bold;
+            }
+        }
+    }
+    
+}

@@ -1,0 +1,17 @@
+.market-size-card {
+    height: 143px;
+    background: #fff;
+    .market-size-card-title {
+        @extend %header-medium;
+        font-weight: bold;
+    }
+    .num-text {
+        @extend %title;
+        font-size: 29px;
+        font-weight: bold;
+    }
+    .num-help-text {
+        @extend %p-small;
+        color: #7A869A;
+    }
+}
