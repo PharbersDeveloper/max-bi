@@ -1,0 +1,35 @@
+{{#bp-layout direction='col' classNames='pro-show-table'}}
+    <p class="pro-show-table-title mb-2">产品表现</p>
+    {{#bp-layout direction='col' classNames='table-area'}}
+        <table class="table stall-point-table bg-white">
+            <thead class="table-head">
+                <th>Brand</th>
+                <th>Sales(Million)</th>
+                <th>Market Share</th>
+                <th>MS Change</th>
+                <th>Growth</th>
+                <th>EI</th>
+            </thead>
+            <tbody class="table-body">
+                {{#each files as |item|}}
+                    <tr local-class="title m-2">
+                        <td>{{item.brand}}</td>
+                        <td>{{item.sales}}</td>
+                        <td>{{item.market}}</td>
+                        <td>{{item.ms}}</td>
+                        <td>{{item.growth}}</td>
+                        <td>{{item.ei}}</td>
+                    </tr>
+                {{/each}}
+                <tr local-class="title m-2">
+                    <td>总计</td>
+                    <td>{{item.sales}}</td>
+                    <td>{{item.market}}</td>
+                    <td>{{item.ms}}</td>
+                    <td>{{item.growth}}</td>
+                    <td>{{item.ei}}</td>
+                </tr>
+            </tbody>
+        </table>
+    {{/bp-layout}}
+{{/bp-layout}}

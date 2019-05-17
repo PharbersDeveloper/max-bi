@@ -83,11 +83,11 @@
                                 {{overall-market-share-card classNames='mr-2 market-size-area'}}
                                 {{overall-market-share-card classNames='market-size-area'}}
                             {{/bp-layout}}
-                            {{#bp-layout direction='col' classNames='pro-show mt-4 charts'}}
-
+                            {{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
+                                {{pro-show-table }}
                             {{/bp-layout}}
                             {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
-
+                                {{!-- {{mb-chart-title title="Competitive Landscape" time=productdimension.firstObject.ym switchFlag=true switchValue=proSaleLineSwitch}} --}}
                             {{/bp-layout}}
                         {{/bp-layout}}
                     {{/bp-layout}}
@@ -96,9 +96,17 @@
                     {{#bp-layout direction='row' }}
                         {{page-left-menu regional=true}}
                         {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-                            {{#bp-layout direction='col' classNames='region-show mt-4 charts'}}
-
-                            {{/bp-layout}}
+                        {{!-- <div class="right-content-area mt-4"> --}}
+                            <div class="region-show mt-4 charts">
+                                    {{bp-bar-stack eid='bp-stack' 
+                                    title='stack title'
+                                    chartData=model.stackData}}
+                                </div>
+                        {{!-- </div> --}}
+                            {{!-- {{#bp-layout direction='col' classNames='region-show mt-4 charts'}} --}}
+                                
+                                
+                            {{!-- {{/bp-layout}} --}}
                             {{#bp-layout direction='col' classNames='pro-show mt-4 charts'}}
 
                             {{/bp-layout}}
@@ -129,7 +137,11 @@
                         {{page-left-menu regional=true province=true city=true}}
                         {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                             {{#bp-layout direction='col' classNames='city-show mt-4 charts'}}
-
+                                <div class="city-show mt-4">
+                                    {{bp-scatter eid='bp-scatter' 
+                                        title='scatter title'
+                                        chartData=model.scatterData}}
+                                </div>
                             {{/bp-layout}}
                             {{#bp-layout direction='col' classNames='pro-show mt-4 charts'}}
 
