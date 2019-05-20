@@ -1,9 +1,10 @@
 .mb-page-container.analysis {
-    padding: 0;
+    padding: 24px;
 
     .analysis-top {
-        padding-top: 24px;
-        padding-left: 24px;
+        // padding-top: 24px;
+        // padding-left: 24px;
+        padding-bottom: 24px;
     }
     .return-btn {
         font-family: PingFangSC-Medium;
@@ -13,7 +14,7 @@
         width: 40px;
     }
     .analysis {
-        padding: 24px;
+        // padding: 24px;
         // height: 105px;
         .bp-page-header {
             padding-top: 24px;
@@ -43,11 +44,16 @@
                 width: 100px;
                 overflow: hidden;
             }
+            .bp-nav-dropdown .bp-nav-dd-ul {
+                cursor: default;
+            }
             .bp-nav-dropdown.hidden-child-list .dd-title::after {
+                animation: none;
                 right: unset;
                 margin-left: -74px;
             }
             .bp-nav-dropdown.show-child-list .dd-title::after {
+                animation: none;
                 right: auto;
                 margin-left: -80px;
             }

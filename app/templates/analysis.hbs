@@ -2,7 +2,7 @@
     {{#bp-layout direction="col" classNames="analysis-top"}}
         {{#link-to 'choose-channel' classNames='return-btn'}}返回{{/link-to}}
     {{/bp-layout}}
-    {{#bp-layout direction="col" classNames="analysis"}}
+    {{#bp-layout direction="col" classNames="analysis mb-4"}}
         {{#bp-page-header as |ph|}}
             {{#ph.body as |body|}}
                 {{#bp-layout direction='col' classNames='header-content-area'}}
@@ -97,7 +97,7 @@
                         {{page-left-menu regional=true}}
                         {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                         {{!-- <div class="right-content-area mt-4"> --}}
-                            <div class="region-show mt-4 charts">
+                            <div class="region-show charts">
                                     {{bp-bar-stack eid='bp-stack' 
                                     title='stack title'
                                     chartData=model.stackData}}
@@ -120,7 +120,7 @@
                     {{#bp-layout direction='row' }}
                         {{page-left-menu regional=true province=true}}
                         {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-                            {{#bp-layout direction='col' classNames='province-show mt-4 charts'}}
+                            {{#bp-layout direction='col' classNames='province-show charts'}}
 
                             {{/bp-layout}}
                             {{#bp-layout direction='col' classNames='pro-show mt-4 charts'}}
@@ -136,7 +136,7 @@
                     {{#bp-layout direction='row' }}
                         {{page-left-menu regional=true province=true city=true}}
                         {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-                            {{#bp-layout direction='col' classNames='city-show mt-4 charts'}}
+                            {{#bp-layout direction='col' classNames='city-show charts'}}
                                 <div class="city-show mt-4">
                                     {{bp-scatter eid='bp-scatter' 
                                         title='scatter title'

@@ -21,13 +21,20 @@
         border-top: 1px solid rgba(9,30,66,0.08);
     }
     .market-select {
+        .bp-dropdown button {
+            height: 32px;
+        }
         .btn-group {
             width: 192px;
             max-height: 32px;
+            
+            button {
+                border-radius: 4px;
+            }
         }
-        .btn-group button:last-child {
-            max-height: 32px;
-        }
+        // .btn-group button:first-child {
+        //     max-height: 32px;
+        // }
         .bp-dropdown-simple-title {
             font-size: 12px;
             color: #6B778C;
@@ -43,13 +50,20 @@
     }
     .measure-sel-area {
         .measure-select {
+            .bp-dropdown button {
+                height: 32px;
+            }
             .btn-group {
                 width: 92px;
                 max-height: 32px;
+                
+                button {
+                    border-radius: 4px;
+                }
             }
-            .btn-group button:last-child {
-                max-height: 32px;
-            }
+            // .btn-group button:first-child {
+            //     max-height: 32px;
+            // }
             .bp-dropdown-simple-title {
                 font-size: 12px;
                 color: #6B778C;
