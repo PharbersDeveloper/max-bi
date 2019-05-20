@@ -60,7 +60,7 @@
                         {{overall-market-share-card classNames='market-size-area'}}
                     {{/bp-layout}}
                     {{#bp-layout direction='col' classNames='pro-show p-4 mt-4'}}
-                        {{pro-show-table }}
+                        {{pro-show-table title='产品表现'}}
                     {{/bp-layout}}
                     {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
                         {{!-- {{mb-chart-title title="Competitive Landscape" time=productdimension.firstObject.ym switchFlag=true switchValue=proSaleLineSwitch}} --}}
@@ -92,7 +92,7 @@
 
                     {{/bp-layout}}
                     {{#bp-layout direction='col' classNames='pro-show p-4 mt-4'}}
-                        {{pro-show-table }}
+                        {{pro-show-table title='Provincial Performance' type='province'}}
                     {{/bp-layout}}
                     {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
 
@@ -109,10 +109,10 @@
                             chartData=model.scatterData}}
                     {{/bp-layout}}
                     {{#bp-layout direction='col' classNames='pro-show p-4 mt-4'}}
-                        {{pro-show-table }}
+                        {{pro-show-table title='Product Performance by City'}}
                     {{/bp-layout}}
                     {{#bp-layout direction='col' classNames='pro-show p-4 mt-4'}}
-                        {{pro-show-table }}
+                        {{pro-show-table title='City Performance' type='city'}}
                     {{/bp-layout}}
                     {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
 
