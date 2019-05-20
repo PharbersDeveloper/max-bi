@@ -39,19 +39,19 @@
             {{/bp-button-group}}
         {{/bp-layout}}
     {{else if sel-group}}
-        {{#bp-layout direction='row' cross='center'}}
+        {{#bp-layout direction='row' cross='center' classNames=''}}
             <p class="sel-title mr-2">Type</p>
             {{bp-dropdown-simple
                 valueId=modelId
                 options=keyName
                 optionKey='name'
-                classNames='type-select mr-4'}}
+                classNames='select mr-4'}}
             <p class="sel-title mr-2">Period</p>
             {{bp-dropdown-simple
                 valueId=modelId
                 options=keyName
                 optionKey='name'
-                classNames='period-select mr-4'}}
+                classNames='select mr-4'}}
         {{/bp-layout}}
     {{/if}}
 {{/bp-layout}}
