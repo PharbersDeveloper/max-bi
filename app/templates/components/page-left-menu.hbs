@@ -14,9 +14,17 @@
         <p class="sel-title">时间区间</p>
         {{#bp-layout direction='row'}}
             {{#bp-button classNames='date-btn mr-1'}}YTD{{/bp-button}}
-            {{#bp-button classNames='date-btn'}}MAT{{/bp-button}}
+            {{#if MAT}}
+                {{#bp-button classNames='date-btn'}}MAT{{/bp-button}}
+            {{else}}
+                {{#bp-button disabled='disable' classNames='date-btn'}}MAT{{/bp-button}}
+            {{/if}}
         {{/bp-layout}}
-        <input type="text" class="mt-2">
+        {{bp-dropdown-simple
+            valueId=modelId
+            options=keyName
+            optionKey='name'
+            classNames='market-select mt-2'}}
     {{/bp-layout}}
     {{#bp-layout direction='col' classNames='measure-sel-area'}}
         <p class="sel-title">Measure</p>
