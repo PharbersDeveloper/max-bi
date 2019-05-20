@@ -15,7 +15,24 @@ export default Route.extend({
 			stackData: A([
 				{ name: 'keyong', data: [5, 20, 36, 10, 10, 20] },
 				{ name: 'bukeyong', data: [40, 22, 18, 35, 42, 40] },
-				{ name: 'qita', data: [40, 22, 18, 35, 42, 40] }])
+				{ name: 'qita', data: [40, 22, 18, 35, 42, 40] }]),
+			doubleData: A([{
+				name: '蒸发量',
+				type: 'bar',
+				yAxisIndex: 1,
+				data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7]
+			},
+			{
+				name: '降水量',
+				type: 'bar',
+				yAxisIndex: 1,
+				data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7]
+			},
+			{
+				name: '平均温度',
+				type: 'line',
+				data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2]
+			}]),
 		})
 	}
 });

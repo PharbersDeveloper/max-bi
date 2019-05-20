@@ -4,8 +4,16 @@ import { A } from '@ember/array';
 export default Controller.extend({
     cur_tab_idx: 0,
     tabs: A(['Overall Market', 'Regional Analysis', 'Province Analysis', 'City Analysis']),
+    collapsed: false,
     actions: {
         onTabClicked() {},
+        toggle() {
+            if(this.collapsed) {
+                this.set('collapsed', false)
+            } else {
+                this.set('collapsed', true)
+            }
+        }
     },
     init() {
 		this._super(...arguments);

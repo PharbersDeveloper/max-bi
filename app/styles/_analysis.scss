@@ -30,9 +30,31 @@
                 height: 309px;
                 margin-bottom: 8px;
                 .header-content-sub {
-                    width: 50%;
+                    // width: 50%;
+                    flex: 1;
+                }
+                .time-title {
+                    min-width: 84px;
+                    @extend %p-primary;
+                }
+                .time-content {
+                    @extend %p-secondary;
                 }
             }
+            .btn {
+                padding-left: 0;
+                min-width: 100px;
+                background: none;
+                color: #5E6C84;
+                @extend %p-primary;
+                // font-weight: bold;
+                border: none;
+                outline:none;
+                box-shadow: none;
+                &:focus {outline:none;} /*for IE*/
+                &::-moz-focus-inner {border-color: transparent;} 
+            }
+            
         }
         .bp-nav.flex-column {
             padding: 0;

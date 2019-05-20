@@ -9,38 +9,49 @@
                     {{#bp-layout direction='row' main='between'}}
                         <p class="header-title">城市渠道</p>
                         {{#bp-layout direction='row'}}
-                            {{#bp-button type='default' classNames='mr-1'}}导出数据{{/bp-button}}
-                            {{#bp-button type='default'}}生成PPT报告{{/bp-button}}
+                            {{!-- {{#bp-button type='default' classNames='mr-1'}}导出数据{{/bp-button}} --}}
+                            {{!-- {{#bp-button type='default'}}生成PPT报告{{/bp-button}} --}}
                         {{/bp-layout}}
                     {{/bp-layout}}
-                    
-                    {{#bp-nav theme='light' as |n|}}                          
-                        {{#n.dropdown title='数据说明' as |dd|}}
-                            {{#bp-layout direction='row' main='between' classNames='header-content mt-4'}}
-                                {{#bp-layout direction='col' classNames='header-content-sub'}}
-                                    {{#bp-layout direction="row" classNames="data-time mb-2"}}
-                                        <p class="time-title mr-3">数据更新时间</p>
-                                        <p class="time-content">2019-05-07 13:00:00</p>
-                                    {{/bp-layout}}
-                                    {{#bp-layout direction="row" classNames="data-time mb-2"}}
-                                        <p class="time-title mr-3">数据覆盖周期</p>
-                                        <p class="time-content">2018-03-12~2019-05-06</p>
-                                    {{/bp-layout}}
-                                    {{#bp-layout direction="row" classNames="data-time mb-2 mt-3"}}
-                                        <p class="time-title mr-3">医疗机构数</p>
-                                        <p class="time-content">100</p>
-                                    {{/bp-layout}}
-                                    {{#bp-layout direction="row" classNames="data-time mb-2"}}
-                                        <p class="time-title mr-3">行政区划数</p>
-                                        <p class="time-content">24</p>
-                                    {{/bp-layout}}
+                    {{#bs-button active=notCollapsed onClick=(action "toggle")}}
+                        {{#if collapsed}}
+                            {{#bp-layout direction='row' cross='center'}}
+                                {{bp-icon icon='right'}}
+                                <p class="drop-title">数据说明</p>
+                            {{/bp-layout}}
+                        {{else}}
+                            {{#bp-layout direction='row' cross='center'}}
+                                {{bp-icon icon='down'}}
+                                <p class="drop-title">数据名称</p>
+                            {{/bp-layout}}
+                        {{/if}}
+                    {{/bs-button}}
+                    {{#bs-collapse collapsed=collapsed}}
+                        {{#bp-layout direction='row' main='between' classNames='header-content mt-4'}}
+                            {{#bp-layout direction='col' classNames='header-content-sub mt-4 pt-2'}}
+                                {{#bp-layout direction="row" classNames="data-time mb-2"}}
+                                    <p class="time-title mr-3">数据更新时间</p>
+                                    <p class="time-content">2019-05-07 13:00:00</p>
                                 {{/bp-layout}}
-                                {{#bp-layout direction='col' classNames='header-content-sub charts'}}
-                                    
+                                {{#bp-layout direction="row" classNames="data-time mb-2"}}
+                                    <p class="time-title mr-3">数据覆盖周期</p>
+                                    <p class="time-content">2018-03-12~2019-05-06</p>
+                                {{/bp-layout}}
+                                {{#bp-layout direction="row" classNames="data-time mb-2 mt-3"}}
+                                    <p class="time-title mr-3">医疗机构数</p>
+                                    <p class="time-content">100</p>
+                                {{/bp-layout}}
+                                {{#bp-layout direction="row" classNames="data-time mb-2"}}
+                                    <p class="time-title mr-3">行政区划数</p>
+                                    <p class="time-content">24</p>
                                 {{/bp-layout}}
                             {{/bp-layout}}
-                        {{/n.dropdown}}
-                        {{/bp-nav}}
+                            <div class="header-content-sub charts">
+                                {{bp-bar-double eid='bp-bar-double' 
+                                    chartData=model.doubleData}}
+                            </div>
+                        {{/bp-layout}}
+                    {{/bs-collapse}}
                 {{/bp-layout}}
             {{/ph.body}}
         {{/bp-page-header}}
