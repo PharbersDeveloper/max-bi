@@ -64,10 +64,11 @@
                         {{pro-show-table }}
                     {{/bp-layout}}
                     {{#bp-layout direction='col' classNames='line-area mt-4'}}
-                        {{mb-chart-title title="产品销售额趋势" noSubtitle=true time=productdimension.firstObject.ym sel-group=true}}
+                        {{mb-chart-title title="产品销售额趋势" noSubtitle=true time=productdimension.firstObject.ym sel-group=true classNames='mb-4'}}
                         {{bp-line
                             xaxisData=xaxisData
-                            lineData=lineData}}
+                            lineData=lineData
+                            legendPosition=legendPosition}}
                     {{/bp-layout}}
                 {{/bp-layout}}
             {{/bp-layout}}
