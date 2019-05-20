@@ -12,7 +12,7 @@
             </thead>
             <tbody class="table-body">
                 {{#each files as |item|}}
-                    <tr local-class="title m-2">
+                    <tr class="title m-2">
                         <td>{{item.brand}}</td>
                         <td>{{item.sales}}</td>
                         <td>{{item.market}}</td>
@@ -21,13 +21,13 @@
                         <td>{{item.ei}}</td>
                     </tr>
                 {{/each}}
-                <tr local-class="title m-2 table-total">
-                    <td>总计</td>
-                    <td>{{item.sales}}</td>
-                    <td>{{item.market}}</td>
-                    <td>{{item.ms}}</td>
-                    <td>{{item.growth}}</td>
-                    <td>{{item.ei}}</td>
+                <tr class="title m-2">
+                    <td class="total">总计</td>
+                    <td class="total">111</td>
+                    <td class="total">111</td>
+                    <td class="total">111</td>
+                    <td class="total">111</td>
+                    <td class="total">111</td>
                 </tr>
             </tbody>
         </table>

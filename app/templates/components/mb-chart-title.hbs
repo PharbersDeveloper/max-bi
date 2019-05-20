@@ -12,6 +12,8 @@
                     <p class="area-content">·{{area}}</p>
                 {{/bp-layout}}
             {{/bp-layout}}
+        {{else if noSubtitle}}
+            <p class="title-content">{{title}}</p>
         {{else}}
             <p class="title-content">{{title}}</p>
             <p class="time-content">{{year-month time}}</p>
@@ -35,6 +37,21 @@
                 {{#bg.button type="default" value=0}}Sales{{/bg.button}}
                 {{#bg.button type="default" value=1}}Growth{{/bg.button}}
             {{/bp-button-group}}
+        {{/bp-layout}}
+    {{else if sel-group}}
+        {{#bp-layout direction='row' cross='center'}}
+            <p class="sel-title mr-2">Type</p>
+            {{bp-dropdown-simple
+                valueId=modelId
+                options=keyName
+                optionKey='name'
+                classNames='type-select mr-4'}}
+            <p class="sel-title mr-2">Period</p>
+            {{bp-dropdown-simple
+                valueId=modelId
+                options=keyName
+                optionKey='name'
+                classNames='period-select mr-4'}}
         {{/bp-layout}}
     {{/if}}
 {{/bp-layout}}

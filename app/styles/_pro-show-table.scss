@@ -20,6 +20,7 @@
             height: 64px;
             vertical-align: middle;
             background: transparent;
+            
             td {
                 border-top: none;
                 margin-bottom: 0;
@@ -46,6 +47,10 @@
                     width: 24px;
                     height: 24px;
                 }
+            }
+            td.total {
+                font-weight: bold;
+                color: #172B4D;
             }
             &:nth-child(1) {
                 min-width: 131px;

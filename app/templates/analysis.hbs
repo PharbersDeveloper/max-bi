@@ -63,8 +63,11 @@
                     {{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
                         {{pro-show-table }}
                     {{/bp-layout}}
-                    {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
-                        {{!-- {{mb-chart-title title="Competitive Landscape" time=productdimension.firstObject.ym switchFlag=true switchValue=proSaleLineSwitch}} --}}
+                    {{#bp-layout direction='col' classNames='line-area mt-4'}}
+                        {{mb-chart-title title="产品销售额趋势" noSubtitle=true time=productdimension.firstObject.ym sel-group=true}}
+                        {{bp-line
+                            xaxisData=xaxisData
+                            lineData=lineData}}
                     {{/bp-layout}}
                 {{/bp-layout}}
             {{/bp-layout}}
