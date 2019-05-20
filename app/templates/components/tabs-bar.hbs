@@ -1,0 +1,10 @@
+{{#bp-layout direction='row' classNames='ib_tab_bar'}}
+    {{#each titles as |item idx|}}
+        {{tabs-bar-item   
+            select_idx=cur_idx 
+            index=idx 
+            title=item 
+            onItemClicked=(action 'itemClicked') 
+            classNames='ib_tab_btn'}}
+    {{/each}}
+{{/bp-layout}}

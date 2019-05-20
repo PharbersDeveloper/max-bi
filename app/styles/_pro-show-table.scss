@@ -7,7 +7,7 @@
         & thead th {
             // background-color: #fafbfc;
             border-top: 0;
-            border-bottom: 0;
+            border-bottom: 2px solid #fafbfc;
             @extend %p-small;
     
         }
@@ -21,7 +21,7 @@
             vertical-align: middle;
             background: transparent;
             td {
-                border-top: 1px solid #fafbfc;
+                border-top: none;
                 margin-bottom: 0;
                 padding-top: 22px;
                 cursor: default;
@@ -54,5 +54,8 @@
                 }
             }
         }
+    }
+    tr.table-total td{
+        font-weight: bold;
     }
 }

@@ -66,3 +66,23 @@ div.bg-white {
 .tab-pane {
     outline: none;
 }
+.ib_tab_bar {
+    border-bottom: 2px rgba(9,30,66,0.08) solid;
+    width: 100%;
+    min-width: 912px;
+    margin-top: 24px;
+    height: 24px;
+
+    .ib_tab_btn {
+        min-width: 80px;
+        padding: 0 16px;
+        height: 24px;
+        @extend %p-primary;
+        cursor: pointer;
+    }
+    .ib_tab_btn_active {
+        color: #3172E0;
+        border-bottom: 2px #3172E0 solid;
+    }
+
+}
