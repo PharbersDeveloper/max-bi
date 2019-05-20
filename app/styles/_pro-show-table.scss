@@ -4,6 +4,7 @@
 }
 .table-area {
     .stall-point-table {
+        margin-bottom: 0;
         & thead th {
             // background-color: #fafbfc;
             border-top: 0;
@@ -41,7 +42,7 @@
                 }
                 &:nth-last-child(1) {
                     width: 300px;
-                    cursor: pointer;
+                    // cursor: pointer;
                 }
                 img {
                     width: 24px;

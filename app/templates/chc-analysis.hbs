@@ -1,4 +1,4 @@
-{{#bp-layout direction="col" classNames="mb-page-container analysis chc-analysis"}}
+{{#bp-layout direction="col" classNames="mb-page-container analysis"}}
     {{#bp-layout direction="col" classNames="analysis-top"}}
         {{#link-to 'choose-channel' classNames='return-btn'}}返回{{/link-to}}
     {{/bp-layout}}
@@ -7,12 +7,12 @@
             {{#ph.body as |body|}}
                 {{#bp-layout direction='col' classNames='header-content-area'}}
                     {{#bp-layout direction='row' main='between'}}
-                        <p class="header-title">城市渠道</p>
+                        <p class="header-title">县域渠道</p>
                         {{#bp-layout direction='row'}}
-                            {{#bp-button type='default' classNames='mr-1'}}导出数据{{/bp-button}}
                             {{#bp-button type='default'}}生成PPT报告{{/bp-button}}
                         {{/bp-layout}}
                     {{/bp-layout}}
+                    
                     {{#bp-nav theme='light' as |n|}}                          
                         {{#n.dropdown title='数据说明' as |dd|}}
                             {{#bp-layout direction='row' main='between' classNames='header-content mt-4'}}
@@ -44,116 +44,81 @@
             {{/ph.body}}
         {{/bp-page-header}}
     {{/bp-layout}}
-    {{#bp-layout direction='col' classNames="analysis"}}
-        {{#bp-tabs selection=selection1 as |tabs|}}
-            {{#tabs.tablist as |list|}}
-                <li class="nav-item">
-                    {{#list.tab
-                        selectPaneId='overall' 
-                        onSelect=(action (mut selection1))}}Overall Market{{/list.tab}}
-                </li>
-                <li class="nav-item">
-                    {{#list.tab
-                        selectPaneId='regional' 
-                        onSelect=(action (mut selection1))}}Regional Analysis{{/list.tab}}
-                </li>
-                <li class="nav-item">
-                    {{#list.tab
-                        selectPaneId='province' 
-                        onSelect=(action (mut selection1))}}Province Analysis{{/list.tab}}
-                </li>
-                 <li class="nav-item">
-                    {{#list.tab
-                        selectPaneId='city' 
-                        onSelect=(action (mut selection1))}}City Analysis{{/list.tab}}
-                </li>
-            {{/tabs.tablist}}
-            <div class="tab-content">
-                {{#tabs.pane elementId="overall"}}
-                    {{#bp-layout direction='row' }}
-                        {{page-left-menu}}
-                        {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-                            {{#bp-layout direction='row' classNames=''}}
-                                {{overall-market-size-card classNames='mr-2 market-size-area'}}
-                                {{overall-market-size-card classNames='market-size-area'}}
-                            {{/bp-layout}}
-                            {{#bp-layout direction='row' classNames='mt-4'}}
-                                {{overall-market-share-card classNames='mr-2 market-size-area'}}
-                                {{overall-market-share-card classNames='mr-2 market-size-area'}}
-                                {{overall-market-share-card classNames='market-size-area'}}
-                            {{/bp-layout}}
-                            {{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
-                                {{pro-show-table }}
-                            {{/bp-layout}}
-                            {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
-                                {{!-- {{mb-chart-title title="Competitive Landscape" time=productdimension.firstObject.ym switchFlag=true switchValue=proSaleLineSwitch}} --}}
-                            {{/bp-layout}}
-                        {{/bp-layout}}
+    {{tabs-bar cur_idx=cur_tab_idx  titles=tabs needAction=true onTabClicked=(action "onTabClicked")}}
+    <div class="tab-content">
+        {{#if (eq cur_tab_idx 0)}}
+            {{#bp-layout direction='row' }}
+                {{page-left-menu}}
+                {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
+                    {{#bp-layout direction='row' classNames=''}}
+                        {{overall-market-size-card classNames='mr-2 market-size-area'}}
+                        {{overall-market-size-card classNames='market-size-area'}}
                     {{/bp-layout}}
-                {{/tabs.pane}}
-                {{#tabs.pane elementId="regional"}}
-                    {{#bp-layout direction='row' }}
-                        {{page-left-menu regional=true}}
-                        {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-                        {{!-- <div class="right-content-area mt-4"> --}}
-                            <div class="region-show charts">
-                                    {{bp-bar-stack eid='bp-stack' 
-                                    title='stack title'
-                                    chartData=model.stackData}}
-                                </div>
-                        {{!-- </div> --}}
-                            {{!-- {{#bp-layout direction='col' classNames='region-show mt-4 charts'}} --}}
-                                
-                                
-                            {{!-- {{/bp-layout}} --}}
-                            {{#bp-layout direction='col' classNames='pro-show mt-4 charts'}}
-
-                            {{/bp-layout}}
-                            {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
-
-                            {{/bp-layout}}
-                        {{/bp-layout}}
+                    {{#bp-layout direction='row' classNames='mt-4'}}
+                        {{overall-market-share-card classNames='mr-2 market-size-area'}}
+                        {{overall-market-share-card classNames='mr-2 market-size-area'}}
+                        {{overall-market-share-card classNames='market-size-area'}}
                     {{/bp-layout}}
-                {{/tabs.pane}}
-                {{#tabs.pane elementId="province"}}
-                    {{#bp-layout direction='row' }}
-                        {{page-left-menu regional=true province=true}}
-                        {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-                            {{#bp-layout direction='col' classNames='province-show charts'}}
-
-                            {{/bp-layout}}
-                            {{#bp-layout direction='col' classNames='pro-show mt-4 charts'}}
-
-                            {{/bp-layout}}
-                            {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
-
-                            {{/bp-layout}}
-                        {{/bp-layout}}
+                    {{#bp-layout direction='col' classNames='pro-show p-4 mt-4'}}
+                        {{pro-show-table }}
                     {{/bp-layout}}
-                {{/tabs.pane}}
-                {{#tabs.pane elementId="city"}}
-                    {{#bp-layout direction='row' }}
-                        {{page-left-menu regional=true province=true city=true}}
-                        {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-                            {{#bp-layout direction='col' classNames='city-show charts'}}
-                                <div class="city-show mt-4">
-                                    {{bp-scatter eid='bp-scatter' 
-                                        title='scatter title'
-                                        chartData=model.scatterData}}
-                                </div>
-                            {{/bp-layout}}
-                            {{#bp-layout direction='col' classNames='pro-show mt-4 charts'}}
-
-                            {{/bp-layout}}
-                            {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
-
-                            {{/bp-layout}}
-                        {{/bp-layout}}
+                    {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
+                        {{!-- {{mb-chart-title title="Competitive Landscape" time=productdimension.firstObject.ym switchFlag=true switchValue=proSaleLineSwitch}} --}}
                     {{/bp-layout}}
-                {{/tabs.pane}}
-            </div>
-        {{/bp-tabs}}
-    {{/bp-layout}}
-    {{#bp-layout direction="col" classNames="analysis-bottom"}}
-    {{/bp-layout}}
+                {{/bp-layout}}
+            {{/bp-layout}}
+        {{!-- {{else if (eq cur_tab_idx 1)}}
+            {{#bp-layout direction='row' }}
+                {{page-left-menu regional=true}}
+                {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
+                    <div class="region-show charts">
+                            {{bp-bar-stack eid='bp-stack' 
+                            title='stack title'
+                            chartData=model.stackData}}
+                        </div>
+                    {{#bp-layout direction='col' classNames='pro-show mt-4 charts'}}
+
+                    {{/bp-layout}}
+                    {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
+
+                    {{/bp-layout}}
+                {{/bp-layout}}
+            {{/bp-layout}} --}}
+        {{else if (eq cur_tab_idx 1)}}
+            {{#bp-layout direction='row' }}
+                {{page-left-menu regional=true province=true}}
+                {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
+                    {{#bp-layout direction='col' classNames='province-show charts'}}
+
+                    {{/bp-layout}}
+                    {{#bp-layout direction='col' classNames='pro-show p-4 mt-4'}}
+                        {{pro-show-table }}
+                    {{/bp-layout}}
+                    {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
+
+                    {{/bp-layout}}
+                {{/bp-layout}}
+            {{/bp-layout}}
+        {{else if (eq cur_tab_idx 2)}}
+            {{#bp-layout direction='row' }}
+                {{page-left-menu regional=true province=true city=true}}
+                {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
+                    {{#bp-layout direction='col' classNames='city-show charts'}}
+                        {{bp-scatter eid='bp-scatter' 
+                            title='scatter title'
+                            chartData=model.scatterData}}
+                    {{/bp-layout}}
+                    {{#bp-layout direction='col' classNames='pro-show p-4 mt-4'}}
+                        {{pro-show-table }}
+                    {{/bp-layout}}
+                    {{#bp-layout direction='col' classNames='pro-show p-4 mt-4'}}
+                        {{pro-show-table }}
+                    {{/bp-layout}}
+                    {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
+
+                    {{/bp-layout}}
+                {{/bp-layout}}
+            {{/bp-layout}}
+        {{/if}}
+    </div>
 {{/bp-layout}}
