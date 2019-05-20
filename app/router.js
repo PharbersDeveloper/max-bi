@@ -23,6 +23,7 @@ Router.map(function() {
   this.route('oauth-callback');
   this.route('choose-channel');
   this.route('analysis');
+  this.route('chc-analysis');
 });
 
 export default Router;

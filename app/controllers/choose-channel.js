@@ -5,7 +5,11 @@ export default Controller.extend({
     actions: {
         onCardClick(param) {
             window.console.log(param);
-            this.transitionToRoute('analysis');
+            if(param == '城市渠道') {
+                this.transitionToRoute('analysis');
+            } else {
+                this.transitionToRoute('chc-analysis');
+            }
         }
     }
 });
