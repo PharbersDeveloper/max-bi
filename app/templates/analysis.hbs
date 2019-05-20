@@ -87,17 +87,10 @@
             {{#bp-layout direction='row' }}
                 {{page-left-menu regional=true}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-                {{!-- <div class="right-content-area mt-4"> --}}
                     <div class="region-show charts">
-                            {{bp-bar-stack eid='bp-stack' 
-                            title='stack title'
-                            chartData=model.stackData}}
-                        </div>
-                {{!-- </div> --}}
-                    {{!-- {{#bp-layout direction='col' classNames='region-show mt-4 charts'}} --}}
-                        
-                        
-                    {{!-- {{/bp-layout}} --}}
+                        {{bp-bar-stack eid='bp-stack' 
+                        chartData=model.stackData}}
+                    </div>
                     {{#bp-layout direction='col' classNames='pro-show mt-4 charts'}}
 
                     {{/bp-layout}}
