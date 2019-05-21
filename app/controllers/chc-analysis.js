@@ -83,13 +83,11 @@ export default Controller.extend({
 		}]);
 
 		this.sampleCover.forEach(elem => {
-			xAxisData.push(elem.cityName)
+			xAxisData.push(elem.city.get('title'))
 			resultArr[0].data.push(elem.universeNum);
 			resultArr[1].data.push(elem.sampleNum);
 			resultArr[2].data.push(elem.coverageRatio);
 		});
-		window.console.log(xAxisData);
-		window.console.log(resultArr);
 		this.set('xAxisDataHeader', xAxisData)
 		this.set('doubleData', resultArr)
 	}
