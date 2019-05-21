@@ -3,12 +3,30 @@
         {{#bp-button classNames='reser-btn mb-4'}}重置{{/bp-button}}
     {{/bp-layout}}
     {{#bp-layout direction='col' classNames='market-sel-area pb-3 mb-3'}}
-        {{bp-dropdown-simple
+        {{!-- {{bp-dropdown-simple
             title='Market'
             valueId=modelId
             options=keyName
             optionKey='name'
-            classNames='market-select'}}
+            classNames='market-select'}} --}}
+        <p class="sel-title">Market</p>
+        {{#bp-dropdown classNames='market-select' as |dd|}}
+            {{#dd.button}}
+                {{#if marketValue.id}}
+                    <p>{{marketValue.market}}</p>
+                {{else}}
+                    请选择
+                {{/if}}
+                {{bp-icon icon='down'}}
+            {{/dd.button}}
+            {{#dd.menu as |menu|}}
+                {{#each marketArr as |item|}}
+                    {{#menu.option value=item onClick=(action (mut marketValue))}}
+                        {{item.market}}
+                    {{/menu.option}}
+                {{/each}}
+            {{/dd.menu}}
+        {{/bp-dropdown}}
     {{/bp-layout}}
     {{#bp-layout direction='col' classNames='date-sel-area pb-3 mb-3'}}
         <p class="sel-title">时间区间</p>

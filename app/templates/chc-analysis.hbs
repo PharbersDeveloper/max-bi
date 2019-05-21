@@ -25,24 +25,25 @@
                             {{/bp-layout}}
                         {{/if}}
                     {{/bs-button}}
+                    {{log sampleCover}}
                     {{#bs-collapse collapsed=collapsed}}
                         {{#bp-layout direction='row' main='between' classNames='header-content mt-4'}}
                             {{#bp-layout direction='col' classNames='header-content-sub mt-4 pt-2'}}
                                 {{#bp-layout direction="row" classNames="data-time mb-2"}}
                                     <p class="time-title mr-3">数据更新时间</p>
-                                    <p class="time-content">2019-05-07 13:00:00</p>
+                                    <p class="time-content">{{timehelper/time2fullformat overallInfo.updateTime}}</p>
                                 {{/bp-layout}}
                                 {{#bp-layout direction="row" classNames="data-time mb-2"}}
                                     <p class="time-title mr-3">数据覆盖周期</p>
-                                    <p class="time-content">2018-03-12~2019-05-06</p>
+                                    <p class="time-content">{{timehelper/time2ymd overallInfo.coverStartTime}} ~ {{timehelper/time2ymd overallInfo.coverEndTime}}</p>
                                 {{/bp-layout}}
                                 {{#bp-layout direction="row" classNames="data-time mb-2 mt-3"}}
                                     <p class="time-title mr-3">医疗机构数</p>
-                                    <p class="time-content">100</p>
+                                    <p class="time-content">{{overallInfo.organizationNum}}</p>
                                 {{/bp-layout}}
                                 {{#bp-layout direction="row" classNames="data-time mb-2"}}
                                     <p class="time-title mr-3">行政区划数</p>
-                                    <p class="time-content">24</p>
+                                    <p class="time-content">{{overallInfo.adminAreasNum}}</p>
                                 {{/bp-layout}}
                             {{/bp-layout}}
                             <div class="header-content-sub charts">
@@ -59,7 +60,7 @@
     <div class="tab-content">
         {{#if (eq cur_tab_idx 0)}}
             {{#bp-layout direction='row' }}
-                {{page-left-menu}}
+                {{page-left-menu marketArr=model.marketData marketValue=curMarket}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                     {{#bp-layout direction='row' classNames=''}}
                         {{overall-market-size-card classNames='mr-2 market-size-area'}}
@@ -95,7 +96,7 @@
                     {{/bp-layout}}
                 {{/bp-layout}}
             {{/bp-layout}} --}}
-        {{else if (eq cur_tab_idx 1)}}
+        {{!-- {{else if (eq cur_tab_idx 1)}}
             {{#bp-layout direction='row' }}
                 {{page-left-menu regional=true province=true}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
@@ -109,8 +110,8 @@
 
                     {{/bp-layout}}
                 {{/bp-layout}}
-            {{/bp-layout}}
-        {{else if (eq cur_tab_idx 2)}}
+            {{/bp-layout}} --}}
+        {{else if (eq cur_tab_idx 1)}}
             {{#bp-layout direction='row' }}
                 {{page-left-menu regional=true province=true city=true}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
