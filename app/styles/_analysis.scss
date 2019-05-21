@@ -22,6 +22,12 @@
         }
         .header-content-area {
             width: 100%;
+            
+            .bar-double-title {
+                margin-left: 40px;
+                @extend %p-primary;
+                color: #344563;
+            }
             .header-title {
                 @extend %title;
                 color: #172B4D;
@@ -87,6 +93,12 @@
         }
         .right-content-area {
             width: 100%;
+            .chart-title {
+                .chart-title-outer .title-content {
+                    font-size: 14px;
+                    font-weight: bold;
+                }
+            }
         }
         .market-size-area {
             flex: 1;
@@ -97,18 +109,21 @@
             // flex: 1;
         }
         .line-area {
-            height: 463px;
+            min-height: 463px;
             padding: 16px 24px;
             background: #fff;
         }
         .region-show {
-            height: 428px;
+            min-height: 428px;
+            background: #fff;
         }
         .province-show {
-            height: 407px;
+            min-height: 407px;
+            background: #fff;
         }
         .city-show {
-            height: 378px;
+            min-height: 378px;
+            background: #fff;
         }
     // }
 }
