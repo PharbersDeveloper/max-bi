@@ -1,7 +1,15 @@
 {{#bp-layout direction='col' classNames='market-size-card'}}
-    <p class="market-size-card-title ml-4 mr-4 mt-3 mb-3">Market Size</p>
+    {{#if title}}
+        <p class="market-size-card-title ml-4 mr-4 mt-3 mb-3">{{title}}</p>
+    {{else}}
+        <p class="market-size-card-title ml-4 mr-4 mt-3 mb-3">Market Size</p>
+    {{/if}}
     {{#bp-layout direction='row' cross='center' classNames='m-4'}}
-        <p class="num-text">418.31</p>
-        <span class="num-help-text">Mil</span>
+        {{#if (gte value 0)}}
+            <p class="num-text">{{value}}</p>
+        {{else}}
+            <p class="num-text red">{{value}}</p>
+        {{/if}}
+        <span class="num-help-text">{{unit}}</span>
     {{/bp-layout}}
 {{/bp-layout}}

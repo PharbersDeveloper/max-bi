@@ -27,7 +27,35 @@ export default Controller.extend({
 			this.setDoubleData();
 		})
         return result;
-    }),
+	}),
+	
+	mktSize: computed('curInfoId', 'cur_tab_idx', function() {
+		let result = this.store.query('salesRecord', {
+			'info-id': this.curInfoId, 
+			'date': '2018Q4',
+			'date-type': 2,
+			'address-type': this.cur_tab_idx,
+			'goods-type': 0,
+			'value-type': 1,
+		});
+        return result;
+	}),
+
+	mktGrowth: computed('curInfoId', 'cur_tab_idx', function() {
+		let result = this.store.query('salesRecord', {
+			'info-id': this.curInfoId, 
+			'date': '2018Q4',
+			'date-type': 2,
+			'address-type': this.cur_tab_idx,
+			'goods-type': 0,
+			'value-type': 2,
+		});
+        return result;
+	}),
+	// mktGrowth: computed('curInfoId', function() {
+	// 	let result = this.store.query('salesData', {'info-id': this.curInfoId});
+    //     return result;
+	// }),
 
     actions: {
         onTabClicked() {},

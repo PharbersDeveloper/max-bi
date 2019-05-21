@@ -64,8 +64,8 @@
                 {{page-left-menu marketArr=model.marketData marketValue=curMarket}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                     {{#bp-layout direction='row' classNames=''}}
-                        {{overall-market-size-card classNames='mr-2 market-size-area'}}
-                        {{overall-market-size-card classNames='market-size-area'}}
+                        {{overall-market-size-card title='Market Size' value=(num2mil-fixed2 mktSize.firstObject.value) unit='Mil'classNames='mr-2 market-size-area'}}
+                        {{overall-market-size-card title='Market Growth' value=(percent-num mktGrowth.firstObject.value) unit='%'classNames='mr-2 market-size-area'}}
                     {{/bp-layout}}
                     {{#bp-layout direction='row' classNames='mt-4'}}
                         {{overall-market-share-card classNames='mr-2 market-size-area'}}
@@ -114,7 +114,7 @@
             {{/bp-layout}} --}}
         {{else if (eq cur_tab_idx 1)}}
             {{#bp-layout direction='row' }}
-                {{page-left-menu regional=true province=true city=true}}
+                {{page-left-menu marketArr=model.marketData marketValue=curMarket}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                     {{#bp-layout direction='col' classNames='city-show charts'}}
                         {{bp-scatter eid='bp-scatter' 

@@ -9,6 +9,10 @@
         @extend %title;
         font-size: 29px;
         font-weight: bold;
+
+        &.red {
+            color: #BF2600;
+        }
     }
     .num-help-text {
         @extend %p-small;
