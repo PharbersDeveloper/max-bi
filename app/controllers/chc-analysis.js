@@ -1,10 +1,25 @@
 import Controller from '@ember/controller';
 import { A } from '@ember/array';
+import { computed } from '@ember/object'
 
 export default Controller.extend({
     cur_tab_idx: 0,
-    tabs: A(['Overall Market', 'Province Analysis', 'City Analysis']),
-    collapsed: false,
+    tabs: A(['Overall Market', 'City Analysis']),
+	collapsed: false,
+	
+	curMarket: null,
+	overallInfoDone: false,
+
+	overallInfo: computed('curMarket', function() {
+		let result = this.store.queryRecord('overallInfo', {'market-id': this.curMarket.id, 'orderby': ''});
+        return result;
+	}),
+	
+	sampleCover: computed('overallInfo', function() {
+		let result = this.store.query('sampleCover', {'info-id': this.overallInfo.id});
+        return result;
+    }),
+
     actions: {
         onTabClicked() {},
         toggle() {

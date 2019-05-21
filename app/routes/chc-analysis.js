@@ -1,10 +1,12 @@
 import Route from '@ember/routing/route';
-import { hash } from 'rsvp';
+import RSVP from 'rsvp';
 import { A } from '@ember/array';
 
 export default Route.extend({
 	model() {
-		return hash({
+		return RSVP.hash({
+			marketData: this.store.query('market', {'company-id': 'pharbers'}),
+			
 			scatterData: A([
 				[[66666, 57, 100000, 'test1']],
 				[[12225, 81, 100000, 'test2']],
@@ -34,5 +36,11 @@ export default Route.extend({
 				data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2]
 			}]),
 		})
-	}
+	},
+	setupController(controller, model) {
+        this._super(controller, model);
+		this.controller.set('curMarket', model.marketData.firstObject);
+		// this.controller.set('overallInfo', model.marketData.firstObject.get('id'));
+		console.log(this.controller.get('curMarket'));
+    }
 });
