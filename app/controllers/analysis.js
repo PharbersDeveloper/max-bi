@@ -38,11 +38,11 @@ export default Controller.extend({
 		// this.set('lineColor',  A(['rgb(115,171,255)', 'rgb(255,227,128)', 'rgb(73,229,245)','rgb(52,246,188)', 'rgb(54,179,126)']));
 		// this.set('legendPosition', { x: 'center', y: 'center', });
 		this.set('scatterData', A([
-			[[66666, 57, 100000, 'test1']],
-			[[12225, 81, 100000, 'test2']],
-			[[55555, 57, 100000, 'test3']],
-			[[33333, 45, 100000, 'test4']],
-			[[22222, 57, 255555, 'test5']]
+			[[66666, 57, 100000, '']],
+			[[12225, 81, 100000, '']],
+			[[55555, 57, 100000, '']],
+			[[33333, 45, 100000, '']],
+			[[22222, 57, 255555, '']]
 		]),);
 		this.set('stackData', A([
 			{ name: 'keyong', data: [5, 20, 36, 10, 10, 20] },
@@ -200,17 +200,7 @@ export default Controller.extend({
 				}
 				proArr.push(proItem);
 				this.set('proByCity', proArr)
-				let totalPro = shareArr.reduce((total, ele) =>  {
-					return {
-						totalSales: Number(total.totalSales)+Number(ele.sales),
-						totalMarketShare:  Number(total.totalMarketShare)+ Number(ele.salesSom),
-						totalMs: total.totalMs+ele.salesSomYearGrowth,
-						totalGrowth: total.totalGrowth+ele.salesYearGrowth,
-						totalEi: total.totalEi+ele.salesEI
-					}
-
-				}, {totalSales:0, totalMarketShare: 0, totalMs: 0, totalGrowth: 0, totalEi: 0});
-				this.set('totalProObj', totalPro)
+				
 				//气泡图
 				let arr = [];
 				let  shareItem= [ item.salesSom, item.salesYearGrowth, item.sales, item.productName];
@@ -226,7 +216,17 @@ export default Controller.extend({
 				// 	[[22222, 57, 255555, 'test5']]
 				// ]),);
 			})
-			
+			let totalPro = res.reduce((total, ele) =>  {
+				return {
+					totalSales: Number(total.totalSales)+Number(ele.sales),
+					totalMarketShare:  Number(total.totalMarketShare)+ Number(ele.salesSom),
+					totalMs: total.totalMs+ele.salesSomYearGrowth,
+					totalGrowth: total.totalGrowth+ele.salesYearGrowth,
+					totalEi: total.totalEi+ele.salesEI
+				}
+
+			}, {totalSales:0, totalMarketShare: 0, totalMs: 0, totalGrowth: 0, totalEi: 0});
+			this.set('totalProObj', totalPro)
 		})		
 	})
 });

@@ -84,14 +84,14 @@
                             <td>{{num-fixed4 item.ei}}</td>
                         </tr>
                     {{/each}}
-                    {{!-- <tr class="title m-2">
+                    <tr class="title m-2">
                         <td class="total">总计</td>
-                        <td class="total">{{totalProObj.totalSales}}</td>
-                        <td class="total">{{totalProObj.totalMarketShare}}</td>
-                        <td class="total">{{totalProObj.totalMs}}</td>
-                        <td class="total">{{totalProObj.totalGrowth}}</td>
-                        <td class="total">{{totalProObj.totalEi}}</td>
-                    </tr> --}}
+                        <td class="total">{{num2mil-fixed2 totalProObj.totalSales}}</td>
+                        <td class="total">{{percent-num totalProObj.totalMarketShare}}</td>
+                        <td class="total">{{percent-num totalProObj.totalMs}}</td>
+                        <td class="total">{{percent-num totalProObj.totalGrowth}}</td>
+                        <td class="total">{{num-fixed4 totalProObj.totalEi}}</td>
+                    </tr>
                 </tbody>
             </table>
         {{/bp-layout}}
