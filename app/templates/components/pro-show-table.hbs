@@ -77,21 +77,21 @@
                     {{#each proByCity as |item|}}
                         <tr class="title m-2">
                             <td>{{item.brand}}</td>
-                            <td>{{percent-num item.sales}}</td>
+                            <td>{{num2mil-fixed2 item.sales}}</td>
                             <td>{{percent-num item.marketShare}}%</td>
                             <td>{{percent-num item.ms}}%</td>
                             <td>{{percent-num item.growth}}%</td>
-                            <td>{{item.ei}}</td>
+                            <td>{{num-fixed4 item.ei}}</td>
                         </tr>
                     {{/each}}
-                    <tr class="title m-2">
+                    {{!-- <tr class="title m-2">
                         <td class="total">总计</td>
                         <td class="total">{{totalProObj.totalSales}}</td>
                         <td class="total">{{totalProObj.totalMarketShare}}</td>
                         <td class="total">{{totalProObj.totalMs}}</td>
                         <td class="total">{{totalProObj.totalGrowth}}</td>
                         <td class="total">{{totalProObj.totalEi}}</td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
         {{/bp-layout}}

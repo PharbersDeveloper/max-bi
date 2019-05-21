@@ -5,7 +5,7 @@ import RSVP from 'rsvp';
 export default Route.extend({
 	model() {
 		return RSVP.hash({
-			markets: this.store.query('market', {'COMPANY_ID': '5ca069e2eeefcc012918ec73'}),
+			markets: this.store.query('market', {'company-id': '5ca069e2eeefcc012918ec73'}),
 		})
 	},
 	setupController(controller,model){

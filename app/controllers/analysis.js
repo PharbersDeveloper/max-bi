@@ -202,8 +202,8 @@ export default Controller.extend({
 				this.set('proByCity', proArr)
 				let totalPro = shareArr.reduce((total, ele) =>  {
 					return {
-						totalSales: total.totalSales+ele.sales,
-						totalMarketShare: total.totalMarketShare+ele.salesSom,
+						totalSales: Number(total.totalSales)+Number(ele.sales),
+						totalMarketShare:  Number(total.totalMarketShare)+ Number(ele.salesSom),
 						totalMs: total.totalMs+ele.salesSomYearGrowth,
 						totalGrowth: total.totalGrowth+ele.salesYearGrowth,
 						totalEi: total.totalEi+ele.salesEI
@@ -211,7 +211,6 @@ export default Controller.extend({
 
 				}, {totalSales:0, totalMarketShare: 0, totalMs: 0, totalGrowth: 0, totalEi: 0});
 				this.set('totalProObj', totalPro)
-				debugger
 				//气泡图
 				let arr = [];
 				let  shareItem= [ item.salesSom, item.salesYearGrowth, item.sales, item.productName];
