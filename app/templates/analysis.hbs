@@ -62,7 +62,7 @@
     <div class="tab-content">
         {{#if (eq cur_tab_idx 0)}}
             {{#bp-layout direction='row' }}
-                {{page-left-menu marketValue=marketValue marketArr=marketArr}}
+                {{page-left-menu marketValue=marketValue marketArr=marketArr MAT=true}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                     {{#bp-layout direction='row' classNames=''}}
                         {{overall-market-size-card classNames='mr-2 market-size-area'}}
@@ -88,7 +88,7 @@
             {{/bp-layout}}
         {{else if (eq cur_tab_idx 1)}}
             {{#bp-layout direction='row' }}
-                {{page-left-menu regional=true}}
+                {{page-left-menu regional=true MAT=true}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                     <div class="region-show charts">
                         {{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title ml-4 mt-3'}}
@@ -110,7 +110,7 @@
             {{/bp-layout}}
         {{else if (eq cur_tab_idx 2)}}
             {{#bp-layout direction='row' }}
-                {{page-left-menu regional=true province=true}}
+                {{page-left-menu regional=true province=true MAT=true}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                     {{!-- {{#bp-layout direction='col' classNames='province-show charts'}} --}}
                     <div class="province-show">
@@ -134,7 +134,7 @@
             {{/bp-layout}}
         {{else if (eq cur_tab_idx 3)}}
             {{#bp-layout direction='row' }}
-                {{page-left-menu regional=true province=true city=true}}
+                {{page-left-menu regional=true province=true city=true MAT=true marketValue=marketValue marketArr=marketArr}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                     {{!-- {{#bp-layout direction='col' classNames='city-show '}} --}}
                     <div class="city-show mt-4">
