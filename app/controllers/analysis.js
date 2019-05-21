@@ -49,6 +49,8 @@ export default Controller.extend({
 			{ name: 'bukeyong', data: [40, 22, 18, 35, 42, 40] },
 			{ name: 'qita', data: [40, 22, 18, 35, 42, 40] }
 		]),);
+		this.set('chartColor', A(['rgb(115,171,255)', 'rgb(121,226,242)', 'rgb(121,242,192)', 'rgb(54,179,126)', 'rgb(255,227,128)', 'rgb(255,171,0)', 'rgb(192,182,242)', 'rgb(101,84,192)', 'rgb(255,189,173)', 'rgb(255,143,115)', 'rgb(35,85,169)',]));
+		this.set('baseNumber', 250)
 		this.set('doubleData', A([{
 			name: '蒸发量',
 			type: 'bar',
@@ -171,7 +173,61 @@ export default Controller.extend({
 		}
 		]))
 	},
-	allData: observer('marketValue' ,'ymValue', function () {
-		// debugger
+	// keyPlusValue(arr) {
+	// 	const result = arr.reduce((obj, item) => {
+	// 		if (!obj[item.key]) {
+	// 		obj[item.key] = 0
+	// 		}
+	// 		obj[item.key] += item.value
+	// 		return obj
+	// 	}, {})
+	// 	return Object.keys(result).map(key => ({key: key, value: result[key]}))
+	// },
+	allData: observer('marketValue', function () {
+		this.store.query('productaggregation', {'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '0', 'ym': '201802', 'ym_type': 'MAT', 'address': '上海市'})
+			.then(res => {
+			let proArr = [];
+			let shareArr = [];
+			res.forEach(item => {
+				//表格
+				let proItem = {
+					brand: item.productName,
+					sales: item.sales,
+					marketShare: item.salesSom,
+					ms: item.salesSomYearGrowth,
+					growth: item.salesYearGrowth,
+					ei: item.salesEI
+				}
+				proArr.push(proItem);
+				this.set('proByCity', proArr)
+				let totalPro = shareArr.reduce((total, ele) =>  {
+					return {
+						totalSales: total.totalSales+ele.sales,
+						totalMarketShare: total.totalMarketShare+ele.salesSom,
+						totalMs: total.totalMs+ele.salesSomYearGrowth,
+						totalGrowth: total.totalGrowth+ele.salesYearGrowth,
+						totalEi: total.totalEi+ele.salesEI
+					}
+
+				}, {totalSales:0, totalMarketShare: 0, totalMs: 0, totalGrowth: 0, totalEi: 0});
+				this.set('totalProObj', totalPro)
+				debugger
+				//气泡图
+				let arr = [];
+				let  shareItem= [ item.salesSom, item.salesYearGrowth, item.sales, item.productName];
+				arr.push(shareItem);
+				shareArr.push(arr);
+				arr = [];
+				this.set('scatterData', shareArr);
+				// this.set('scatterData', A([
+				// 	[[66666, 150, 1000000, 'test1']],
+				// 	[[12225, 81, 100000, 'test2']],
+				// 	[[55555, 57, 100000, 'test3']],
+				// 	[[33333, 45, 100000, 'test4']],
+				// 	[[22222, 57, 255555, 'test5']]
+				// ]),);
+			})
+			
+		})		
 	})
 });

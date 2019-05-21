@@ -15,7 +15,9 @@ export default DS.JSONAPIAdapter.extend({
 
 	headers: computed(function() {
         return {
-            'Authorization': this.cookies.read("token_type") + ' ' + this.cookies.read("token")
+            'Authorization': this.cookies.read("token_type") + ' ' + this.cookies.read("token"),
+            'Content-Type': 'application/json'
+            
         };
     }),
 });
