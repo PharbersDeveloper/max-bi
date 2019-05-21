@@ -1,7 +1,9 @@
 import Controller from '@ember/controller';
 import { A } from '@ember/array';
+import { observer } from '@ember/object';
 
 export default Controller.extend({
+
     cur_tab_idx: 0,
     tabs: A(['Overall Market', 'Regional Analysis', 'Province Analysis', 'City Analysis']),
     collapsed: false,
@@ -33,5 +35,8 @@ export default Controller.extend({
 		}]));
 		// this.set('lineColor',  A(['rgb(115,171,255)', 'rgb(255,227,128)', 'rgb(73,229,245)','rgb(52,246,188)', 'rgb(54,179,126)']));
 		this.set('legendPosition', { x: 'center', y: 'center', });
-	}
+	},
+	allData: observer('marketValue' ,'ymValue', function () {
+		// debugger
+	})
 });
