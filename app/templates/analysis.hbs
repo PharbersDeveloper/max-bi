@@ -62,7 +62,7 @@
     <div class="tab-content">
         {{#if (eq cur_tab_idx 0)}}
             {{#bp-layout direction='row' }}
-                {{page-left-menu}}
+                {{page-left-menu marketValue=marketValue marketArr=marketArr}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                     {{#bp-layout direction='row' classNames=''}}
                         {{overall-market-size-card classNames='mr-2 market-size-area'}}
