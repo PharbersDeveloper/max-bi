@@ -19,9 +19,9 @@ RUN npm update && \
 
 WORKDIR /app
 
-LABEL maxview.version=0.0.9
+LABEL maxview.version=0.0.10
 
-RUN git clone https://github.com/PharbersDeveloper/max-bi.git && \
+RUN git clone -b chsun-0515 https://github.com/PharbersDeveloper/max-bi.git && \
 	git clone https://github.com/PharbersDeveloper/BP-Components.git 
 	
 WORKDIR /app/BP-Components
