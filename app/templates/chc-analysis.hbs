@@ -73,7 +73,7 @@
                         {{overall-market-share-card classNames='market-size-area'}}
                     {{/bp-layout}} --}}
                     {{#bp-layout direction='col' classNames='pro-show p-4 mt-4'}}
-                        {{pro-show-table title='产品表现'}}
+                        {{pro-show-table title='产品表现' tableData=productTableListData totalProObj=totalProObj}}
                     {{/bp-layout}}
                     {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
                         {{!-- {{mb-chart-title title="Competitive Landscape" time=productdimension.firstObject.ym switchFlag=true switchValue=proSaleLineSwitch}} --}}
@@ -112,6 +112,7 @@
                     {{/bp-layout}}
                 {{/bp-layout}}
             {{/bp-layout}} --}}
+        {{log productTableList}}
         {{else if (eq cur_tab_idx 1)}}
             {{#bp-layout direction='row' }}
                 {{page-left-menu chc=true onlyCity=true marketArr=model.marketData marketValue=curMarket dateType=curDateType dateArr=dateData dateValue=curDate cityArr=cityData cityValue=curCity}}

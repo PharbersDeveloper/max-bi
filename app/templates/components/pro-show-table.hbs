@@ -14,7 +14,7 @@
                     <th>EI</th>
                 </thead>
                 <tbody class="table-body">
-                    {{#each files as |item|}}
+                    {{#each tableData as |item|}}
                         <tr class="title m-2">
                             <td>{{item.brand}}</td>
                             <td>{{item.sales}}</td>
@@ -45,7 +45,7 @@
                     <th>EI</th>
                 </thead>
                 <tbody class="table-body">
-                    {{#each cityPer as |item|}}
+                    {{#each tableData as |item|}}
                         <tr class="title m-2">
                             <td>{{item.city}}</td>
                             <td>{{item.tier}}</td>
@@ -74,7 +74,7 @@
                     <th>EI</th>
                 </thead>
                 <tbody class="table-body">
-                    {{#each proByCity as |item|}}
+                    {{#each tableData as |item|}}
                         <tr class="title m-2">
                             <td>{{item.brand}}</td>
                             <td>{{num2mil-fixed2 item.sales}}</td>

@@ -48,7 +48,7 @@
                 {{/dd.button}}
                 {{#dd.menu as |menu|}}
                     {{#each dateArr as |item|}}
-                        {{#menu.option value=item onClick=(action (mut dateValue.date))}}
+                        {{#menu.option value=item onClick=(action (mut dateValue))}}
                             {{item.date}}
                         {{/menu.option}}
                     {{/each}}
