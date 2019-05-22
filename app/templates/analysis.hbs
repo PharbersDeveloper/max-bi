@@ -242,13 +242,15 @@
 							title="Product Performance by City" 
 							noSubtitle=true 
 							classNames='chart-title'}}
-						{{pro-show-table type='province'}}
+						{{pro-show-table
+							type='province' 
+							files=files}}
 					{{/bp-layout}}
 					{{#bp-layout direction='col' classNames='line-area mt-4'}}
 						{{mb-chart-title title="Competitive Landscape " noSubtitle=true classNames='chart-title mb-4'}}
 						{{bp-line
                             xaxisData=xaxisData
-                            lineData=lineData
+                            lineData=provinceLineData
                             legendPosition=linelegendPosition
                             grid=grid}}
 					{{/bp-layout}}
