@@ -150,9 +150,11 @@ export default Controller.extend({
 					}
 				}
 			}
+
 			//横轴长度为13,缺少项补0
 			let len = 13 - dest[0].item.length;
 			for( let i = 0; i < len; i++  ){ sales.push( '0' ); }
+			
 			for (let i = 0; i < dest.length; i++) {
 				dest[i].item.forEach(yeararr => {
 					marketline = yeararr.productName

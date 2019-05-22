@@ -19,7 +19,10 @@
 .country-card-part {
     height: 174px;
     .country-lv-card {
-        flex-grow: 1;
+        -webkit-box-flex: 1;
+        -webkit-flex-grow: 1;
+            -ms-flex-positive: 1;
+                flex-grow: 1;
         margin-right: $spacing*2;
 
         &:nth-last-child(1) {
@@ -33,12 +36,20 @@
         width: $spacing*2
     }
     .country-double-chart-line {
-        flex-grow: 1;
+        -webkit-box-flex: 1;
+        -webkit-flex-grow: 1;
+            -ms-flex-positive: 1;
+                flex-grow: 1;
+        max-width: -webkit-calc(50% - 8px);
         max-width: calc(50% - 8px);
         margin-right: $spacing*2;
     }
     .country-double-chart-pie {
-        flex-grow: 1;
+        -webkit-box-flex: 1;
+        -webkit-flex-grow: 1;
+            -ms-flex-positive: 1;
+                flex-grow: 1;
+        max-width: -webkit-calc(50% - 8px);
         max-width: calc(50% - 8px);
 
         .circle-container {
@@ -60,5 +71,7 @@
     
 }
 .min-h {
+    min-height: -webkit-fit-content;
+    min-height: -moz-fit-content;
     min-height: fit-content;
 }

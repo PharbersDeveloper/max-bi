@@ -37,13 +37,14 @@
                     // max-width: 500px;
                     // width: 500px;
                     overflow: hidden;
-                    text-overflow:ellipsis;
+                    -o-text-overflow:ellipsis;
+                       text-overflow:ellipsis;
                     white-space: nowrap;
                 }
-                &:nth-last-child(1) {
-                    // width: 300px;
-                    // cursor: pointer;
-                }
+                // &:nth-last-child(1) {
+                //     // width: 300px;
+                //     // cursor: pointer;
+                // }
                 img {
                     width: 24px;
                     height: 24px;

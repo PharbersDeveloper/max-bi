@@ -7,6 +7,9 @@
         font-weight: bold;
     }
     .card-list-container {
-        flex: auto;
+        -webkit-box-flex: 1;
+        -webkit-flex: auto;
+            -ms-flex: auto;
+                flex: auto;
     }
 }
