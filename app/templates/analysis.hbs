@@ -211,16 +211,17 @@
 				{{/bp-layout}}
 			{{else if (eq cur_tab_idx 1)}}
 				{{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-					<div class="region-show charts">
-						{{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title ml-4 mt-3'}}
-						{{bp-bar-stack eid='bp-stack' 
-                        chartData=stackData}}
+					<div class="region-show pt-3 mb-4">
+						{{mb-chart-title title="Regional Performance" noSubtitle=true classNames='chart-title ml-4'}}
+						{{bp-bar-stack eid='bp-stack'
+                            chartColor=chartColor
+                            chartData=stackData}}
 					</div>
 					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
 						{{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title'}}
 						{{pro-show-table }}
 					{{/bp-layout}}
-					{{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
+					{{#bp-layout direction='col' classNames='line-area mt-4 '}}
 						{{mb-chart-title title="Competitive Landscape by Province" noSubtitle=true classNames='chart-title mb-4'}}
 						{{bp-line
                             xaxisData=xaxisData
@@ -229,32 +230,10 @@
                             grid=grid}}
 					{{/bp-layout}}
 				{{/bp-layout}}
-				{{!--{{#bp-layout direction='row' }}
-				{{page-left-menu regional=true MAT=true}}
-				{{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-					<div class="region-show charts">
-						{{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title ml-4 mt-3'}}
-						{{bp-bar-stack eid='bp-stack' 
-                        chartData=stackData}}
-					</div>
-					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
-						{{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title'}}
-						{{pro-show-table }}
-					{{/bp-layout}}
-					{{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
-						{{mb-chart-title title="Competitive Landscape by Province" noSubtitle=true classNames='chart-title mb-4'}}
-						{{bp-line
-                            xaxisData=xaxisData
-                            lineData=lineData
-                            legendPosition=linelegendPosition
-                            grid=grid}}
-					{{/bp-layout}}
-				{{/bp-layout}}
-			{{/bp-layout}}--}}
 			{{else if (eq cur_tab_idx 2)}}
 				{{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-					<div class="province-show">
-						{{mb-chart-title title="Provincial Performance" noSubtitle=true classNames='chart-title ml-4 mt-3'}}
+					<div class="province-show pt-3 mb-4">
+						{{mb-chart-title title="Provincial Performance" noSubtitle=true classNames='chart-title ml-4'}}
 						{{bp-map eid='bp-map' 
                             chartData=mapData}}
 					</div>
@@ -274,35 +253,10 @@
                             grid=grid}}
 					{{/bp-layout}}
 				{{/bp-layout}}
-				{{!-- {{#bp-layout direction='row' }}
-				{{page-left-menu regional=true province=true MAT=true}}
-				{{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-					<div class="province-show">
-						{{mb-chart-title title="Provincial Performance" noSubtitle=true classNames='chart-title ml-4 mt-3'}}
-						{{bp-map eid='bp-map' 
-                            chartData=mapData}}
-					</div>
-					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
-						{{mb-chart-title
-							title="Product Performance by City" 
-							noSubtitle=true 
-							classNames='chart-title'}}
-						{{pro-show-table type='province'}}
-					{{/bp-layout}}
-					{{#bp-layout direction='col' classNames='line-area mt-4'}}
-						{{mb-chart-title title="Competitive Landscape " noSubtitle=true classNames='chart-title mb-4'}}
-						{{bp-line
-                            xaxisData=xaxisData
-                            lineData=lineData
-                            legendPosition=linelegendPosition
-                            grid=grid}}
-					{{/bp-layout}}
-				{{/bp-layout}}
-			{{/bp-layout}}--}}
 			{{else if (eq cur_tab_idx 3)}}
 				{{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-					<div class="city-show">
-						{{mb-chart-title title="BMS Product Growth vs. BMS Prouct Share" noSubtitle=true classNames='ml-4 mt-3 chart-title'}}
+					<div class="city-show pt-3 mb-4">
+						{{mb-chart-title title="BMS Product Growth vs. BMS Prouct Share" noSubtitle=true classNames='ml-4 chart-title'}}
 						{{bp-scatter eid='bp-scatter' 
                             chartData=scatterData
                             chartColor=chartColor
@@ -326,35 +280,6 @@
                             legendPosition=linelegendPosition}}
 					{{/bp-layout}}
 				{{/bp-layout}}
-				{{!--	{{#bp-layout direction='row' }}
-				{{page-left-menu regional=true province=true city=true MAT=true marketValue=marketValue marketArr=marketArr}}
-				{{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-					<div class="city-show mt-4">
-						{{mb-chart-title title="BMS Product Growth vs. BMS Prouct Share" noSubtitle=true classNames='ml-4 mt-3 chart-title'}}
-						{{bp-scatter eid='bp-scatter' 
-                            chartData=scatterData
-                            chartColor=chartColor
-                            baseNumber=baseNumber}}
-					</div>
-					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
-						{{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title'}}
-						{{pro-show-table proByCity=proByCity totalProObj=totalProObj}}
-					{{/bp-layout}}
-					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
-						{{mb-chart-title title="City Performance" noSubtitle=true classNames='chart-title'}}
-						{{pro-show-table type='city'}}
-					{{/bp-layout}}
-					{{#bp-layout direction='col' classNames='line-area mt-4'}}
-						{{mb-chart-title title="Competitive Landscape by City" noSubtitle=true time=productdimension.firstObject.ym sel-group=true classNames='mb-4 chart-title'}}
-						{{bp-line
-                            xaxisData=xaxisData
-                            lineData=lineData
-                            grid=grid
-                            lineColor=chartColor
-                            legendPosition=linelegendPosition}}
-					{{/bp-layout}}
-				{{/bp-layout}}
-			{{/bp-layout}} --}}
 			{{/if}}
 		{{/bp-layout}}
 	</div>

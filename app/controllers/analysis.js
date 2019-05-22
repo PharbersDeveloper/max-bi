@@ -256,17 +256,6 @@ export default Controller.extend({
 						let arr = [], map = {}, dest = [], proName = '', dataArr = [], dateArr = [], arritem = [];
 						res.forEach(item => {
 							arr.push(item);
-							// let dateArr = [];
-							// dateArr.push(item.ym);
-							// let 
-							// dataArr.push(item.sales)
-							// let lineItem = {
-							// 	name: item.productName,
-							// 	date: dateArr,
-							// 	data: dataArr,
-							// }
-							// lineArr.push(lineItem);
-							// this.set('lineData', cityArr)
 						})
 						//将大数组根据某项值分成若干小数组
 						for (let i = 0; i < arr.length; i++) {
@@ -305,5 +294,9 @@ export default Controller.extend({
 						this.set('lineData', arritem)
 					})
 			})
+
+			//Regional Analysis数据
+			
+
 	})
 });
