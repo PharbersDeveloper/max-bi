@@ -5,10 +5,11 @@ import RSVP from 'rsvp';
 export default Route.extend({
 	model() {
 		return RSVP.hash({
-			markets: this.store.query('market', {'company-id': '5ca069e2eeefcc012918ec73'}),
+			markets: this.store.query('market',
+				{ 'company-id': '5ca069e2eeefcc012918ec73' }),
 		})
 	},
-	setupController(controller,model){
+	setupController(controller, model) {
 		let markets = model.markets;
 		let marketArr = [];
 		markets.forEach((item) => {
@@ -18,10 +19,10 @@ export default Route.extend({
 			}
 			marketArr.push(market)
 		})
-        // controller.set('ymValue', arrval.firstObject.ym);
-        // controller.set('timeArr', arrval);
-        // controller.set('marketsArr', markets);
-        controller.set('marketArr', marketArr);
-        controller.set('marketValue', marketArr.firstObject);
-    }
+		// controller.set('ymValue', arrval.firstObject.ym);
+		// controller.set('timeArr', arrval);
+		// controller.set('marketsArr', markets);
+		controller.set('marketArr', marketArr);
+		controller.set('marketValue', marketArr.firstObject);
+	}
 });
