@@ -53,8 +53,6 @@ export default Component.extend({
             } else {
                 this.set('dateType', 4)
             }
-            window.console.log(this.dateType);
-            
         },
     }
 });
