@@ -1,172 +1,286 @@
 {{#bp-layout direction="col" classNames="mb-page-container analysis"}}
-    {{#bp-layout direction="col" classNames="analysis-top"}}
-        {{#link-to 'choose-channel' classNames='return-btn'}}返回{{/link-to}}
-    {{/bp-layout}}
-    {{#bp-layout direction="col" classNames="analysis"}}
-        {{#bp-page-header as |ph|}}
-            {{#ph.body as |body|}}
-                {{#bp-layout direction='col' classNames='header-content-area'}}
-                    {{#bp-layout direction='row' main='between'}}
-                        <p class="header-title">城市渠道</p>
-                        {{#bp-layout direction='row'}}
-                            {{!-- {{#bp-button type='default' classNames='mr-1'}}导出数据{{/bp-button}} --}}
-                            {{!-- {{#bp-button type='default'}}生成PPT报告{{/bp-button}} --}}
-                        {{/bp-layout}}
-                    {{/bp-layout}}
-                    {{#bs-button active=notCollapsed onClick=(action "toggle")}}
-                        {{#if collapsed}}
-                            {{#bp-layout direction='row' cross='center'}}
-                                {{bp-icon icon='right'}}
-                                <p class="drop-title">数据说明</p>
-                            {{/bp-layout}}
-                        {{else}}
-                            {{#bp-layout direction='row' cross='center'}}
-                                {{bp-icon icon='down'}}
-                                <p class="drop-title">数据名称</p>
-                            {{/bp-layout}}
-                        {{/if}}
-                    {{/bs-button}}
-                    {{#bs-collapse collapsed=collapsed}}
-                        {{#bp-layout direction='row' main='between' classNames='header-content mt-4'}}
-                            {{#bp-layout direction='col' classNames='header-content-sub mt-4 pt-2'}}
-                                {{#bp-layout direction="row" classNames="data-time mb-2"}}
-                                    <p class="time-title mr-3">数据更新时间</p>
-                                    <p class="time-content">2019-05-07 13:00:00</p>
-                                {{/bp-layout}}
-                                {{#bp-layout direction="row" classNames="data-time mb-2"}}
-                                    <p class="time-title mr-3">数据覆盖周期</p>
-                                    <p class="time-content">2018-03-12~2019-05-06</p>
-                                {{/bp-layout}}
-                                {{#bp-layout direction="row" classNames="data-time mb-2 mt-3"}}
-                                    <p class="time-title mr-3">医疗机构数</p>
-                                    <p class="time-content">100</p>
-                                {{/bp-layout}}
-                                {{#bp-layout direction="row" classNames="data-time mb-2"}}
-                                    <p class="time-title mr-3">行政区划数</p>
-                                    <p class="time-content">24</p>
-                                {{/bp-layout}}
-                            {{/bp-layout}}
-                            {{#bp-layout direction='col' classNames="header-content-sub"}}
-                                <p class="bar-double-title">样本覆盖率</p>
-                                <div class="header-content-sub">
-                                    {{bp-bar-double eid='bp-bar-double' chartData=doubleData}}
-                                </div>
-                            {{/bp-layout}}
-                        {{/bp-layout}}
-                    {{/bs-collapse}}
-                {{/bp-layout}}
-            {{/ph.body}}
-        {{/bp-page-header}}
-    {{/bp-layout}}
-    {{tabs-bar cur_idx=cur_tab_idx  titles=tabs needAction=true onTabClicked=(action "onTabClicked")}}
-    <div class="tab-content">
-        {{#if (eq cur_tab_idx 0)}}
-            {{#bp-layout direction='row' }}
-                {{page-left-menu marketValue=marketValue marketArr=marketArr MAT=true}}
-                {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-                    {{#bp-layout direction='row' classNames=''}}
-                        {{overall-market-size-card classNames='mr-2 market-size-area'}}
-                        {{overall-market-size-card classNames='market-size-area'}}
-                    {{/bp-layout}}
-                    {{#bp-layout direction='row' classNames='mt-4'}}
-                        {{overall-market-share-card classNames='mr-2 market-size-area'}}
-                        {{overall-market-share-card classNames='mr-2 market-size-area'}}
-                        {{overall-market-share-card classNames='market-size-area'}}
-                    {{/bp-layout}}
-                    {{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
-                        {{mb-chart-title title="产品表现" noSubtitle=true classNames='chart-title'}}
-                        {{pro-show-table }}
-                    {{/bp-layout}}
-                    {{#bp-layout direction='col' classNames='line-area mt-4'}}
-                        {{mb-chart-title title="Competitive Landscape" noSubtitle=true classNames='chart-title mb-4'}}
-                        {{bp-line
+	{{#bp-layout direction="col" classNames="analysis-top"}}
+		{{#link-to 'choose-channel' classNames='return-btn'}}返回{{/link-to}}
+	{{/bp-layout}}
+	{{#bp-layout direction="col" classNames="analysis"}}
+		{{#bp-page-header as |ph|}}
+			{{#ph.body as |body|}}
+				{{#bp-layout direction='col' classNames='header-content-area'}}
+					{{#bp-layout direction='row' main='between'}}
+						<p class="header-title">城市渠道</p>
+						{{#bp-layout direction='row'}}
+							{{!-- {{#bp-button type='default' classNames='mr-1'}}导出数据{{/bp-button}} --}}
+							{{!-- {{#bp-button type='default'}}生成PPT报告{{/bp-button}} --}}
+						{{/bp-layout}}
+					{{/bp-layout}}
+					{{#bs-button active=notCollapsed onClick=(action "toggle")}}
+						{{#if collapsed}}
+							{{#bp-layout direction='row' cross='center'}}
+								{{bp-icon icon='right'}}
+								<p class="drop-title">数据说明</p>
+							{{/bp-layout}}
+						{{else}}
+							{{#bp-layout direction='row' cross='center'}}
+								{{bp-icon icon='down'}}
+								<p class="drop-title">数据名称</p>
+							{{/bp-layout}}
+						{{/if}}
+					{{/bs-button}}
+					{{#bs-collapse collapsed=collapsed}}
+						{{#bp-layout direction='row' main='between' classNames='header-content mt-4'}}
+							{{#bp-layout direction='col' classNames='header-content-sub mt-4 pt-2'}}
+								{{#bp-layout direction="row" classNames="data-time mb-2"}}
+									<p class="time-title mr-3">数据更新时间</p>
+									<p class="time-content">2019-05-07 13:00:00</p>
+								{{/bp-layout}}
+								{{#bp-layout direction="row" classNames="data-time mb-2"}}
+									<p class="time-title mr-3">数据覆盖周期</p>
+									<p class="time-content">2018-03-12~2019-05-06</p>
+								{{/bp-layout}}
+								{{#bp-layout direction="row" classNames="data-time mb-2 mt-3"}}
+									<p class="time-title mr-3">医疗机构数</p>
+									<p class="time-content">100</p>
+								{{/bp-layout}}
+								{{#bp-layout direction="row" classNames="data-time mb-2"}}
+									<p class="time-title mr-3">行政区划数</p>
+									<p class="time-content">24</p>
+								{{/bp-layout}}
+							{{/bp-layout}}
+							{{#bp-layout direction='col' classNames="header-content-sub"}}
+								<p class="bar-double-title">样本覆盖率</p>
+								<div class="header-content-sub">
+									{{bp-bar-double eid='bp-bar-double' chartData=doubleData}}
+								</div>
+							{{/bp-layout}}
+						{{/bp-layout}}
+					{{/bs-collapse}}
+				{{/bp-layout}}
+			{{/ph.body}}
+		{{/bp-page-header}}
+	{{/bp-layout}}
+	{{tabs-bar cur_idx=cur_tab_idx  titles=tabs needAction=true onTabClicked=(action "onTabClicked")}}
+	<div class="tab-content">
+		{{#bp-layout direction='row' }}
+			{{#bp-layout direction='col' classNames="left-menu-card mr-4 mt-4"}}
+				{{#bp-layout direction='row' main='center'}}
+					{{#bp-button classNames='reser-btn mb-4'}}重置{{/bp-button}}
+				{{/bp-layout}}
+				{{#bp-layout direction='col' classNames='market-sel-area pb-3 mb-3'}}
+					<p class="bp-dropdown-simple-title mr-4">Market</p>
+					{{#bp-dropdown as |dd|}}
+						{{#dd.button classNames='market-select'}}
+							{{#if marketValue.id}}
+								<p>{{marketValue.market}}</p>
+							{{else}}
+								请选择
+							{{/if}}
+							{{bp-icon icon='down'}}
+						{{/dd.button}}
+						{{#dd.menu as |menu|}}
+							{{#each marketArr as |item|}}
+								{{#menu.option value=item onClick=(action (mut marketValue))}}
+									{{item.market}}
+								{{/menu.option}}
+							{{/each}}
+						{{/dd.menu}}
+					{{/bp-dropdown}}
+				{{/bp-layout}}
+				{{#bp-layout direction='col' classNames='date-sel-area pb-3 mb-3'}}
+					<p class="sel-title">时间区间</p>
+					{{#if chc}}
+						{{#bp-layout direction='row' classNames='mb-3'}}
+							{{#if (eq dateType 4)}}
+								{{#bp-button classNames='date-btn mr-1 sel' click=(action 'ytdOnClick')}}YTD{{/bp-button}}
+							{{else}}
+								{{#bp-button classNames='date-btn mr-1' click=(action 'ytdOnClick')}}YTD{{/bp-button}}
+							{{/if}}
+							{{#if MAT}}
+								{{#bp-button classNames='date-btn'}}MAT{{/bp-button}}
+							{{else}}
+								{{#bp-button disabled='disable' classNames='date-btn'}}MAT{{/bp-button}}
+							{{/if}}
+						{{/bp-layout}}
+						{{#bp-dropdown as |dd|}}
+							{{#dd.button classNames='market-select'}}
+								{{#if dateValue.id}}
+									<p>{{dateValue.date}}</p>
+								{{else}}
+									请选择
+								{{/if}}
+								{{bp-icon icon='down'}}
+							{{/dd.button}}
+							{{#dd.menu as |menu|}}
+								{{#each dateArr as |item|}}
+									{{#menu.option value=item onClick=(action (mut dateValue.date))}}
+										{{item.date}}
+									{{/menu.option}}
+								{{/each}}
+							{{/dd.menu}}
+						{{/bp-dropdown}}
+					{{else}}
+						{{#bp-layout direction='row' classNames='mb-3'}}
+							{{#bp-button classNames='date-btn mr-1' click=(action 'ytdOnClick')}}YTD{{/bp-button}}
+							{{#bp-button classNames='date-btn'}}MAT{{/bp-button}}
+						{{/bp-layout}}
+						{{#bp-dropdown as |dd|}}
+							{{#dd.button classNames='market-select'}}
+								{{#if timeArr.firstObject.id}}
+									<p>{{timeArr.firstObject.name}}</p>
+								{{else}}
+									请选择
+								{{/if}}
+								{{bp-icon icon='down'}}
+							{{/dd.button}}
+							{{#dd.menu as |menu|}}
+								{{#each timeArr as |item|}}
+									{{#menu.option value=item onClick=(action (mut timeArr.firstObject))}}
+										{{item.name}}
+									{{/menu.option}}
+								{{/each}}
+							{{/dd.menu}}
+						{{/bp-dropdown}}
+					{{/if}}
+				{{/bp-layout}}
+				{{#bp-layout direction='col' classNames='measure-sel-area'}}
+					<p class="sel-title">Measure</p>
+					{{#bp-layout direction='row'}}
+						{{bp-dropdown-simple
+							valueId=modelId
+							options=rmb
+							choosedValue=rmbChoosedValue
+							optionKey='name'
+							classNames='measure-select mr-2'}}
+						{{bp-dropdown-simple
+							valueId=modelId
+							options=million
+							choosedValue=millionChoosedValue
+							optionKey='name'
+							classNames='measure-select'}}
+					{{/bp-layout}}
+				{{/bp-layout}}
+				{{#if (bp-not-eq cur_tab_idx 0)}}
+					{{#bp-layout direction='col' classNames='region-sel-area mt-3 pt-3'}}
+						{{bp-dropdown-simple
+							title='Region'
+							valueId=modelId
+							options=keyName
+							optionKey='name'
+							classNames='market-select'}}
+					{{/bp-layout}}
+					{{#if (bp-not-eq cur_tab_idx 0 1)}}
+						{{bp-dropdown-simple
+							title='Province'
+							valueId=modelId
+							options=keyName
+							optionKey='name'
+							classNames='market-select mt-3'}}
+						{{#if (eq cur_tab_idx 3)}}
+							{{bp-dropdown-simple
+								title='City'
+								valueId=modelId
+								options=keyName
+								optionKey='name'
+								classNames='market-select mt-3'}}
+						{{/if}}
+					{{/if}}
+				{{/if}}
+			{{/bp-layout}}
+			{{#if (eq cur_tab_idx 0)}}
+				{{#bp-layout direction='col' classNames='right-content-area mt-4'}}
+					{{#bp-layout direction='row' classNames=''}}
+						{{overall-market-size-card classNames='mr-2 market-size-area'}}
+						{{overall-market-size-card classNames='market-size-area'}}
+					{{/bp-layout}}
+					{{#bp-layout direction='row' classNames='mt-4'}}
+						{{overall-market-share-card classNames='mr-2 market-size-area'}}
+						{{overall-market-share-card classNames='mr-2 market-size-area'}}
+						{{overall-market-share-card classNames='market-size-area'}}
+					{{/bp-layout}}
+					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
+						{{mb-chart-title title="产品表现" noSubtitle=true classNames='chart-title'}}
+						{{pro-show-table }}
+					{{/bp-layout}}
+					{{#bp-layout direction='col' classNames='line-area mt-4'}}
+						{{mb-chart-title title="Competitive Landscape" noSubtitle=true classNames='chart-title mb-4'}}
+						{{bp-line
                             xaxisData=xaxisData
                             lineData=lineData
                             legendPosition=linelegendPosition
                             grid=grid}}
-                    {{/bp-layout}}
-                {{/bp-layout}}
-            {{/bp-layout}}
-        {{else if (eq cur_tab_idx 1)}}
-            {{#bp-layout direction='row' }}
-                {{page-left-menu regional=true MAT=true}}
-                {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-                    <div class="region-show pt-3 mb-4">
-                        {{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title ml-4'}}
-                        {{bp-bar-stack eid='bp-stack' 
-                        chartData=stackData}}
-                    </div>
-                    {{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
-                        {{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title'}}
-                        {{pro-show-table }}
-                    {{/bp-layout}}
-                    {{#bp-layout direction='col' classNames='line-area mt-4'}}
-                        {{mb-chart-title title="Competitive Landscape by Province" noSubtitle=true classNames='chart-title mb-4'}}
-                        {{bp-line
+					{{/bp-layout}}
+				{{/bp-layout}}
+			{{else if (eq cur_tab_idx 1)}}
+				{{#bp-layout direction='col' classNames='right-content-area mt-4'}}
+					<div class="region-show pt-3 mb-4">
+						{{mb-chart-title title="Regional Performance" noSubtitle=true classNames='chart-title ml-4'}}
+						{{bp-bar-stack eid='bp-stack'
+                            chartColor=chartColor
+                            chartData=stackData}}
+					</div>
+					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
+						{{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title'}}
+						{{pro-show-table }}
+					{{/bp-layout}}
+					{{#bp-layout direction='col' classNames='line-area mt-4 '}}
+						{{mb-chart-title title="Competitive Landscape by Province" noSubtitle=true classNames='chart-title mb-4'}}
+						{{bp-line
                             xaxisData=xaxisData
                             lineData=lineData
                             legendPosition=linelegendPosition
                             grid=grid}}
-                    {{/bp-layout}}
-                {{/bp-layout}}
-            {{/bp-layout}}
-        {{else if (eq cur_tab_idx 2)}}
-            {{#bp-layout direction='row' }}
-                {{page-left-menu regional=true province=true MAT=true}}
-                {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-                    {{!-- {{#bp-layout direction='col' classNames='province-show charts'}} --}}
-                    <div class="province-show mb-4 pt-3">
-                        {{mb-chart-title title="Provincial Performance" noSubtitle=true classNames='chart-title ml-4'}}
-                        {{bp-map eid='bp-map' 
+					{{/bp-layout}}
+				{{/bp-layout}}
+			{{else if (eq cur_tab_idx 2)}}
+				{{#bp-layout direction='col' classNames='right-content-area mt-4'}}
+					<div class="province-show pt-3 mb-4">
+						{{mb-chart-title title="Provincial Performance" noSubtitle=true classNames='chart-title ml-4'}}
+						{{bp-map eid='bp-map' 
                             chartData=mapData}}
-                    </div>
-                    {{!-- {{/bp-layout}} --}}
-                    {{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
-                        {{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title'}}
-                        {{pro-show-table type='province'}}
-                    {{/bp-layout}}
-                    {{#bp-layout direction='col' classNames='line-area mt-4'}}
-                        {{mb-chart-title title="Competitive Landscape " noSubtitle=true classNames='chart-title mb-4'}}
-                        {{bp-line
+					</div>
+					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
+						{{mb-chart-title
+							title="Product Performance by City" 
+							noSubtitle=true 
+							classNames='chart-title'}}
+						{{pro-show-table type='province'}}
+					{{/bp-layout}}
+					{{#bp-layout direction='col' classNames='line-area mt-4'}}
+						{{mb-chart-title title="Competitive Landscape " noSubtitle=true classNames='chart-title mb-4'}}
+						{{bp-line
                             xaxisData=xaxisData
                             lineData=lineData
                             legendPosition=linelegendPosition
                             grid=grid}}
-                    {{/bp-layout}}
-                {{/bp-layout}}
-            {{/bp-layout}}
-        {{else if (eq cur_tab_idx 3)}}
-            {{#bp-layout direction='row' }}
-                {{page-left-menu regional=true province=true city=true MAT=true marketValue=marketValue marketArr=marketArr}}
-                {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
-                    {{!-- {{#bp-layout direction='col' classNames='city-show '}} --}}
-                    <div class="city-show pt-3 mb-4">
-                        {{mb-chart-title title="BMS Product Growth vs. BMS Prouct Share" noSubtitle=true classNames='ml-4 chart-title'}}
-                        {{bp-scatter eid='bp-scatter' 
+					{{/bp-layout}}
+				{{/bp-layout}}
+			{{else if (eq cur_tab_idx 3)}}
+				{{#bp-layout direction='col' classNames='right-content-area mt-4'}}
+					<div class="city-show pt-3 mb-4">
+						{{mb-chart-title title="BMS Product Growth vs. BMS Prouct Share" noSubtitle=true classNames='ml-4 chart-title'}}
+						{{bp-scatter eid='bp-scatter' 
                             chartData=scatterData
                             chartColor=chartColor
                             baseNumber=baseNumber}}
-                    </div>
-                    {{!-- {{/bp-layout}} --}}
-                    {{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
-                        {{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title'}}
-                        {{pro-show-table proByCity=proByCity totalProObj=totalProObj}}
-                    {{/bp-layout}}
-                    {{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
-                        {{mb-chart-title title="City Performance" noSubtitle=true classNames='chart-title'}}
-                        {{pro-show-table type='city' cityPer=cityPer}}
-                    {{/bp-layout}}
-                    {{#bp-layout direction='col' classNames='line-area mt-4'}}
-                        {{mb-chart-title title="Competitive Landscape by City" noSubtitle=true time=productdimension.firstObject.ym sel-group=false classNames='mb-4 chart-title'}}
-                        {{bp-line
+					</div>
+					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
+						{{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title'}}
+						{{pro-show-table proByCity=proByCity totalProObj=totalProObj}}
+					{{/bp-layout}}
+					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
+						{{mb-chart-title title="City Performance" noSubtitle=true classNames='chart-title'}}
+						{{pro-show-table type='city'}}
+					{{/bp-layout}}
+					{{#bp-layout direction='col' classNames='line-area mt-4'}}
+						{{mb-chart-title title="Competitive Landscape by City" noSubtitle=true time=productdimension.firstObject.ym sel-group=true classNames='mb-4 chart-title'}}
+						{{bp-line
                             xaxisData=xaxisData
                             lineData=lineData
                             grid=grid
                             lineColor=chartColor
                             legendPosition=linelegendPosition}}
-                    {{/bp-layout}}
-                {{/bp-layout}}
-            {{/bp-layout}}
-        {{/if}}
-    </div>
+					{{/bp-layout}}
+				{{/bp-layout}}
+			{{/if}}
+		{{/bp-layout}}
+	</div>
 {{/bp-layout}}
