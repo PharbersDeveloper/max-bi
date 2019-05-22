@@ -34,29 +34,29 @@
             <table class="table stall-point-table bg-white">
                 <thead class="table-head">
                     <th>City</th>
-                    <th>Reliable City</th>
+                    {{!-- <th>Reliable City</th> --}}
                     <th>City Tier</th>
                     <th>Market Size</th>
                     <th>Market Growth</th>
                     <th>BMS Product Sales</th>
                     <th>BMS Product Share</th>
                     <th>BMS Product Change</th>
-                    <th>Product Growth</th>
+                    {{!-- <th>Product Growth</th> --}}
                     <th>EI</th>
                 </thead>
                 <tbody class="table-body">
-                    {{#each files as |item|}}
+                    {{#each cityPer as |item|}}
                         <tr class="title m-2">
-                            <td>{{item.brand}}</td>
-                            <td>{{item.sales}}</td>
-                            <td>{{item.market}}</td>
-                            <td>{{item.ms}}</td>
-                            <td>{{item.growth}}</td>
-                            <td>{{item.ei}}</td>
-                            <td>{{item.sales}}</td>
-                            <td>{{item.market}}</td>
-                            <td>{{item.ms}}</td>
-                            <td>{{item.growth}}</td>
+                            <td>{{item.city}}</td>
+                            <td>{{item.tier}}</td>
+                            <td>{{item.size}}</td>
+                            <td>{{percent-num item.mGrowth}}%</td>
+                            <td>{{item.Psales}}</td>
+                            <td>{{percent-num item.share}}%</td>
+                            <td>{{percent-num item.Pchange}}%</td>
+                            <td>{{num-fixed4 item.ei}}</td>
+                            {{!-- <td>{{item.ms}}</td>
+                            <td>{{item.growth}}</td> --}}
                         </tr>
                     {{/each}}
                 </tbody>

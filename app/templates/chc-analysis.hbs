@@ -61,17 +61,17 @@
     <div class="tab-content">
         {{#if (eq cur_tab_idx 0)}}
             {{#bp-layout direction='row' }}
-                {{page-left-menu marketArr=model.marketData marketValue=curMarket}}
+                {{page-left-menu chc=true marketArr=model.marketData marketValue=curMarket dateType=curDateType dateArr=dateData dateValue=curDate}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                     {{#bp-layout direction='row' classNames=''}}
                         {{overall-market-size-card title='Market Size' value=(num2mil-fixed2 mktSize.firstObject.value) unit='Mil'classNames='mr-2 market-size-area'}}
                         {{overall-market-size-card title='Market Growth' value=(percent-num mktGrowth.firstObject.value) unit='%'classNames='mr-2 market-size-area'}}
                     {{/bp-layout}}
-                    {{#bp-layout direction='row' classNames='mt-4'}}
+                    {{!-- {{#bp-layout direction='row' classNames='mt-4'}}
                         {{overall-market-share-card classNames='mr-2 market-size-area'}}
                         {{overall-market-share-card classNames='mr-2 market-size-area'}}
                         {{overall-market-share-card classNames='market-size-area'}}
-                    {{/bp-layout}}
+                    {{/bp-layout}} --}}
                     {{#bp-layout direction='col' classNames='pro-show p-4 mt-4'}}
                         {{pro-show-table title='产品表现'}}
                     {{/bp-layout}}
@@ -114,7 +114,7 @@
             {{/bp-layout}} --}}
         {{else if (eq cur_tab_idx 1)}}
             {{#bp-layout direction='row' }}
-                {{page-left-menu marketArr=model.marketData marketValue=curMarket}}
+                {{page-left-menu chc=true onlyCity=true marketArr=model.marketData marketValue=curMarket dateType=curDateType dateArr=dateData dateValue=curDate cityArr=cityData cityValue=curCity}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                     {{#bp-layout direction='col' classNames='city-show charts'}}
                         {{bp-scatter eid='bp-scatter' 

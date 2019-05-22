@@ -19,22 +19,13 @@ export default Controller.extend({
     },
     init() {
 		this._super(...arguments);
-		this.set('linelegendPosition', { right: '0', 'top': '40', type: 'scoll', orient: 'vertical' });
+		this.set('linelegendPosition', { right: '0', 'top': '60', type: 'scoll', orient: 'vertical' });
 		this.set('grid', { right: '200px', });
 		this.set('lineData', A([{
-			name: 'MNC',
-			date: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05',
-				'2018-06', '2018-07', '2018-08',
-				'2018-09', '2018-10', '2018-11', '2018-12'],
-			data: [320, 332, 301, 334, 390, 330, 320, 255, 350, 337, 365, 912]
-		},
-		{
-			name: 'ELILILLY GROUP',
-			date: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05',
-				'2018-06', '2018-07', '2018-08',
-				'2018-09', '2018-10', '2018-11', '2018-12'],
-			data: [820, 932, 901, 934, 1290, 1330, 1320, 244, 365, 109, 203, 273]
-		}]));
+			name: '',
+			date: [],
+			data: []
+		},]));
 		// this.set('lineColor',  A(['rgb(115,171,255)', 'rgb(255,227,128)', 'rgb(73,229,245)','rgb(52,246,188)', 'rgb(54,179,126)']));
 		// this.set('legendPosition', { x: 'center', y: 'center', });
 		this.set('scatterData', A([
@@ -184,37 +175,31 @@ export default Controller.extend({
 	// 	return Object.keys(result).map(key => ({key: key, value: result[key]}))
 	// },
 	allData: observer('marketValue', function () {
+		//City Analysis数据
 		this.store.query('productaggregation', {'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '0', 'ym': '201802', 'ym_type': 'MAT', 'address': '上海市'})
 			.then(res => {
-			let proArr = [];
-			let shareArr = [];
-			res.forEach(item => {
-				//表格
-				let proItem = {
-					brand: item.productName,
-					sales: item.sales,
-					marketShare: item.salesSom,
-					ms: item.salesSomYearGrowth,
-					growth: item.salesYearGrowth,
-					ei: item.salesEI
-				}
-				proArr.push(proItem);
-				this.set('proByCity', proArr)
-				
-				//气泡图
-				let arr = [];
-				let  shareItem= [ item.salesSom, item.salesYearGrowth, item.sales, item.productName];
-				arr.push(shareItem);
-				shareArr.push(arr);
-				arr = [];
-				this.set('scatterData', shareArr);
-				// this.set('scatterData', A([
-				// 	[[66666, 150, 1000000, 'test1']],
-				// 	[[12225, 81, 100000, 'test2']],
-				// 	[[55555, 57, 100000, 'test3']],
-				// 	[[33333, 45, 100000, 'test4']],
-				// 	[[22222, 57, 255555, 'test5']]
-				// ]),);
+				let proArr = [];
+				let shareArr = [];
+				res.forEach(item => {
+					//表格1
+					let proItem = {
+						brand: item.productName,
+						sales: item.sales,
+						marketShare: item.salesSom,
+						ms: item.salesSomYearGrowth,
+						growth: item.salesYearGrowth,
+						ei: item.salesEI
+					}
+					proArr.push(proItem);
+					this.set('proByCity', proArr)
+					
+					//气泡图
+					let arr = [];
+					let  shareItem= [ item.salesSom, item.salesYearGrowth, item.sales, item.productName];
+					arr.push(shareItem);
+					shareArr.push(arr);
+					arr = [];
+					this.set('scatterData', shareArr);
 			})
 			let totalPro = res.reduce((total, ele) =>  {
 				return {
@@ -224,9 +209,85 @@ export default Controller.extend({
 					totalGrowth: total.totalGrowth+ele.salesYearGrowth,
 					totalEi: total.totalEi+ele.salesEI
 				}
-
 			}, {totalSales:0, totalMarketShare: 0, totalMs: 0, totalGrowth: 0, totalEi: 0});
 			this.set('totalProObj', totalPro)
+
+			//表格2
+			let cityArr = [];
+			this.store.query('marketaggregation', {'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '0', 'ym': '201802', 'ym_type': 'MAT', 'address_type': 'CITY'})
+				.then(res => {
+					res.forEach(item => {
+						let marSize = item.sales/item.salesSom;
+						let cityItem = {
+							city: item.address,
+							// reliable: item.sales,
+							tier: 0,
+							size: marSize,
+							mGrowth: item.salesYearGrowth,
+							Psales: item.sales,
+							share: item.salesSom,
+							Pchange: item.salesSomYearGrowth,
+							// pGrowth: item,
+							ei: item.salesEI,
+						}
+						cityArr.push(cityItem);
+						this.set('cityPer', cityArr)
+					})
+				})
+			//多条折线图
+			this.store.query('productaggregation', {'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': 'SALES_RANK', 'gte[ym]': '201801', 'lte[ym]': '201812', 'ym_type': 'MAT', 'address': '上海市', 'address_type': 'CITY', 'lte[sales_rank]': '10'})
+				.then(res => {
+					let arr = [], map = {}, dest = [], proName='', dataArr = [], dateArr = [], arritem = [];
+					res.forEach(item => {
+						arr.push(item);
+						// let dateArr = [];
+						// dateArr.push(item.ym);
+						// let 
+						// dataArr.push(item.sales)
+						// let lineItem = {
+						// 	name: item.productName,
+						// 	date: dateArr,
+						// 	data: dataArr,
+						// }
+						// lineArr.push(lineItem);
+						// this.set('lineData', cityArr)
+					})
+					//将大数组根据某项值分成若干小数组
+					for(let i = 0; i < arr.length; i++){
+						var ai = arr[i];
+						if(!map[ai.productName]){
+							dest.push({
+								productName: ai.productName,
+								item: [ai]
+							});
+							map[ai.productName] = ai;
+						}else{
+							for(let j = 0; j < dest.length; j++){
+								var dj = dest[j];
+								if(dj.productName == ai.productName){
+									dj.item.push(ai);
+									break;
+								}
+							}
+						}
+					}
+
+					for (let i = 0; i < dest.length; i++) {
+						dest[i].item.forEach(list => {
+							proName = list.productName
+							dateArr.push(list.ym)
+							dataArr.push(list.sales)
+						})
+						arritem[i] = {
+							name: proName,
+							date: dateArr,
+							data: dataArr
+						}
+						dateArr = [];
+						dataArr = [];
+					}
+					this.set('lineData', arritem)
+				})
 		})		
 	})
 });

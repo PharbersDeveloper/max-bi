@@ -6,7 +6,7 @@ export default Component.extend({
 		this._super(...arguments);
 		this.set('rmbChoosedValue', 'RMB');
         this.set('millionChoosedValue', 'Million');
-	},
+    },
     keyName: A([
         { id: 1, name: '将进酒' },
         { id: 2, name: '桃花源记' },
@@ -45,4 +45,16 @@ export default Component.extend({
     million: A([
         { id: 'Million', name: 'Million' },
     ]),
+
+    actions: {
+        ytdOnClick() {
+            if(this.dateType == 4) {
+                this.set('dateType', 2)
+            } else {
+                this.set('dateType', 4)
+            }
+            window.console.log(this.dateType);
+            
+        },
+    }
 });

@@ -1,6 +1,8 @@
 .mb-page-container.analysis {
     padding: 24px;
-
+    .analysis {
+        height: 450px;
+    }
     .analysis-top {
         // padding-top: 24px;
         // padding-left: 24px;
@@ -19,6 +21,7 @@
         .bp-page-header {
             padding-top: 24px;
             padding-bottom: 16px;
+            height: 450px;
         }
         .header-content-area {
             width: 100%;
@@ -37,7 +40,10 @@
                 margin-bottom: 8px;
                 .header-content-sub {
                     // width: 50%;
-                    flex: 1;
+                    -webkit-box-flex: 1;
+                    -webkit-flex: 1;
+                        -ms-flex: 1;
+                            flex: 1;
                 }
                 .time-title {
                     min-width: 84px;
@@ -56,9 +62,11 @@
                 // font-weight: bold;
                 border: none;
                 outline:none;
-                box-shadow: none;
+                -webkit-box-shadow: none;
+                        box-shadow: none;
                 &:focus {
-                    box-shadow: none;
+                    -webkit-box-shadow: none;
+                            box-shadow: none;
                     outline:none;
                 } /*for IE*/
                 &::-moz-focus-inner {
@@ -81,12 +89,14 @@
                 cursor: default;
             }
             .bp-nav-dropdown.hidden-child-list .dd-title::after {
-                animation: none;
+                -webkit-animation: none;
+                        animation: none;
                 right: unset;
                 margin-left: -74px;
             }
             .bp-nav-dropdown.show-child-list .dd-title::after {
-                animation: none;
+                -webkit-animation: none;
+                        animation: none;
                 right: auto;
                 margin-left: -80px;
             }
@@ -101,7 +111,10 @@
             }
         }
         .market-size-area {
-            flex: 1;
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+                -ms-flex: 1;
+                    flex: 1;
         }
         .pro-show {
             // min-height: 197px;
@@ -109,19 +122,25 @@
             // flex: 1;
         }
         .line-area {
-            min-height: 463px;
+            height: 490px;
+            min-height: 490px;
             padding: 16px 24px;
             background: #fff;
         }
         .region-show {
+            height: 428px;
             min-height: 428px;
             background: #fff;
         }
         .province-show {
-            min-height: 407px;
+            margin-bottom: 24px;
+            height: 421px;
+            min-height: 421px;
             background: #fff;
         }
         .city-show {
+            // margin-bottom: 24px;
+            height: 378px;
             min-height: 378px;
             background: #fff;
         }
