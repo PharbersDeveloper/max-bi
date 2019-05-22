@@ -92,9 +92,10 @@
                 {{page-left-menu regional=true MAT=true}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                     <div class="region-show pt-3 mb-4">
-                        {{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title ml-4'}}
+                        {{mb-chart-title title="Regional Performance" noSubtitle=true classNames='chart-title ml-4'}}
                         {{bp-bar-stack eid='bp-stack' 
-                        chartData=stackData}}
+                            chartColor=chartColor
+                            chartData=stackData}}
                     </div>
                     {{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
                         {{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title'}}
