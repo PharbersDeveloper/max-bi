@@ -7,8 +7,11 @@ export default Controller.extend({
 	tabs: A(['Overall Market', 'City Analysis']),
 	collapsed: false,
 	
-	curMarket: null,
 	curInfoId: '',
+	curMarket: null,
+	curCity: null,
+	curDate: null,
+	curDateType: 4,
 	
 	xAxisDataHeader: A([]),
 	doubleData: A([]),
@@ -25,6 +28,28 @@ export default Controller.extend({
 		let result = this.store.query('sampleCover', {'info-id': this.curInfoId});
 		result.then(() => {
 			this.setDoubleData();
+		})
+        return result;
+	}),
+
+	dateData: computed('curInfoId', 'curDateType', function() {
+		let result = this.store.query('availableDate', {
+			'info-id': this.curInfoId, 
+			'date-type': this.curDateType, 
+		});
+		result.then(res => {
+			this.set('curDate', res.firstObject);
+		})
+        return result;
+	}),
+
+	cityData: computed('curInfoId', function() {
+		let result = this.store.query('availableAddress', {
+			'info-id': this.curInfoId, 
+			'address-type': 1, 
+		});
+		result.then(res => {
+			this.set('curCity', res.firstObject);
 		})
         return result;
 	}),
@@ -52,10 +77,7 @@ export default Controller.extend({
 		});
         return result;
 	}),
-	// mktGrowth: computed('curInfoId', function() {
-	// 	let result = this.store.query('salesData', {'info-id': this.curInfoId});
-    //     return result;
-	// }),
+
 
     actions: {
         onTabClicked() {},

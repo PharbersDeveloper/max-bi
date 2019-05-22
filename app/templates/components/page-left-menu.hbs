@@ -3,12 +3,6 @@
         {{#bp-button classNames='reser-btn mb-4'}}重置{{/bp-button}}
     {{/bp-layout}}
     {{#bp-layout direction='col' classNames='market-sel-area pb-3 mb-3'}}
-        {{!-- {{bp-dropdown-simple
-            title='Market'
-            valueId=modelId
-            options=keyName
-            optionKey='name'
-            classNames='market-select'}} --}}
             <p class="bp-dropdown-simple-title mr-4">Market</p>
             {{#bp-dropdown as |dd|}}
                 {{#dd.button classNames='market-select'}}
@@ -30,36 +24,59 @@
     {{/bp-layout}}
     {{#bp-layout direction='col' classNames='date-sel-area pb-3 mb-3'}}
         <p class="sel-title">时间区间</p>
-        {{#bp-layout direction='row' classNames='mb-3'}}
-            {{#bp-button classNames='date-btn mr-1'}}YTD{{/bp-button}}
-            {{#if MAT}}
-                {{#bp-button classNames='date-btn'}}MAT{{/bp-button}}
-            {{else}}
-                {{#bp-button disabled='disable' classNames='date-btn'}}MAT{{/bp-button}}
-            {{/if}}
-        {{/bp-layout}}
-        {{!-- {{bp-dropdown-simple
-            valueId=modelId
-            options=keyName
-            optionKey='name'
-            classNames='market-select mt-2'}} --}}
-        {{#bp-dropdown as |dd|}}
-            {{#dd.button classNames='market-select'}}
-                {{#if timeArr.firstObject.id}}
-                    <p>{{timeArr.firstObject.name}}</p>
+        {{#if chc}}
+            {{#bp-layout direction='row' classNames='mb-3'}}
+                {{#if (eq dateType 4)}}
+                    {{#bp-button classNames='date-btn mr-1 sel' click=(action 'ytdOnClick')}}YTD{{/bp-button}}
                 {{else}}
-                    请选择
+                    {{#bp-button classNames='date-btn mr-1' click=(action 'ytdOnClick')}}YTD{{/bp-button}}
                 {{/if}}
-                {{bp-icon icon='down'}}
-            {{/dd.button}}
-            {{#dd.menu as |menu|}}
-                {{#each timeArr as |item|}}
-                    {{#menu.option value=item onClick=(action (mut timeArr.firstObject))}}
-                        {{item.name}}
-                    {{/menu.option}}
-                {{/each}}
-            {{/dd.menu}}
-        {{/bp-dropdown}}
+                {{#if MAT}}
+                    {{#bp-button classNames='date-btn'}}MAT{{/bp-button}}
+                {{else}}
+                    {{#bp-button disabled='disable' classNames='date-btn'}}MAT{{/bp-button}}
+                {{/if}}
+            {{/bp-layout}}
+            {{#bp-dropdown as |dd|}}
+                {{#dd.button classNames='market-select'}}
+                    {{#if dateValue.id}}
+                        <p>{{dateValue.date}}</p>
+                    {{else}}
+                        请选择
+                    {{/if}}
+                    {{bp-icon icon='down'}}
+                {{/dd.button}}
+                {{#dd.menu as |menu|}}
+                    {{#each dateArr as |item|}}
+                        {{#menu.option value=item onClick=(action (mut dateValue.date))}}
+                            {{item.date}}
+                        {{/menu.option}}
+                    {{/each}}
+                {{/dd.menu}}
+            {{/bp-dropdown}}
+        {{else}}
+            {{#bp-layout direction='row' classNames='mb-3'}}
+                {{#bp-button classNames='date-btn mr-1' click=(action 'ytdOnClick')}}YTD{{/bp-button}}
+                {{#bp-button classNames='date-btn'}}MAT{{/bp-button}}
+            {{/bp-layout}}
+            {{#bp-dropdown as |dd|}}
+                {{#dd.button classNames='market-select'}}
+                    {{#if timeArr.firstObject.id}}
+                        <p>{{timeArr.firstObject.name}}</p>
+                    {{else}}
+                        请选择
+                    {{/if}}
+                    {{bp-icon icon='down'}}
+                {{/dd.button}}
+                {{#dd.menu as |menu|}}
+                    {{#each timeArr as |item|}}
+                        {{#menu.option value=item onClick=(action (mut timeArr.firstObject))}}
+                            {{item.name}}
+                        {{/menu.option}}
+                    {{/each}}
+                {{/dd.menu}}
+            {{/bp-dropdown}}
+        {{/if}}
     {{/bp-layout}}
     {{#bp-layout direction='col' classNames='measure-sel-area'}}
         <p class="sel-title">Measure</p>
@@ -103,5 +120,27 @@
                 classNames='market-select mt-3'}}
             {{/if}}
         {{/if}}
+    {{/if}}
+    {{#if onlyCity}}
+        {{#bp-layout direction='col' classNames='region-sel-area mt-3 pt-3'}}
+            <p class="bp-dropdown-simple-title mr-4">City</p>
+            {{#bp-dropdown as |dd|}}
+                {{#dd.button classNames='market-select'}}
+                    {{#if cityValue.city.id}}
+                        <p>{{cityValue.city.title}}</p>
+                    {{else}}
+                        请选择
+                    {{/if}}
+                    {{bp-icon icon='down'}}
+                {{/dd.button}}
+                {{#dd.menu as |menu|}}
+                    {{#each cityArr as |item|}}
+                        {{#menu.option value=item onClick=(action (mut cityValue))}}
+                            {{item.city.title}}
+                        {{/menu.option}}
+                    {{/each}}
+                {{/dd.menu}}
+            {{/bp-dropdown}}
+        {{/bp-layout}}
     {{/if}}
 {{/bp-layout}}
