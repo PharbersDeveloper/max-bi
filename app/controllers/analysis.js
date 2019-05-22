@@ -52,9 +52,9 @@ export default Controller.extend({
 			[[22222, 57, 255555, '']]
 		]));
 		this.set('stackData', A([
-			{ name: 'keyong', data: [5, 20, 36, 10, 10, 20] },
-			{ name: 'bukeyong', data: [40, 22, 18, 35, 42, 40] },
-			{ name: 'qita', data: [40, 22, 18, 35, 42, 40] }
+			{ name: '111', data: [5, 20, 36, 10, 10, 20] },
+			{ name: '222', data: [40, 22, 18, 35, 42, 40] },
+			{ name: '333', data: [40, 22, 18, 35, 42, 40] },
 		]));
 		this.set('chartColor', A(['rgb(115,171,255)', 'rgb(121,226,242)', 'rgb(121,242,192)', 'rgb(54,179,126)', 'rgb(255,227,128)', 'rgb(255,171,0)', 'rgb(192,182,242)', 'rgb(101,84,192)', 'rgb(255,189,173)', 'rgb(255,143,115)', 'rgb(35,85,169)',]));
 		this.set('baseNumber', 250)
@@ -180,16 +180,6 @@ export default Controller.extend({
 		}
 		]))
 	},
-	// keyPlusValue(arr) {
-	// 	const result = arr.reduce((obj, item) => {
-	// 		if (!obj[item.key]) {
-	// 		obj[item.key] = 0
-	// 		}
-	// 		obj[item.key] += item.value
-	// 		return obj
-	// 	}, {})
-	// 	return Object.keys(result).map(key => ({key: key, value: result[key]}))
-	// },
 	allData: observer('marketValue', function () {
 		//City Analysis数据
 		this.store.query('productaggregation', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '0', 'ym': '201802', 'ym_type': 'MAT', 'address': '上海市' })
@@ -296,7 +286,46 @@ export default Controller.extend({
 			})
 
 			//Regional Analysis数据
-			
+			this.store.query('productaggregation', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '10', 'ym': '201802', 'ym_type': 'MAT', 'address_type': 'CITY', })
+			.then(data => {
+				let increastData = data.sortBy('ym'),
+					cities = data.uniqBy('address').sortBy('address'),
+					productList = increastData.uniqBy('productName'),
+					result = A([]),
+					otherData = A([]);
+					// productList.push({productName: 'others'})
 
+					result = productList.map(ele=> {
+						let currentProductList = increastData.filterBy('productName',ele.productName);
+						let productSalesSomValues = cities.map(item=> {
+							let tmpSalesSom = 0;
+							currentProductList.forEach(i=> {
+								if(item.address === i.address) {
+									tmpSalesSom = i.salesSom;
+								}
+							})
+							return tmpSalesSom;
+						})
+						return {
+							name: ele.productName,data:productSalesSomValues
+						}
+					});
+
+					let testData = [...result.map(ele=>ele.data)],
+						totalTestData = testData.flat();
+						for(let j=0,citiesLen=cities.length;j<citiesLen;j++) {
+						let len = productList.length;
+						let tmpRest = 0;
+						for(let i = 0;i<len;i++) {
+							tmpRest = tmpRest +totalTestData[5*i+j]
+						}
+						otherData.push(1-tmpRest);
+					}
+	
+					result.push({name: 'others',data: otherData})
+	
+				this.set('stackXdata', cities.map(ele=>ele.address));
+				this.set('stackData', result);
+			})
 	})
 });
