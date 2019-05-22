@@ -7,7 +7,7 @@ export default Route.extend({
 		return RSVP.hash({
 			marketData: this.store.query('market', {'company-id': 'pharbers'}),
 			
-			scatterData: A([
+			scatterData: A([	
 				[[66666, 57, 100000, 'test1']],
 				[[12225, 81, 100000, 'test2']],
 				[[55555, 57, 100000, 'test3']],

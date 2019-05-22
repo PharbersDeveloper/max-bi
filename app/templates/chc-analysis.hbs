@@ -37,11 +37,11 @@
                                     <p class="time-title mr-3">数据覆盖周期</p>
                                     <p class="time-content">{{timehelper/time2ymd overallInfo.coverStartTime}} ~ {{timehelper/time2ymd overallInfo.coverEndTime}}</p>
                                 {{/bp-layout}}
-                                {{#bp-layout direction="row" classNames="data-time mb-2 mt-3"}}
+                                {{!-- {{#bp-layout direction="row" classNames="data-time mb-2 mt-3"}}
                                     <p class="time-title mr-3">医疗机构数</p>
                                     <p class="time-content">{{overallInfo.organizationNum}}</p>
-                                {{/bp-layout}}
-                                {{#bp-layout direction="row" classNames="data-time mb-2"}}
+                                {{/bp-layout}} --}}
+                                {{#bp-layout direction="row" classNames="data-time mb-2 mt-3"}}
                                     <p class="time-title mr-3">行政区划数</p>
                                     <p class="time-content">{{overallInfo.adminAreasNum}}</p>
                                 {{/bp-layout}}
@@ -124,18 +124,28 @@
                 {{page-left-menu chc=true onlyCity=true marketArr=model.marketData marketValue=curMarket dateType=curDateType dateArr=dateData dateValue=curDate cityArr=cityData cityValue=curCity}}
                 {{#bp-layout direction='col' classNames='right-content-area mt-4'}}
                     {{#bp-layout direction='col' classNames='city-show charts'}}
+                        {{log bubbleMapList}}
                         {{bp-scatter eid='bp-scatter' 
-                            title='scatter title'
-                            chartData=model.scatterData}}
+                            chartData=bubbleMapListData
+                            chartColor=chartColor
+                            baseNumber=baseNumber}}
                     {{/bp-layout}}
                     {{#bp-layout direction='col' classNames='pro-show p-4 mt-4'}}
-                        {{pro-show-table title='Product Performance by City'}}
+                        {{log productTableListByCity}}
+                        {{pro-show-table title='Product Performance by City' tableData=productTableListDataByCity totalProObj=totalProObjByCity}}
                     {{/bp-layout}}
                     {{#bp-layout direction='col' classNames='pro-show p-4 mt-4'}}
-                        {{pro-show-table title='City Performance' type='city'}}
+                        {{log cityPerformenceListByCity}}
+                        {{pro-show-table title='City Performance' type='chcCity' tableData=cityPerformenceData}}
                     {{/bp-layout}}
                     {{#bp-layout direction='col' classNames='line-area mt-4 charts'}}
-
+                        {{log cityLineList}}
+                        {{mb-chart-title title="Competitive Landscape" noSubtitle=true classNames='chart-title mb-4'}}
+						{{bp-line
+                            xaxisData=xaxisData
+                            lineData=cityLineData
+                            legendPosition=linelegendPosition
+                            grid=grid}}
                     {{/bp-layout}}
                 {{/bp-layout}}
             {{/bp-layout}}
