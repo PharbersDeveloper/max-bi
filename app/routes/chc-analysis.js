@@ -41,6 +41,6 @@ export default Route.extend({
         this._super(controller, model);
 		this.controller.set('curMarket', model.marketData.firstObject);
 		// this.controller.set('overallInfo', model.marketData.firstObject.get('id'));
-		console.log(this.controller.get('curMarket'));
+		// console.log(this.controller.get('curMarket'));
     }
 });
