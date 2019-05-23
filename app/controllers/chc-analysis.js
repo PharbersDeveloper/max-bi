@@ -9,6 +9,7 @@ export default Controller.extend({
     cur_tab_idx: 0,
 	tabs: A(['Overall Market', 'City Analysis']),
 	collapsed: false,
+	isLoading: false,
 
 	tableTake: 10,
 	
@@ -404,7 +405,11 @@ export default Controller.extend({
 		tempObj.cityName = this.curCity.city.get('title');
 		tempObj.cityTier = this.curCity.city.get('cityTier');
 		result1.then(res => {
-			tempObj.marketSize = res.firstObject.value;
+			if(res.firstObject.value == undefined) {
+				tempObj.marketSize = '-'
+			} else {
+				tempObj.marketSize = res.firstObject.value;
+			}
 			flag1 = true;
 			if(flag1 && flag2 && flag3) {
 				window.console.log(tempObj);
@@ -412,7 +417,11 @@ export default Controller.extend({
 			}
 		})
 		result2.then(res => {
-			tempObj.marketGrowth = res.firstObject.value;
+			if(res.firstObject.value == undefined) {
+				tempObj.marketGrowth = '-';
+			} else {
+				tempObj.marketGrowth = res.firstObject.value;
+			}
 			flag2 = true;
 			if(flag1 && flag2 && flag3) {
 				window.console.log(tempObj);
@@ -590,7 +599,6 @@ export default Controller.extend({
 				document.body.removeChild(link);
 				// delete link;
 				this.set('isLoading', false);
-				this.set('cur_page_idx', 3)
 				window.console.log('success');
 				
 		}).catch(error=> {

@@ -25,6 +25,16 @@
 	.header-content-area {
 		width: 100%;
 
+		.download-btn {
+			.spinner-border {
+				margin-left: 8px;
+				width: 16px;
+				height: 16px;
+				border: 2px solid currentColor;
+				border-right-color: transparent;
+			}
+		}
+
 		.bar-double-title {
 			margin-left: 40px;
 			@extend %p-primary;
