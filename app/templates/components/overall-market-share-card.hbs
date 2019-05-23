@@ -1,7 +1,7 @@
 {{#bp-layout direction='col' classNames='market-share-card p-4'}}
-    <p class="market-share-card-title mb-3">Tian Ding</p>
+    <p class="market-share-card-title mb-3">{{item.title}}</p>
     {{#bp-layout direction='row' cross='center' classNames=''}}
-        <p class="num-text">6.89</p>
+        <p class="num-text">{{item.value}}</p>
         <span class="num-help-text">%</span>
     {{/bp-layout}}
     <p class="help-text mb-3">市场份额变化</p>

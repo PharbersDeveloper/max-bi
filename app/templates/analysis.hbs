@@ -188,23 +188,33 @@
 			{{#if (eq cur_tab_idx 0)}}
 				{{#bp-layout direction='col' classNames='right-content-area mt-4'}}
 					{{#bp-layout direction='row' classNames=''}}
-						{{overall-market-size-card classNames='mr-2 market-size-area'}}
-						{{overall-market-size-card classNames='market-size-area'}}
+						{{overall-market-size-card 
+							unit='Mil'
+							value=(num2mil-fixed2 marketSize)
+							classNames='mr-2 market-size-area'}}
+						{{overall-market-size-card 
+							title='Market Growth'
+							unit='%'
+							value=(percent-num marketGrowth)
+							classNames='market-size-area'}}
 					{{/bp-layout}}
-					{{#bp-layout direction='row' classNames='mt-4'}}
-						{{overall-market-share-card classNames='mr-2 market-size-area'}}
-						{{overall-market-share-card classNames='mr-2 market-size-area'}}
-						{{overall-market-share-card classNames='market-size-area'}}
-					{{/bp-layout}}
+					{{!-- {{#bp-layout direction='row' classNames='mt-4'}}
+						{{#each increaseData as |item|}}
+							{{overall-market-share-card item=item classNames='mr-2 market-size-area'}}
+						{{/each}}
+					{{/bp-layout}} --}}
 					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
 						{{mb-chart-title title="产品表现" noSubtitle=true classNames='chart-title'}}
-						{{pro-show-table }}
+						{{pro-show-table 
+							type='overall'
+							tableData=overallTableData
+							totalProObj=overallTotalPro}}
 					{{/bp-layout}}
 					{{#bp-layout direction='col' classNames='line-area mt-4'}}
 						{{mb-chart-title title="Competitive Landscape" noSubtitle=true classNames='chart-title mb-4'}}
 						{{bp-line
                             xaxisData=xaxisData
-                            lineData=lineData
+                            lineData=overallCompetitiveLnadscape
                             legendPosition=linelegendPosition
                             grid=grid}}
 					{{/bp-layout}}
@@ -212,21 +222,33 @@
 			{{else if (eq cur_tab_idx 1)}}
 				{{#bp-layout direction='col' classNames='right-content-area mt-4'}}
 					<div class="region-show pt-3 mb-4">
-						{{mb-chart-title title="Regional Performance" noSubtitle=true classNames='chart-title ml-4'}}
+						{{mb-chart-title 
+							title="Regional Performance" 
+							noSubtitle=true 
+							classNames='chart-title ml-4'}}
 						{{bp-bar-stack eid='bp-stack'
                             chartColor=chartColor
                             xData=stackXdata
                             chartData=stackData}}
 					</div>
 					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
-						{{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title'}}
-						{{pro-show-table }}
+						{{mb-chart-title 
+							title="Competitive Landscape " 
+							noSubtitle=true 
+							classNames='chart-title'}}
+						{{pro-show-table 
+							type='region' 
+							tableData=regionTableData
+							totalProObj=regionTotalPro}}
 					{{/bp-layout}}
 					{{#bp-layout direction='col' classNames='line-area mt-4 '}}
-						{{mb-chart-title title="Competitive Landscape by Province" noSubtitle=true classNames='chart-title mb-4'}}
+						{{mb-chart-title 
+							title="Competitive Landscape " 
+							noSubtitle=true 
+							classNames='chart-title mb-4'}}
 						{{bp-line
                             xaxisData=xaxisData
-                            lineData=lineData
+                            lineData=regionCompetitiveLnadscape
                             legendPosition=linelegendPosition
                             grid=grid}}
 					{{/bp-layout}}
@@ -263,7 +285,7 @@
 						{{bp-scatter eid='bp-scatter' 
                             chartData=scatterData
                             chartColor=chartColor
-                            baseNumber=baseNumber}}
+                            baseNumber=citybaseNumber}}
 					</div>
 					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
 						{{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title'}}
