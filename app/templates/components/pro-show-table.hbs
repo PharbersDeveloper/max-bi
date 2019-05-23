@@ -1,132 +1,131 @@
 {{#bp-layout direction='col' classNames='pro-show-table'}}
-    <p class="pro-show-table-title mb-2">{{title}}</p>
-    {{#if (eq type 'province')}}
-        {{#bp-layout direction='col' classNames='table-area'}}
-            <table class="table stall-point-table bg-white">
-                <thead class="table-head">
-                    <th>省份</th>
-                    <th>Market Size</th>
-                    <th>Market Growth</th>
-                    <th>Product Sales</th>
-                    <th>Product Share</th>
-                    <th>Product Share Change</th>
-                    {{!-- <th>Product Growth</th> --}}
-                    <th>EI</th>
-                </thead>
-                <tbody class="table-body">
-                    {{#each tableData as |item|}}
-                        <tr class="title m-2">
-                            <td>{{item.province}}</td>
-                            <td>{{item.marketSize}}</td>
-                            <td>{{percent-num item.markerGrowth}}%</td>
-                            <td>{{item.productSales}}</td>
-                            <td>{{percent-num item.productShare}}%</td>
-                            <td>{{percent-num item.productSalesChange}}%</td>
-                            {{!-- <td>{{item.productGrowth}}</td> --}}
-                            <td>{{num-fixed4 item.ei}}</td>
-                        </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        {{/bp-layout}}
-    {{else if (eq type 'city')}}
-        {{#bp-layout direction='col' classNames='table-area'}}
-            <table class="table stall-point-table bg-white">
-                <thead class="table-head">
-                    <th>City</th>
-                    {{!-- <th>Reliable City</th> --}}
-                    <th>City Tier</th>
-                    <th>Market Size</th>
-                    <th>Market Growth</th>
-                    <th>Product Sales</th>
-                    <th>Product Share</th>
-                    <th>Product Change</th>
-                    {{!-- <th>Product Growth</th> --}}
-                    <th>EI</th>
-                </thead>
-                <tbody class="table-body">
-                    {{#each tableData as |item|}}
-                        <tr class="title m-2">
-                            <td>{{item.city}}</td>
-                            <td>{{item.tier}}</td>
-                            <td>{{item.size}}</td>
-                            <td>{{percent-num item.mGrowth}}%</td>
-                            <td>{{item.Psales}}</td>
-                            <td>{{percent-num item.share}}%</td>
-                            <td>{{percent-num item.Pchange}}%</td>
-                            <td>{{num-fixed4 item.ei}}</td>
-                            {{!-- <td>{{item.ms}}</td>
+	<p class="pro-show-table-title mb-2">{{title}}</p>
+	{{#if (eq type 'province')}}
+		{{#bp-layout direction='col' classNames='table-area'}}
+			<table class="table stall-point-table bg-white">
+				<thead class="table-head">
+					<th>省份</th>
+					<th>Market Size</th>
+					<th>Market Growth</th>
+					<th>Product Sales</th>
+					<th>Product Share</th>
+					<th>Product Share Change</th>
+					{{!-- <th>Product Growth</th> --}}
+					<th>EI</th>
+				</thead>
+				<tbody class="table-body">
+					{{#each tableData as |item|}}
+						<tr class="title m-2">
+							<td>{{item.province}}</td>
+							<td>{{item.marketSize}}</td>
+							<td>{{percent-num item.markerGrowth}}%</td>
+							<td>{{item.productSales}}</td>
+							<td>{{percent-num item.productShare}}%</td>
+							<td>{{percent-num item.productSalesChange}}%</td>
+							{{!-- <td>{{item.productGrowth}}</td> --}}
+							<td>{{num-fixed4 item.ei}}</td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		{{/bp-layout}}
+	{{else if (eq type 'city')}}
+		{{#bp-layout direction='col' classNames='table-area'}}
+			<table class="table stall-point-table bg-white">
+				<thead class="table-head">
+					<th>City</th>
+					{{!-- <th>Reliable City</th> --}}
+					<th>City Tier</th>
+					<th>Market Size</th>
+					<th>Market Growth</th>
+					<th>Product Sales</th>
+					<th>Product Share</th>
+					<th>Product Change</th>
+					{{!-- <th>Product Growth</th> --}}
+					<th>EI</th>
+				</thead>
+				<tbody class="table-body">
+					{{#each tableData as |item|}}
+						<tr class="title m-2">
+							<td>{{item.city}}</td>
+							<td>{{item.tier}}</td>
+							<td>{{item.size}}</td>
+							<td>{{percent-num item.mGrowth}}%</td>
+							<td>{{item.Psales}}</td>
+							<td>{{percent-num item.share}}%</td>
+							<td>{{percent-num item.Pchange}}%</td>
+							<td>{{num-fixed4 item.ei}}</td>
+							{{!-- <td>{{item.ms}}</td>
                             <td>{{item.growth}}</td> --}}
-                        </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-        {{/bp-layout}}
-    {{else if (eq type 'chcCity')}}
-        {{#bp-layout direction='col' classNames='table-area'}}
-            <table class="table stall-point-table bg-white">
-                <thead class="table-head">
-                    <th>City</th>
-                    {{!-- <th>Reliable City</th> --}}
-                    <th>City Tier</th>
-                    <th>Market Size(Million)</th>
-                    <th>Market Growth</th>
-                    <th>Product Sales(Million)</th>
-                    <th>Product Share</th>
-                    <th>Product Change</th>
-                    <th>Product Growth</th>
-                    <th>EI</th>
-                </thead>
-                <tbody class="table-body">
-                    <tr class="title m-2">
-                        <td>{{tableData.cityName}}</td>
-                        <td>{{tableData.cityTier}}</td>
-                        <td>{{num2mil-fixed2 tableData.marketSize}}</td>
-                        <td>{{percent-num tableData.marketGrowth}}%</td>
-                        <td>{{num2mil-fixed2 tableData.citySales}}</td>
-                        <td>{{percent-num tableData.cityShare}}%</td>
-                        <td>{{percent-num tableData.cityShareChange}}%</td>
-                        <td>{{percent-num tableData.cityGrowth}}%</td>
-                        <td>{{num-fixed4 tableData.cityei}}</td>
-                        {{!-- <td>{{item.ms}}</td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		{{/bp-layout}}
+	{{else if (eq type 'chcCity')}}
+		{{#bp-layout direction='col' classNames='table-area'}}
+			<table class="table stall-point-table bg-white">
+				<thead class="table-head">
+					<th>City</th>
+					{{!-- <th>Reliable City</th> --}}
+					<th>City Tier</th>
+					<th>Market Size(Million)</th>
+					<th>Market Growth</th>
+					<th>Product Sales(Million)</th>
+					<th>Product Share</th>
+					<th>Product Change</th>
+					<th>Product Growth</th>
+					<th>EI</th>
+				</thead>
+				<tbody class="table-body">
+					<tr class="title m-2">
+						<td>{{tableData.cityName}}</td>
+						<td>{{tableData.cityTier}}</td>
+						<td>{{num2mil-fixed2 tableData.marketSize}}</td>
+						<td>{{percent-num tableData.marketGrowth}}%</td>
+						<td>{{num2mil-fixed2 tableData.citySales}}</td>
+						<td>{{percent-num tableData.cityShare}}%</td>
+						<td>{{percent-num tableData.cityShareChange}}%</td>
+						<td>{{percent-num tableData.cityGrowth}}%</td>
+						<td>{{num-fixed4 tableData.cityei}}</td>
+						{{!-- <td>{{item.ms}}</td>
                         <td>{{item.growth}}</td> --}}
-                    </tr>
-                </tbody>
-            </table>
-        {{/bp-layout}}
-    {{else}}
-        {{#bp-layout direction='col' classNames='table-area'}}
-            <table class="table stall-point-table bg-white">
-                <thead class="table-head">
-                    <th>Brand</th>
-                    <th>Sales(Million)</th>
-                    <th>Market Share</th>
-                    <th>MS Change</th>
-                    <th>Growth</th>
-                    <th>EI</th>
-                </thead>
-                <tbody class="table-body">
-                    {{#each tableData as |item|}}
-                        <tr class="title m-2">
-                            <td>{{item.brand}}</td>
-                            <td>{{num2mil-fixed2 item.sales}}</td>
-                            <td>{{percent-num item.marketShare}}%</td>
-                            <td>{{percent-num item.ms}}%</td>
-                            <td>{{percent-num item.growth}}%</td>
-                            <td>{{num-fixed4 item.ei}}</td>
-                        </tr>
-                    {{/each}}
-                    {{log totalPro}}
-                    <tr class="title m-2">
-                        <td class="total">总计</td>
-                        <td class="total">{{num2mil-fixed2 totalProObj.totalSales}}</td>
-                        <td class="total">{{percent-num totalProObj.totalMarketShare}}%</td>
-                        <td class="total">{{percent-num totalProObj.totalMs}}%</td>
-                        <td class="total">{{percent-num totalProObj.totalGrowth}}%</td>
-                        <td class="total">{{num-fixed4 totalProObj.totalEi}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        {{/bp-layout}}
-    {{/if}}
+					</tr>
+				</tbody>
+			</table>
+		{{/bp-layout}}
+	{{else}}
+		{{#bp-layout direction='col' classNames='table-area'}}
+			<table class="table stall-point-table bg-white">
+				<thead class="table-head">
+					<th>Brand</th>
+					<th>Sales(Million)</th>
+					<th>Market Share</th>
+					<th>MS Change</th>
+					<th>Growth</th>
+					<th>EI</th>
+				</thead>
+				<tbody class="table-body">
+					{{#each tableData as |item|}}
+						<tr class="title m-2">
+							<td>{{item.brand}}</td>
+							<td>{{num2mil-fixed2 item.sales}}</td>
+							<td>{{percent-num item.marketShare}}%</td>
+							<td>{{percent-num item.ms}}%</td>
+							<td>{{percent-num item.growth}}%</td>
+							<td>{{num-fixed4 item.ei}}</td>
+						</tr>
+					{{/each}}
+					<tr class="title m-2">
+						<td class="total">总计</td>
+						<td class="total">{{num2mil-fixed2 totalProObj.totalSales}}</td>
+						<td class="total">{{percent-num totalProObj.totalMarketShare}}%</td>
+						<td class="total">{{percent-num totalProObj.totalMs}}%</td>
+						<td class="total">{{percent-num totalProObj.totalGrowth}}%</td>
+						<td class="total">{{num-fixed4 totalProObj.totalEi}}</td>
+					</tr>
+				</tbody>
+			</table>
+		{{/bp-layout}}
+	{{/if}}
 {{/bp-layout}}
