@@ -77,9 +77,6 @@ export default Route.extend({
 				provinceMapData.push({ name: '香港', value: 0 });
 				provinceMapData.push({ name: '澳门', value: 0 });
 
-				console.log(provinceMapData);
-				console.log(provinceMapMaxValue);
-
 				return this.store.query('marketaggregation', {
 					'company_id': '5ca069e2eeefcc012918ec73',
 					market: firstMarketName,
