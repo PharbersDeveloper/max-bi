@@ -23,7 +23,6 @@ export default Controller.extend({
 			} else {
 				this.set('dateType', 4)
 			}
-			window.console.log(this.dateType);
 		},
 		toggle() {
 			if (this.collapsed) {
@@ -515,7 +514,6 @@ export default Controller.extend({
 						data: currentProductData.map(ele => ele.sales),
 					}
 				});
-				console.log(provinceCompetitiveLnadscape)
 				this.setProperties({
 					provinceMapData,
 					provinceMapMaxValue,
