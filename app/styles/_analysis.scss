@@ -1,148 +1,180 @@
 .mb-page-container.analysis {
-    padding: 24px;
-    .analysis {
-        height: 450px;
-    }
-    .analysis-top {
-        // padding-top: 24px;
-        // padding-left: 24px;
-        padding-bottom: 24px;
-    }
-    .return-btn {
-        font-family: PingFangSC-Medium;
-        font-size: 12px;
-        color: #6B778C;
-        line-height: 16px;
-        width: 40px;
-    }
-    // .analysis {
-        // padding: 24px;
-        // height: 105px;
-        .bp-page-header {
-            padding-top: 24px;
-            padding-bottom: 16px;
-            height: 450px;
-        }
-        .header-content-area {
-            width: 100%;
-            
-            .bar-double-title {
-                margin-left: 40px;
-                @extend %p-primary;
-                color: #344563;
-            }
-            .header-title {
-                @extend %title;
-                color: #172B4D;
-            }
-            .header-content {
-                height: 309px;
-                margin-bottom: 8px;
-                .header-content-sub {
-                    // width: 50%;
-                    -webkit-box-flex: 1;
-                    -webkit-flex: 1;
-                        -ms-flex: 1;
-                            flex: 1;
-                }
-                .time-title {
-                    min-width: 84px;
-                    @extend %p-primary;
-                }
-                .time-content {
-                    @extend %p-secondary;
-                }
-            }
-            .btn {
-                padding-left: 0;
-                min-width: 100px;
-                background: none;
-                color: #5E6C84;
-                @extend %p-primary;
-                // font-weight: bold;
-                border: none;
-                outline:none;
-                -webkit-box-shadow: none;
-                        box-shadow: none;
-                &:focus {
-                    -webkit-box-shadow: none;
-                            box-shadow: none;
-                    outline:none;
-                } /*for IE*/
-                &::-moz-focus-inner {
-                    border-color: transparent;
-                } 
-            }
-            
-        }
-        .bp-nav.flex-column {
-            padding: 0;
-            width: 100%;
-            .bp-nav-dropdown .dd-title {
-                padding-left: 18px;
-                color: #5E6C84;
-                // font-weight: bold;
-                width: 100px;
-                overflow: hidden;
-            }
-            .bp-nav-dropdown .bp-nav-dd-ul {
-                cursor: default;
-            }
-            .bp-nav-dropdown.hidden-child-list .dd-title::after {
-                -webkit-animation: none;
-                        animation: none;
-                right: unset;
-                margin-left: -74px;
-            }
-            .bp-nav-dropdown.show-child-list .dd-title::after {
-                -webkit-animation: none;
-                        animation: none;
-                right: auto;
-                margin-left: -80px;
-            }
-        }
-        .right-content-area {
-            width: 100%;
-            .chart-title {
-                .chart-title-outer .title-content {
-                    font-size: 14px;
-                    font-weight: bold;
-                }
-            }
-        }
-        .market-size-area {
-            -webkit-box-flex: 1;
-            -webkit-flex: 1;
-                -ms-flex: 1;
-                    flex: 1;
-        }
-        .pro-show {
-            // min-height: 197px;
-            background: #fff;
-            // flex: 1;
-        }
-        .line-area {
-            height: 490px;
-            min-height: 490px;
-            padding: 16px 24px;
-            background: #fff;
-        }
-        .region-show {
-            height: 428px;
-            min-height: 428px;
-            background: #fff;
-        }
-        .province-show {
-            margin-bottom: 24px;
-            height: 421px;
-            min-height: 421px;
-            background: #fff;
-        }
-        .city-show {
-            // margin-bottom: 24px;
-            height: 378px;
-            min-height: 378px;
-            background: #fff;
-        }
-    // }
+	padding: 24px;
+
+	.analysis {
+		height: 450px;
+	}
+
+	.analysis-top {
+		padding-bottom: 24px;
+	}
+
+	.return-btn {
+		font-size: 12px;
+		color: #6B778C;
+		line-height: 16px;
+		width: 40px;
+	}
+
+	.bp-page-header {
+		padding-top: 24px;
+		padding-bottom: 16px;
+		// height: 450px;
+	}
+
+	.header-content-area {
+		width: 100%;
+
+		.bar-double-title {
+			margin-left: 40px;
+			@extend %p-primary;
+			color: #344563;
+		}
+
+		.header-title {
+			@extend %title;
+			color: #172B4D;
+		}
+
+		.header-content {
+			height: 309px;
+			margin-bottom: 8px;
+
+			.header-content-sub {
+				// width: 50%;
+				-webkit-box-flex: 1;
+				-webkit-flex: 1;
+				-ms-flex: 1;
+				flex: 1;
+			}
+
+			.time-title {
+				min-width: 84px;
+				@extend %p-primary;
+			}
+
+			.time-content {
+				@extend %p-secondary;
+			}
+		}
+
+		.btn {
+			padding-left: 0;
+			min-width: 100px;
+			background: none;
+			color: #5E6C84;
+			@extend %p-primary;
+			// font-weight: bold;
+			border: none;
+			outline: none;
+			-webkit-box-shadow: none;
+			box-shadow: none;
+
+			&:focus {
+				-webkit-box-shadow: none;
+				box-shadow: none;
+				outline: none;
+			}
+
+			/*for IE*/
+			&::-moz-focus-inner {
+				border-color: transparent;
+			}
+		}
+
+	}
+
+	.bp-nav.flex-column {
+		padding: 0;
+		width: 100%;
+
+		.bp-nav-dropdown .dd-title {
+			padding-left: 18px;
+			color: #5E6C84;
+			// font-weight: bold;
+			width: 100px;
+			overflow: hidden;
+		}
+
+		.bp-nav-dropdown .bp-nav-dd-ul {
+			cursor: default;
+		}
+
+		.bp-nav-dropdown.hidden-child-list .dd-title::after {
+			-webkit-animation: none;
+			animation: none;
+			right: unset;
+			margin-left: -74px;
+		}
+
+		.bp-nav-dropdown.show-child-list .dd-title::after {
+			-webkit-animation: none;
+			animation: none;
+			right: auto;
+			margin-left: -80px;
+		}
+	}
+
+	.left-menu-card {
+		.choose-time-mode {
+			display: flex;
+
+			&>button {
+				flex: 1;
+			}
+		}
+	}
+
+	.right-content-area {
+		width: 100%;
+
+		.chart-title {
+			.chart-title-outer .title-content {
+				font-size: 14px;
+				font-weight: bold;
+			}
+		}
+	}
+
+	.market-size-area {
+		-webkit-box-flex: 1;
+		-webkit-flex: 1;
+		-ms-flex: 1;
+		flex: 1;
+	}
+
+	.pro-show {
+		// min-height: 197px;
+		background: #fff;
+		// flex: 1;
+	}
+
+	.line-area {
+		height: 490px;
+		min-height: 490px;
+		padding: 16px 24px;
+		background: #fff;
+	}
+
+	.region-show {
+		height: 428px;
+		min-height: 428px;
+		background: #fff;
+	}
+
+	.province-show {
+		margin-bottom: 24px;
+		height: 421px;
+		min-height: 421px;
+		background: #fff;
+	}
+
+	.city-show {
+		// margin-bottom: 24px;
+		height: 378px;
+		min-height: 378px;
+		background: #fff;
+	}
+
+	// }
 }

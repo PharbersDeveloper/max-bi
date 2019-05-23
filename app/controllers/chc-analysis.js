@@ -51,6 +51,7 @@ export default Controller.extend({
 		let result = this.store.query('availableDate', {
 			'info-id': this.curInfoId, 
 			'date-type': this.curDateType, 
+			'orderby': 'DATE',
 		});
 		result.then(res => {
 			this.set('curDate', res.firstObject);

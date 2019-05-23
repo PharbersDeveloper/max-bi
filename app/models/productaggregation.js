@@ -16,4 +16,5 @@ export default DS.Model.extend({
     salesYearGrowth: DS.attr('number'),
     salesSomYearGrowth: DS.attr('number'),
     salesEI: DS.attr('number'),
+    tier: DS.attr('string')
 });

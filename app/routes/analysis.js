@@ -4,17 +4,122 @@ import { A } from '@ember/array';
 
 export default Route.extend({
 	model() {
+		const store = this.store;
+
 		let markets = A([]),
 			firstMarketName = '',
+			regionsData = A([]),
+			provincesData = A([]),
+			citiesData = A([]),
+			provinceMapData = A([]),
+			doubleXAxisData = A([]),
+			doubleData = A([]),
+			provinceMapMaxValue = 0,
 			provinceProductPerformanceData = A([]),
-			provinceCompetitiveLnadscape = A([]);
+			provinceCompetitiveLnadscape = A([]),
+			yearMonths = A([]),
+			currentYear = new Date().getFullYear(),
+			settingEarliestYear = 2017,
+			defaultYearMonth = '',
+			overallInfo = {};
 
-		return this.store.query('market', { 'company-id': '5ca069e2eeefcc012918ec73' })
+		// 生成时间区间
+		for (let i = settingEarliestYear; i < currentYear; i++) {
+			for (let j = 1; j <= 12; j++) {
+				let month = j < 10 ? `0${j}` : String(j);
+				yearMonths.unshift(i + month);
+			}
+		}
+		defaultYearMonth = yearMonths.firstObject;
+
+		return store.query('market', {
+			'company-id': '5ca069e2eeefcc012918ec73'
+		})
 			.then(data => {
 				markets = data;
 				firstMarketName = markets.firstObject.market;
+				return store.findAll('region');
+			})
+			.then(data => {
+				regionsData = data;
 
-				this.store.query('productaggregation', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '0', 'ym': '201802', 'ym_type': 'MAT', 'address': '上海市' })
+				return store.findAll('province');
+			})
+			.then(data => {
+				provincesData = data;
+
+				return store.findAll('city');
+			})
+			.then(data => {
+				citiesData = data;
+				return store.query('market', { 'company-id': 'pharbers' });
+			})
+			.then(data => {
+				return store.queryRecord('overallInfo',
+					{
+						'market-id': data.firstObject.id,
+						'orderby': ''
+					});
+			})
+			.then(data => {
+				return store.query('sampleCover',
+					{ 'info-id': data.id });
+			})
+			.then(data => {
+
+				let xAxisData = A([]),
+					resultArr = A([{
+						name: 'Universe',
+						type: 'bar',
+						yAxisIndex: 1,
+						data: []
+					},
+					{
+						name: 'Sample',
+						type: 'bar',
+						yAxisIndex: 1,
+						data: []
+					},
+					{
+						name: 'Coverage Ratio',
+						type: 'line',
+						data: []
+					}]);
+
+				data.forEach(elem => {
+					xAxisData.push(elem.city.get('title'))
+					resultArr[0].data.push(elem.universeNum);
+					resultArr[1].data.push(elem.sampleNum);
+					resultArr[2].data.push(elem.coverageRatio);
+				});
+				doubleXAxisData = xAxisData;
+				doubleData = resultArr;
+				return store.query('marketaggregation', {
+					'company_id': '5ca069e2eeefcc012918ec73',
+					market: firstMarketName,
+					orderby: '-SALES',
+					ym: yearMonths.firstObject,
+					'ym_type': 'YTD',
+					'address_type': 'PROVINCE'
+				})
+			})
+			.then(data => {
+				provinceMapData = data.map(ele => {
+					return {
+						name: ele.address,
+						value: ele.sales,
+						productCount: ele.productCount,
+						salesSom: ele.salesSom,
+						salesYearGrowth: ele.salesYearGrowth,
+						salesEi: ele.salesEi,
+						salesSomYearGrowth: ele.salesSomYearGrowth,
+					}
+				});
+				provinceMapMaxValue = Math.ceil(provinceMapData.sortBy('value').lastObject.value);
+
+				provinceMapData.push({ name: '台湾', value: 0 });
+				provinceMapData.push({ name: '香港', value: 0 });
+				provinceMapData.push({ name: '澳门', value: 0 });
 
 				return this.store.query('marketaggregation', {
 					'company_id': '5ca069e2eeefcc012918ec73',
@@ -22,24 +127,12 @@ export default Route.extend({
 					orderby: '-SALES',
 					take: '10',
 					skip: '0',
-					ym: '201802',
-					'ym_type': 'MAT',
-					'address_type': 'CITY'
+					ym: yearMonths.firstObject,
+					'ym_type': 'YTD',
+					'address_type': 'PROVINCE'
 				})
 			})
 			.then(data => {
-				// companyId: DS.attr('string'),
-				// market: DS.attr('string'),
-				// address: DS.attr('string'),
-				// addressType: DS.attr('string'),
-				// ym: DS.attr('number'),
-				// ymType: DS.attr('string'),
-				// sales: DS.attr('number'),
-				// productCount: DS.attr('number'),
-				// salesSom: DS.attr('number'),
-				// salesYearGrowth: DS.attr('number'),
-				// salesSomYearGrowth: DS.attr('number'),
-				// salesEI: DS.attr('number'),
 				provinceProductPerformanceData = data.map(ele => {
 					let marSize = ele.sales / ele.salesSom;
 					return {
@@ -57,98 +150,52 @@ export default Route.extend({
 					'company_id': '5ca069e2eeefcc012918ec73',
 					market: firstMarketName,
 					orderby: 'SALES_RANK',
-					'gte[ym]': 201801,
-					'lte[ym]': 201812,
-					'ym_type': 'MAT',
-					address: '北京市',
-					'address_type': 'CITY',
+					'gte[ym]': '201801',
+					'lte[ym]': '201812',
+					'ym_type': 'YTD',
+					address: provincesData.firstObject.title,
+					'address_type': 'PROVINCE',
 					'lte[sales_rank]': 10,
+					'current[ym]': yearMonths.firstObject
 				})
 			})
 			.then(data => {
-				provinceCompetitiveLnadscape = A([{
-					name: 'MNC',
-					date: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05',
-						'2018-06', '2018-07', '2018-08',
-						'2018-09', '2018-10', '2018-11', '2018-12'],
-					data: [320, 332, 301, 334, 390, 330, 320, 255, 350, 337, 365, 912]
-				},
-				{
-					name: 'ELILILLY GROUP',
-					date: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05',
-						'2018-06', '2018-07', '2018-08',
-						'2018-09', '2018-10', '2018-11', '2018-12'],
-					data: [820, 932, 901, 934, 1290, 1330, 1320, 244, 365, 109, 203, 273]
-				}]);
-
-				let arr = [],
-					map = {},
-					dest = [],
-					proName = '',
-					dataArr = [],
-					dateArr = [],
-					arritem = [];
 				let increaseData = data.sortBy('ym'),
-					productList = increaseData.uniqBy('productName'),
-					ymList = increaseData.uniqBy('ym');
+					productList = increaseData.uniqBy('productName');
 
-				console.log(increaseData);
-				console.log(productList);
-				console.log(productList.map(ele => ele.productName));
-				console.log(ymList.map(ele => ele.ym));
-				console.log(increaseData.map(ele => ele.ym));
-				console.log(increaseData.map(ele => ele.productName).filter(ele => ele === '泰道'));
-
-				// data.forEach(item => {
-				// 	arr.push(item);
-				// })
-				//将大数组根据某项值分成若干小数组
-				// for (let i = 0, len = arr.length; i < len; i++) {
-				// 	var ai = arr[i];
-				// 	if (!map[ai.productName]) {
-				// 		dest.push({
-				// 			productName: ai.productName,
-				// 			item: [ai]
-				// 		});
-				// 		map[ai.productName] = ai;
-				// 	} else {
-				// 		for (let j = 0; j < dest.length; j++) {
-				// 			var dj = dest[j];
-				// 			if (dj.productName == ai.productName) {
-				// 				dj.item.push(ai);
-				// 				break;
-				// 			}
-				// 		}
-				// 	}
-				// }
-
-				// for (let i = 0; i < dest.length; i++) {
-				// 	dest[i].item.forEach(list => {
-				// 		proName = list.productName
-				// 		dateArr.push(list.ym)
-				// 		dataArr.push(list.sales)
-				// 	})
-				// 	arritem[i] = {
-				// 		name: proName,
-				// 		date: dateArr,
-				// 		data: dataArr
-				// 	}
-				// 	dateArr = [];
-				// 	dataArr = [];
-				// }
-				this.set('lineData', arritem)
+				provinceCompetitiveLnadscape = productList.map(ele => {
+					let currentProductData = increaseData.filterBy('productName', ele.productName).sortBy('ym');
+					return {
+						name: ele.productName,
+						date: currentProductData.map(ele => ele.ym),
+						data: currentProductData.map(ele => ele.sales),
+					}
+				});
+				return this.store.queryRecord('overview', {
+					'company_id': '5ca069e2eeefcc012918ec73',
+					'market': firstMarketName,
+				})
+			})
+			.then(data => {
+				overallInfo = data;
 			})
 			.then(() => {
 				return RSVP.hash({
+					yearMonths,
+					defaultYearMonth,
 					markets,
+					regionsData,
+					provincesData,
+					citiesData,
+					doubleXAxisData,
+					doubleData,
+					provinceMapData,
+					provinceMapMaxValue,
 					provinceProductPerformanceData,
-					provinceCompetitiveLnadscape
+					provinceCompetitiveLnadscape,
+					overallInfo,
 				});
 			})
-		// return RSVP.hash({
-		// 	markets: this.store.query('market',
-		// 		{ 'company-id': '5ca069e2eeefcc012918ec73' }),
-		// })
 	},
 	setupController(controller, model) {
 		let markets = model.markets,
@@ -160,14 +207,33 @@ export default Route.extend({
 				market: item.market,
 			}
 			marketArr.push(market)
-		})
-		// controller.set('ymValue', arrval.firstObject.ym);
-		// controller.set('timeArr', arrval);
-		// controller.set('marketsArr', markets);
+		});
+		// 设置 市场选择 datum / 默认市场
 		controller.set('marketArr', marketArr);
 		controller.set('marketValue', marketArr.firstObject);
-		controller.set('files', model.provinceProductPerformanceData)
+		// 设置 区域选择 datum / 默认区域
+		controller.set('regionsData', model.regionsData);
+		controller.set('defaultRegion', model.regionsData.firstObject);
+		// 设置 省份选择 datum / 默认省份
+		controller.set('provincesData', model.provincesData);
+		controller.set('defaultProvince', model.provincesData.firstObject);
+		// 设置 城市选择 datum / 默认城市
+		controller.set('citiesData', model.citiesData);
+		controller.set('defaultCity', model.citiesData.firstObject);
+		// 设置 日期选择 datum / 默认日期 / 默认时间区间模式 
+		controller.set('timeArr', model.yearMonths);
+		controller.set('defaultYearMonth', model.defaultYearMonth);
+		controller.set('buttonGroupValue', 1);
+		// 设置 样本覆盖率
+		controller.set('doubleXAxisData', model.doubleXAxisData);
+		controller.set('doubleData', model.doubleData);
+		// 设置 province 的 地图 / 表格 / 折线图
+		controller.set('provinceMapData', model.provinceMapData);
+		controller.set('provinceMapMaxValue', model.provinceMapMaxValue);
+
+		controller.set('provinceProductPerformanceData', model.provinceProductPerformanceData)
 		controller.set('provinceLineData', model.provinceCompetitiveLnadscape)
 
+		controller.set('overallInfo', model.overallInfo)
 	}
 });
