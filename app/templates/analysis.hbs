@@ -31,19 +31,19 @@
 							{{#bp-layout direction='col' classNames='header-content-sub mt-4 pt-2'}}
 								{{#bp-layout direction="row" classNames="data-time mb-2"}}
 									<p class="time-title mr-3">数据更新时间</p>
-									<p class="time-content">2019-05-07 13:00:00</p>
+									<p class="time-content">{{timehelper/time2fullformat (str2num overallInfo.updateTime)}}</p>
 								{{/bp-layout}}
 								{{#bp-layout direction="row" classNames="data-time mb-2"}}
 									<p class="time-title mr-3">数据覆盖周期</p>
-									<p class="time-content">2018-03-12~2019-05-06</p>
+									<p class="time-content">{{timehelper/time2ymd (str2num overallInfo.coverStartTime)}} ~ {{timehelper/time2ymd (str2num overallInfo.coverEndTime)}}</p>
 								{{/bp-layout}}
 								{{#bp-layout direction="row" classNames="data-time mb-2 mt-3"}}
 									<p class="time-title mr-3">医疗机构数</p>
-									<p class="time-content">100</p>
+									<p class="time-content">{{overallInfo.hospCount}}</p>
 								{{/bp-layout}}
 								{{#bp-layout direction="row" classNames="data-time mb-2"}}
 									<p class="time-title mr-3">行政区划数</p>
-									<p class="time-content">24</p>
+									<p class="time-content">{{overallInfo.regionCount}}</p>
 								{{/bp-layout}}
 							{{/bp-layout}}
 							{{#bp-layout direction='col' classNames="header-content-sub"}}
@@ -157,14 +157,14 @@
 					<p class="sel-title">Measure</p>
 					{{#bp-layout direction='row'}}
 						{{bp-dropdown-simple
-							valueId=modelId
+							valueId=rmb.id
 							options=rmb
 							widthSize='auto'
 							choosedValue=rmbChoosedValue
 							optionKey='name'
 							classNames='measure-select mr-2'}}
 						{{bp-dropdown-simple
-							valueId=modelId
+							valueId=million.id
 							options=million
 							choosedValue=millionChoosedValue
 							optionKey='name'
@@ -370,7 +370,7 @@
 						{{pro-show-table type='city' tableData=cityPer}}
 					{{/bp-layout}}
 					{{#bp-layout direction='col' classNames='line-area mt-4'}}
-						{{mb-chart-title title="Competitive Landscape by City" noSubtitle=true time=productdimension.firstObject.ym sel-group=true classNames='mb-4 chart-title'}}
+						{{mb-chart-title title="Competitive Landscape by City" noSubtitle=true time=productdimension.firstObject.ym sel-group=false classNames='mb-4 chart-title'}}
 						{{bp-line
                             lineData=lineData
                             grid=grid

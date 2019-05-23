@@ -20,7 +20,8 @@ export default Route.extend({
 			yearMonths = A([]),
 			currentYear = new Date().getFullYear(),
 			settingEarliestYear = 2017,
-			defaultYearMonth = '';
+			defaultYearMonth = '',
+			overallInfo = {};
 
 		// 生成时间区间
 		for (let i = settingEarliestYear; i < currentYear; i++) {
@@ -170,6 +171,13 @@ export default Route.extend({
 						data: currentProductData.map(ele => ele.sales),
 					}
 				});
+				return this.store.queryRecord('overview', {
+					'company_id': '5ca069e2eeefcc012918ec73',
+					'market': firstMarketName,
+				})
+			})
+			.then(data => {
+				overallInfo = data;
 			})
 			.then(() => {
 				return RSVP.hash({
@@ -184,7 +192,8 @@ export default Route.extend({
 					provinceMapData,
 					provinceMapMaxValue,
 					provinceProductPerformanceData,
-					provinceCompetitiveLnadscape
+					provinceCompetitiveLnadscape,
+					overallInfo,
 				});
 			})
 	},
@@ -225,5 +234,6 @@ export default Route.extend({
 		controller.set('provinceProductPerformanceData', model.provinceProductPerformanceData)
 		controller.set('provinceLineData', model.provinceCompetitiveLnadscape)
 
+		controller.set('overallInfo', model.overallInfo)
 	}
 });

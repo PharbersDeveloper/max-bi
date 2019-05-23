@@ -50,10 +50,16 @@ export default Controller.extend({
 		this.set('citybaseNumber', 100)
 
 	},
-	allData: observer('marketValue', 'defaultYearMonth', 'defaultRegion', 'defaultProvince', 'defaultCity', function () {
+	allData: observer('marketValue', 'defaultYearMonth', 'defaultRegion', 'defaultProvince', 'defaultCity', 'overallInfo', function () {
 		if (isEmpty(this.marketValue) || isEmpty(this.defaultYearMonth) || isEmpty(this.defaultRegion) || isEmpty(this.defaultProvince) || isEmpty(this.defaultCity)) {
 			return;
 		}
+		this.store.queryRecord('overview', {
+			'company_id': '5ca069e2eeefcc012918ec73',
+			'market': this.marketValue.market,
+		}).then(res =>{
+			this.set('overallInfo', res);
+		})
 		//City Analysis数据
 		this.store.query('productaggregation', { 
 			'company_id': '5ca069e2eeefcc012918ec73', 
@@ -121,7 +127,7 @@ export default Controller.extend({
 							let cityItem = {
 								city: item.address,
 								// reliable: item.sales,
-								tier: 0,
+								tier: item.tier,
 								size: marSize,
 								mGrowth: item.salesYearGrowth,
 								Psales: item.sales,
