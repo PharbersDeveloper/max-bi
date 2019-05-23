@@ -19,7 +19,7 @@ RUN npm update && \
 
 WORKDIR /app
 
-LABEL maxview.version=0.0.12
+LABEL maxview.version=0.0.13
 
 RUN git clone -b chsun-0515 https://github.com/PharbersDeveloper/max-bi.git && \
 	git clone https://github.com/PharbersDeveloper/BP-Components.git 
@@ -35,8 +35,7 @@ WORKDIR /app/max-bi
 RUN npm install && \
 	npm link bp-components && \
 	bower install foundation --allow-root && \
-	bower install ali-oss --allow-root && \
-	bower install jsonapi-datastore --allow-root
+	bower install ali-oss --allow-root
 
 RUN ember b --environment production
 
