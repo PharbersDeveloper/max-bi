@@ -215,6 +215,7 @@
 						{{mb-chart-title title="Regional Performance" noSubtitle=true classNames='chart-title ml-4'}}
 						{{bp-bar-stack eid='bp-stack'
                             chartColor=chartColor
+                            xData=stackXdata
                             chartData=stackData}}
 					</div>
 					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
@@ -244,7 +245,7 @@
 							classNames='chart-title'}}
 						{{pro-show-table
 							type='province' 
-							files=files}}
+							tableData=files}}
 					{{/bp-layout}}
 					{{#bp-layout direction='col' classNames='line-area mt-4'}}
 						{{mb-chart-title title="Competitive Landscape " noSubtitle=true classNames='chart-title mb-4'}}
@@ -258,7 +259,7 @@
 			{{else if (eq cur_tab_idx 3)}}
 				{{#bp-layout direction='col' classNames='right-content-area mt-4'}}
 					<div class="city-show pt-3 mb-4">
-						{{mb-chart-title title="BMS Product Growth vs. BMS Prouct Share" noSubtitle=true classNames='ml-4 chart-title'}}
+						{{mb-chart-title title="Product Growth vs. Prouct Share" noSubtitle=true classNames='ml-4 chart-title'}}
 						{{bp-scatter eid='bp-scatter' 
                             chartData=scatterData
                             chartColor=chartColor
@@ -266,11 +267,11 @@
 					</div>
 					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
 						{{mb-chart-title title="Product Performance by City" noSubtitle=true classNames='chart-title'}}
-						{{pro-show-table proByCity=proByCity totalProObj=totalProObj}}
+						{{pro-show-table tableData=proByCity totalProObj=totalProObj}}
 					{{/bp-layout}}
 					{{#bp-layout direction='col' classNames='pro-show mt-4 pt-3 pl-4 pr-4'}}
 						{{mb-chart-title title="City Performance" noSubtitle=true classNames='chart-title'}}
-						{{pro-show-table type='city'}}
+						{{pro-show-table type='city' tableData=cityPer}}
 					{{/bp-layout}}
 					{{#bp-layout direction='col' classNames='line-area mt-4'}}
 						{{mb-chart-title title="Competitive Landscape by City" noSubtitle=true time=productdimension.firstObject.ym sel-group=true classNames='mb-4 chart-title'}}

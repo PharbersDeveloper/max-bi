@@ -22,6 +22,11 @@ export default Controller.extend({
 	productTableListData: A([]),
 	totalProObj: null,
 	overallLineData: A([]),
+	productTableListDataByCity: A([]),
+	totalProObjByCity: null,
+	bubbleMapListData: A([]),
+	cityPerformenceData: null,
+	cityLineData: A([]),
 
 	overallInfo: computed('curMarket', function() {
 		let result = this.store.queryRecord('overallInfo', {'market-id': this.curMarket.id, 'orderby': ''});
@@ -200,17 +205,6 @@ export default Controller.extend({
 					result.forEach(ele => {
 						tempArrX.push(ele.date)
 						tempArrY.push(ele.value)
-						// if(ele.valueType == 1) {
-						// 	tempObj.sales = ele.value;
-						// } else if(ele.valueType == 2) {
-						// 	tempObj.growth = ele.value;
-						// } else if(ele.valueType == 3) {
-						// 	tempObj.marketShare = ele.value;
-						// } else if(ele.valueType == 4) {
-						// 	tempObj.ms = ele.value;
-						// } else if(ele.valueType == 5) {
-						// 	tempObj.ei = ele.value;
-						// }
 					})
 					tempObj.date = tempArrX;
 					tempObj.data = tempArrY;
@@ -225,6 +219,283 @@ export default Controller.extend({
         return result;
 	}),
 
+	bubbleMapList: computed('curInfoId', 'cur_tab_idx', 'curDate', 'dateDataStateFlag', 'curCity', function() {
+		if (this.curDate == undefined || this.curDate == null) {
+			return;
+		} 
+		if (this.curCity == undefined || this.curCity == null) {
+			return;
+		} 
+		let result = this.store.query('salesRecord', {
+			'info-id': this.curInfoId, 
+			'date': this.curDate.date,
+			'date-type': this.curDateType,
+			'address-id': this.curCity.addressId,
+			'address-type': this.cur_tab_idx,
+			'goods-type': 1,
+			'value-type': 1,
+			'orderby': '-VALUE',
+			'skip': 0,
+			'take': this.tableTake,
+		});
+		result.then(res => {
+			let tempRecords = A([]);
+			let finalArr = A([]);
+			res.forEach((elem, index, arr) => {
+				// let tempObj = {};
+				let tempArr = A([]);
+				tempArr[3] = elem.product.get('title');
+				tempRecords[index] = this.store.query('salesRecord', {
+					'info-id': this.curInfoId, 
+					'date': this.curDate.date,
+					'date-type': this.curDateType,
+					'address-id': this.curCity.addressId,
+					'address-type': this.cur_tab_idx,
+					'goods-type': 1,
+					'goods-id': elem.goodsId,
+					'orderby': 'VALUE_TYPE',
+					'skip': 0,
+				});
+				tempRecords[index].then(result => {
+					// window.console.log(result);
+					result.forEach(ele => {
+						if(ele.valueType == 1) {
+							tempArr[2] = ele.value;
+						} else if(ele.valueType == 2) {
+							tempArr[1] = ele.value;
+						} else if(ele.valueType == 3) {
+							tempArr[0] = ele.value;
+						}
+					})
+					finalArr.pushObject(A([tempArr]))
+					if(finalArr.length == arr.length) {
+						// window.console.log(finalArr);
+						this.set('bubbleMapListData', finalArr);
+					}
+				})
+			})
+		})
+        return result;
+	}),
+
+	productTableListByCity: computed('curInfoId', 'cur_tab_idx', 'curDate', 'dateDataStateFlag', 'curCity', function() {
+		if (this.curDate == undefined || this.curDate == null) {
+			return;
+		} 
+		if (this.curCity == undefined || this.curCity == null) {
+			return;
+		} 
+		let result = this.store.query('salesRecord', {
+			'info-id': this.curInfoId, 
+			'date': this.curDate.date,
+			'date-type': this.curDateType,
+			'address-id': this.curCity.addressId,
+			'address-type': this.cur_tab_idx,
+			'goods-type': 1,
+			'value-type': 1,
+			'orderby': '-VALUE',
+			'skip': 0,
+			'take': this.tableTake,
+		});
+		result.then(res => {
+			let tempRecords = A([]);
+			let finalArr = A([]);
+			res.forEach((elem, index, arr) => {
+				let tempObj = {};
+				tempObj.brand = elem.product.get('title');
+				tempRecords[index] = this.store.query('salesRecord', {
+					'info-id': this.curInfoId, 
+					'date': this.curDate.date,
+					'date-type': this.curDateType,
+					'address-id': this.curCity.addressId,
+					'address-type': this.cur_tab_idx,
+					'goods-type': 1,
+					'goods-id': elem.goodsId,
+					'orderby': 'VALUE_TYPE',
+					'skip': 0,
+				});
+				tempRecords[index].then(result => {
+					// window.console.log(result);
+					result.forEach(ele => {
+						if(ele.valueType == 1) {
+							tempObj.sales = ele.value;
+						} else if(ele.valueType == 2) {
+							tempObj.growth = ele.value;
+						} else if(ele.valueType == 3) {
+							tempObj.marketShare = ele.value;
+						} else if(ele.valueType == 4) {
+							tempObj.ms = ele.value;
+						} else if(ele.valueType == 5) {
+							tempObj.ei = ele.value;
+						}
+					})
+					finalArr.pushObject(tempObj)
+					if(finalArr.length == arr.length) {
+						// window.console.log(finalArr);
+						this.set('productTableListDataByCity', finalArr);
+						let totalPro = finalArr.reduce((total, ele) =>  {
+							return {
+								totalSales: Number(total.totalSales)+Number(ele.sales),
+								totalMarketShare:  Number(total.totalMarketShare)+ Number(ele.marketShare),
+								totalMs: total.totalMs+ele.ms,
+								totalGrowth: total.totalGrowth+ele.growth,
+								totalEi: total.totalEi+ele.ei
+							}
+						}, {totalSales:0, totalMarketShare: 0, totalMs: 0, totalGrowth: 0, totalEi: 0});
+						// console.log(totalPro)
+						this.set('totalProObjByCity', totalPro)
+					}
+				})
+			})
+		})
+        return result;
+	}),
+
+	cityPerformenceListByCity: computed('curInfoId', 'cur_tab_idx', 'curDate', 'dateDataStateFlag', 'curCity', function() {
+		if (this.curDate == undefined || this.curDate == null) {
+			return;
+		} 
+		if (this.curCity == undefined || this.curCity == null) {
+			return;
+		} 
+		let result1 = this.store.query('salesRecord', {
+			'info-id': this.curInfoId, 
+			'date': this.curDate.date,
+			'date-type': this.curDateType,
+			'address-type': 0,
+			'goods-type': 0,
+			'value-type': 1,
+			'orderby': '-VALUE',
+			'skip': 0,
+			'take': 1,
+		});
+		let result2 = this.store.query('salesRecord', {
+			'info-id': this.curInfoId, 
+			'date': this.curDate.date,
+			'date-type': this.curDateType,
+			'address-type': 0,
+			'goods-type': 0,
+			'value-type': 2,
+			'orderby': '-VALUE',
+			'skip': 0,
+			'take': 1,
+		});
+		let result3 = this.store.query('salesRecord', {
+			'info-id': this.curInfoId, 
+			'date': this.curDate.date,
+			'date-type': this.curDateType,
+			'address-id': this.curCity.addressId,
+			'address-type': this.cur_tab_idx,
+			'goods-type': 0,
+			// 'value-type': 2,
+			'orderby': 'VALUE_TYPE',
+			'skip': 0,
+			'take': 20,
+		});
+
+		let flag1 = false;
+		let flag2 = false;
+		let flag3 = false;
+		let tempObj = {};
+		tempObj.cityName = this.curCity.city.get('title');
+		tempObj.cityTier = this.curCity.city.get('cityTier');
+		result1.then(res => {
+			tempObj.marketSize = res.firstObject.value;
+			flag1 = true;
+			if(flag1 && flag2 && flag3) {
+				window.console.log(tempObj);
+				this.set('cityPerformenceData', tempObj);
+			}
+		})
+		result2.then(res => {
+			tempObj.marketGrowth = res.firstObject.value;
+			flag2 = true;
+			if(flag1 && flag2 && flag3) {
+				window.console.log(tempObj);
+				this.set('cityPerformenceData', tempObj);
+			}
+		})
+		result3.then(res => {
+			res.forEach(ele => {
+				if(ele.valueType == 1) {
+					tempObj.citySales = ele.value;
+				} else if(ele.valueType == 2) {
+					tempObj.cityGrowth = ele.value;
+				} else if(ele.valueType == 3) {
+					tempObj.cityShare = ele.value;
+				} else if(ele.valueType == 4) {
+					tempObj.cityShareChange = ele.value;
+				} else if(ele.valueType == 5) {
+					tempObj.cityei = ele.value;
+				}
+			})
+			flag3 = true;
+			if(flag1 && flag2 && flag3) {
+				window.console.log(tempObj);
+				this.set('cityPerformenceData', tempObj);
+			}
+		})
+        return result3;
+	}),
+
+	cityLineList: computed('curInfoId', 'cur_tab_idx', 'curDate', 'dateDataStateFlag', 'curCity', function() {
+		if (this.curDate == undefined || this.curDate == null) {
+			return;
+		} 
+		if (this.curCity == undefined || this.curCity == null) {
+			return;
+		} 
+		let result = this.store.query('salesRecord', {
+			'info-id': this.curInfoId, 
+			'date': this.curDate.date,
+			'date-type': this.curDateType,
+			'address-id': this.curCity.addressId,
+			'address-type': this.cur_tab_idx,
+			'goods-type': 1,
+			'value-type': 1,
+			'orderby': '-VALUE',
+			'skip': 0,
+			'take': this.tableTake,
+		});
+		result.then(res => {
+			let tempRecords = A([]);
+			let finalArr = A([]);
+			res.forEach((elem, index, arr) => {
+				let tempObj = {};
+				let tempArrX = A([]);
+				let tempArrY = A([]);
+				tempObj.name = elem.product.get('title');
+				tempRecords[index] = this.store.query('salesRecord', {
+					'info-id': this.curInfoId, 
+					// 'date': this.curDate.date,
+					'date-type': 2,
+					'address-id': this.curCity.addressId,
+					'address-type': this.cur_tab_idx,
+					'goods-type': 1,
+					'goods-id': elem.goodsId,
+					'value-type': 1,
+					'orderby': 'DATE',
+					'skip': 0,
+					'take': 8,
+				});
+				tempRecords[index].then(result => {
+					// window.console.log(result);
+					result.forEach(ele => {
+						tempArrX.push(ele.date)
+						tempArrY.push(ele.value)
+					})
+					tempObj.date = tempArrX;
+					tempObj.data = tempArrY;
+					finalArr.pushObject(tempObj);
+					if(finalArr.length == arr.length) {
+						// window.console.log(finalArr);
+						this.set('cityLineData', finalArr);
+					}
+				})
+			})
+		})
+        return result;
+	}),
 
     actions: {
         onTabClicked() {},
@@ -255,6 +526,8 @@ export default Controller.extend({
 		}]));
 		this.set('linelegendPosition', { right: '0', 'top': '60', type: 'scoll', orient: 'vertical' });
 		this.set('grid', { right: '200px', });
+		this.set('chartColor', A(['rgb(115,171,255)', 'rgb(121,226,242)', 'rgb(121,242,192)', 'rgb(54,179,126)', 'rgb(255,227,128)', 'rgb(255,171,0)', 'rgb(192,182,242)', 'rgb(101,84,192)', 'rgb(255,189,173)', 'rgb(255,143,115)', 'rgb(35,85,169)',]));
+		this.set('baseNumber', 100)
 	},
 
 	

@@ -41,12 +41,15 @@ export default Route.extend({
 				// salesSomYearGrowth: DS.attr('number'),
 				// salesEI: DS.attr('number'),
 				provinceProductPerformanceData = data.map(ele => {
+					let marSize = ele.sales / ele.salesSom;
 					return {
-						brand: ele.address,
-						sales: ele.sales,
-						market: ele.market,
-						ms: '*',
-						growth: '*',
+						province: ele.address,
+						marketSize: marSize,
+						markerGrowth: ele.salesYearGrowth,
+						productSales: ele.sales,
+						productShare: ele.salesSom,
+						productSalesChange: ele.salesSomYearGrowth,
+						// productGrowth: '*',
 						ei: ele.salesEI
 					}
 				})

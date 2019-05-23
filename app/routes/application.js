@@ -6,19 +6,19 @@ export default Route.extend({
 	oauth_service: service(),
 
 	beforeModel({ targetName }) {
-		// window.console.log("target route:" + targetName);
-		// if(targetName === 'oauth-callback') {
-		// 	return;
-		// }
+		window.console.log("target route:" + targetName);
+		if(targetName === 'oauth-callback') {
+			return;
+		}
 
-		// if(this.oauth_service.judgeAuth()) {
-		// 	window.console.log("have auth");
-		// 	if(targetName === 'index') {
-		// 		this.transitionTo('choose-channel');
-		// 	}
-		// } else {
-		// 	window.console.log("no auth!");
-		// 	this.transitionTo('index');
-		// }
+		if(this.oauth_service.judgeAuth()) {
+			window.console.log("have auth");
+			if(targetName === 'index') {
+				this.transitionTo('choose-channel');
+			}
+		} else {
+			window.console.log("no auth!");
+			this.transitionTo('index');
+		}
 	}
 });
