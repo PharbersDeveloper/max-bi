@@ -322,7 +322,6 @@
 							noSubtitle=true 
 							classNames='chart-title mb-4'}}
 						{{bp-line
-                            xaxisData=xaxisData
                             lineData=regionCompetitiveLnadscape
                             legendPosition=linelegendPosition
                             grid=grid}}
@@ -348,8 +347,7 @@
 					{{#bp-layout direction='col' classNames='line-area mt-4'}}
 						{{mb-chart-title title="Competitive Landscape " noSubtitle=true classNames='chart-title mb-4'}}
 						{{bp-line
-                            xaxisData=xaxisData
-                            lineData=provinceLineData
+                            lineData=provinceCompetitiveLnadscape
                             legendPosition=linelegendPosition
                             grid=grid}}
 					{{/bp-layout}}
@@ -374,7 +372,6 @@
 					{{#bp-layout direction='col' classNames='line-area mt-4'}}
 						{{mb-chart-title title="Competitive Landscape by City" noSubtitle=true time=productdimension.firstObject.ym sel-group=true classNames='mb-4 chart-title'}}
 						{{bp-line
-                            xaxisData=xaxisData
                             lineData=lineData
                             grid=grid
                             lineColor=chartColor
