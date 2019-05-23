@@ -12,6 +12,8 @@ export default Route.extend({
 			provincesData = A([]),
 			citiesData = A([]),
 			provinceMapData = A([]),
+			doubleXAxisData = A([]),
+			doubleData = A([]),
 			provinceMapMaxValue = 0,
 			provinceProductPerformanceData = A([]),
 			provinceCompetitiveLnadscape = A([]),
@@ -49,8 +51,49 @@ export default Route.extend({
 			})
 			.then(data => {
 				citiesData = data;
+				return store.query('market', { 'company-id': 'pharbers' });
+			})
+			.then(data => {
+				return store.queryRecord('overallInfo',
+					{
+						'market-id': data.firstObject.id,
+						'orderby': ''
+					});
+			})
+			.then(data => {
+				return store.query('sampleCover',
+					{ 'info-id': data.id });
+			})
+			.then(data => {
 
-				return this.store.query('marketaggregation', {
+				let xAxisData = A([]),
+					resultArr = A([{
+						name: 'Universe',
+						type: 'bar',
+						yAxisIndex: 1,
+						data: []
+					},
+					{
+						name: 'Sample',
+						type: 'bar',
+						yAxisIndex: 1,
+						data: []
+					},
+					{
+						name: 'Coverage Ratio',
+						type: 'line',
+						data: []
+					}]);
+
+				data.forEach(elem => {
+					xAxisData.push(elem.city.get('title'))
+					resultArr[0].data.push(elem.universeNum);
+					resultArr[1].data.push(elem.sampleNum);
+					resultArr[2].data.push(elem.coverageRatio);
+				});
+				doubleXAxisData = xAxisData;
+				doubleData = resultArr;
+				return store.query('marketaggregation', {
 					'company_id': '5ca069e2eeefcc012918ec73',
 					market: firstMarketName,
 					orderby: '-SALES',
@@ -136,6 +179,8 @@ export default Route.extend({
 					regionsData,
 					provincesData,
 					citiesData,
+					doubleXAxisData,
+					doubleData,
 					provinceMapData,
 					provinceMapMaxValue,
 					provinceProductPerformanceData,
@@ -170,6 +215,9 @@ export default Route.extend({
 		controller.set('timeArr', model.yearMonths);
 		controller.set('defaultYearMonth', model.defaultYearMonth);
 		controller.set('buttonGroupValue', 1);
+		// 设置 样本覆盖率
+		controller.set('doubleXAxisData', model.doubleXAxisData);
+		controller.set('doubleData', model.doubleData);
 		// 设置 province 的 地图 / 表格 / 折线图
 		controller.set('provinceMapData', model.provinceMapData);
 		controller.set('provinceMapMaxValue', model.provinceMapMaxValue);
