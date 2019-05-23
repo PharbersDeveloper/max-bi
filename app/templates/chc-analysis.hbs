@@ -9,7 +9,9 @@
                     {{#bp-layout direction='row' main='between'}}
                         <p class="header-title">县域渠道</p>
                         {{#bp-layout direction='row'}}
-                            {{#bp-button type='default'}}生成PPT报告{{/bp-button}}
+                            {{#bp-button type='default' onClick=(action 'downloadFile')}}
+                                生成PPT报告
+                            {{/bp-button}}
                         {{/bp-layout}}
                     {{/bp-layout}}
                     {{#bs-button active=notCollapsed onClick=(action "toggle")}}

@@ -1,8 +1,11 @@
 import Controller from '@ember/controller';
 import { A } from '@ember/array';
 import { computed } from '@ember/object'
+import { inject as service } from '@ember/service';
 
 export default Controller.extend({
+	ossService: service(),
+
     cur_tab_idx: 0,
 	tabs: A(['Overall Market', 'City Analysis']),
 	collapsed: false,
@@ -505,7 +508,16 @@ export default Controller.extend({
             } else {
                 this.set('collapsed', true)
             }
-        }
+		},
+		downloadFile() {
+			this.set('isLoading', true);
+			if(this.curMarket.get('id') == '5ce36373eeefcc03626e4012') {
+				this.downloadURI(this.genDownloadUrl(), 'diabetes.pptx')
+			} else {
+				this.downloadURI(this.genDownloadUrl(), 'calcium.pptx')
+			}
+			// this.set('downloadmodal', true);
+		},
 	},
 	
     init() {
@@ -560,5 +572,44 @@ export default Controller.extend({
 		});
 		this.set('xAxisDataHeader', xAxisData)
 		this.set('doubleData', resultArr)
-	}
+	},
+	downloadURI(url, name) {
+		fetch(url).then(response => {
+			if( response.status == 200 )
+                return response.blob()
+            throw new Error(`status: ${response.status}`)
+		}).then(blob => {
+				var link = document.createElement("a");
+				link.download = name;
+				// var blob = new Blob([response]);
+				link.href =  URL.createObjectURL(blob);
+				// link.href = url;
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+				// delete link;
+				this.set('isLoading', false);
+				this.set('cur_page_idx', 3)
+				window.console.log('success');
+				
+		}).catch(error=> {
+			this.set('isLoading', false);
+			window.console.log("failed. cause:", error)
+		})
+	},
+	genDownloadUrl() {
+		let accept = 'pdf';
+		let uuid = '';
+		window.console.log(this.curMarket);
+		
+		if(this.curMarket.get('id') == '5ce36373eeefcc03626e4012') {
+			uuid = 'diabetes.pptx';
+		} else {
+			uuid = 'calcium.pptx';
+		}
+		let client = this.ossService.get('ossClient');
+		let url = client.signatureUrl(accept + '/' + uuid, {expires: 43200});
+		window.console.log(url)
+		return url;
+	},
 });
