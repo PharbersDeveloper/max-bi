@@ -6,7 +6,6 @@ import { observer } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 
 export default Controller.extend({
-
 	cur_tab_idx: 0,
 	tabs: A(['Overall Market', 'Regional Analysis', 'Province Analysis', 'City Analysis']),
 	collapsed: false,
@@ -65,9 +64,21 @@ export default Controller.extend({
 		this.set('citybaseNumber', 100)
 
 	},
-	allData: observer('marketValue', function () {
+	allData: observer('marketValue', 'defaultYearMonth', 'defaultRegion', 'defaultProvince', 'defaultCity', function () {
+		if (isEmpty(this.marketValue) || isEmpty(this.defaultYearMonth) || isEmpty(this.defaultRegion) || isEmpty(this.defaultProvince) || isEmpty(this.defaultCity)) {
+			return;
+		}
 		//City Analysis数据
-		this.store.query('productaggregation', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '0', 'ym': '201802', 'ym_type': 'YTD', 'address': '上海市', 'address_type': 'CITY' })
+		this.store.query('productaggregation', { 
+			'company_id': '5ca069e2eeefcc012918ec73', 
+			'market': this.marketValue.market, 
+			'orderby': '-SALES', 
+			'take': '10', 
+			'skip': '0', 
+			'ym': this.defaultYearMonth, 
+			'ym_type': 'YTD', 
+			'address': this.defaultCity.title, 
+			'address_type': 'CITY' })
 			.then(res => {
 				let proArr = [];
 				let shareArr = [];
@@ -83,14 +94,6 @@ export default Controller.extend({
 					}
 					proArr.push(proItem);
 					this.set('proByCity', proArr)
-
-					//气泡图
-					let arr = [];
-					let shareItem = [item.salesSom, item.salesYearGrowth, item.sales, item.productName];
-					arr.push(shareItem);
-					shareArr.push(arr);
-					arr = [];
-					this.set('scatterData', shareArr);
 				})
 				let totalPro = res.reduce((total, ele) => {
 					return {
@@ -102,10 +105,30 @@ export default Controller.extend({
 					}
 				}, { totalSales: 0, totalMarketShare: 0, totalMs: 0, totalGrowth: 0, totalEi: 0 });
 				this.set('totalProObj', totalPro)
-
+				//气泡图
+				let salesSortData = res.sortBy('sales');
+				let maxValue = salesSortData.lastObject.sales/1200;
+				this.set('citybaseNumber', 50)
+				salesSortData.map(item =>{
+					let arr = [];
+					let shareItem = [item.salesSom, item.salesYearGrowth, item.sales, item.productName];
+					arr.push(shareItem);
+					shareArr.push(arr);
+					arr = [];
+					this.set('scatterData', shareArr);
+				})
+				
 				//表格2
-
-				this.store.query('marketaggregation', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '0', 'ym': '201802', 'ym_type': 'YTD', 'address_type': 'CITY' })
+				
+				this.store.query('marketaggregation', { 
+					'company_id': '5ca069e2eeefcc012918ec73', 
+					'market': this.marketValue.market, 
+					'orderby': '-SALES', 
+					'take': '10', 
+					'skip': '0', 
+					'ym': this.defaultYearMonth, 
+					'ym_type': 'YTD', 
+					'address_type': 'CITY'})
 					.then(res => {
 						let cityArr = [];
 						res.forEach(item => {
