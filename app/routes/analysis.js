@@ -63,80 +63,22 @@ export default Route.extend({
 					address: '北京市',
 					'address_type': 'CITY',
 					'lte[sales_rank]': 10,
+					'current[ym]': 201801
 				})
 			})
 			.then(data => {
-				provinceCompetitiveLnadscape = A([{
-					name: 'MNC',
-					date: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05',
-						'2018-06', '2018-07', '2018-08',
-						'2018-09', '2018-10', '2018-11', '2018-12'],
-					data: [320, 332, 301, 334, 390, 330, 320, 255, 350, 337, 365, 912]
-				},
-				{
-					name: 'ELILILLY GROUP',
-					date: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05',
-						'2018-06', '2018-07', '2018-08',
-						'2018-09', '2018-10', '2018-11', '2018-12'],
-					data: [820, 932, 901, 934, 1290, 1330, 1320, 244, 365, 109, 203, 273]
-				}]);
-
-				let arr = [],
-					map = {},
-					dest = [],
-					proName = '',
-					dataArr = [],
-					dateArr = [],
-					arritem = [];
 				let increaseData = data.sortBy('ym'),
-					productList = increaseData.uniqBy('productName'),
-					ymList = increaseData.uniqBy('ym');
+					productList = increaseData.uniqBy('productName');
 
-				console.log(increaseData);
-				console.log(productList);
-				console.log(productList.map(ele => ele.productName));
-				console.log(ymList.map(ele => ele.ym));
-				console.log(increaseData.map(ele => ele.ym));
-				console.log(increaseData.map(ele => ele.productName).filter(ele => ele === '泰道'));
+				provinceCompetitiveLnadscape = productList.map(ele => {
+					let currentProductData = increaseData.filterBy('productName', ele.productName).sortBy('ym');
+					return {
+						name: ele.productName,
+						date: currentProductData.map(ele => ele.ym),
+						data: currentProductData.map(ele => ele.sales),
 
-				// data.forEach(item => {
-				// 	arr.push(item);
-				// })
-				//将大数组根据某项值分成若干小数组
-				// for (let i = 0, len = arr.length; i < len; i++) {
-				// 	var ai = arr[i];
-				// 	if (!map[ai.productName]) {
-				// 		dest.push({
-				// 			productName: ai.productName,
-				// 			item: [ai]
-				// 		});
-				// 		map[ai.productName] = ai;
-				// 	} else {
-				// 		for (let j = 0; j < dest.length; j++) {
-				// 			var dj = dest[j];
-				// 			if (dj.productName == ai.productName) {
-				// 				dj.item.push(ai);
-				// 				break;
-				// 			}
-				// 		}
-				// 	}
-				// }
-
-				// for (let i = 0; i < dest.length; i++) {
-				// 	dest[i].item.forEach(list => {
-				// 		proName = list.productName
-				// 		dateArr.push(list.ym)
-				// 		dataArr.push(list.sales)
-				// 	})
-				// 	arritem[i] = {
-				// 		name: proName,
-				// 		date: dateArr,
-				// 		data: dataArr
-				// 	}
-				// 	dateArr = [];
-				// 	dataArr = [];
-				// }
-				this.set('lineData', arritem)
+					}
+				});
 			})
 			.then(() => {
 				return RSVP.hash({
@@ -145,10 +87,6 @@ export default Route.extend({
 					provinceCompetitiveLnadscape
 				});
 			})
-		// return RSVP.hash({
-		// 	markets: this.store.query('market',
-		// 		{ 'company-id': '5ca069e2eeefcc012918ec73' }),
-		// })
 	},
 	setupController(controller, model) {
 		let markets = model.markets,
