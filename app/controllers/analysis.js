@@ -37,6 +37,32 @@ export default Controller.extend({
 		this.set('grid', { right: '200px', });
 		this.set('rmbChoosedValue', 'RMB');
 		this.set('millionChoosedValue', 'Million');
+		this.set('timeArr', A([
+			{ id: 201812, name: '201812' },
+			{ id: 201811, name: '201811' },
+			{ id: 201810, name: '201810' },
+			{ id: 201809, name: '201809' },
+			{ id: 201808, name: '201808' },
+			{ id: 201807, name: '201807' },
+			{ id: 201806, name: '201806' },
+			{ id: 201805, name: '201805' },
+			{ id: 201804, name: '201804' },
+			{ id: 201803, name: '201803' },
+			{ id: 201802, name: '201802' },
+			{ id: 201801, name: '201801' },
+			{ id: 201712, name: '201712' },
+			{ id: 201711, name: '201711' },
+			{ id: 201710, name: '201710' },
+			{ id: 201709, name: '201709' },
+			{ id: 201708, name: '201708' },
+			{ id: 201707, name: '201707' },
+			{ id: 201706, name: '201706' },
+			{ id: 201705, name: '201705' },
+			{ id: 201704, name: '201704' },
+			{ id: 201703, name: '201703' },
+			{ id: 201702, name: '201702' },
+			{ id: 201701, name: '201701' },
+		]),)
 		this.set('lineData', A([{
 			name: '',
 			date: [],
@@ -182,8 +208,9 @@ export default Controller.extend({
 	},
 	allData: observer('marketValue', function () {
 		//City Analysis数据
-		this.store.query('productaggregation', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '0', 'ym': '201802', 'ym_type': 'MAT', 'address': '上海市' })
+		this.store.query('productaggregation', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '0', 'ym': '201802', 'ym_type': 'MAT', 'address': '上海市', 'address_type': 'CITY' })
 			.then(res => {
+				console.log(res)
 				let proArr = [];
 				let shareArr = [];
 				res.forEach(item => {
@@ -219,9 +246,10 @@ export default Controller.extend({
 				this.set('totalProObj', totalPro)
 
 				//表格2
-				let cityArr = [];
+				
 				this.store.query('marketaggregation', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '0', 'ym': '201802', 'ym_type': 'MAT', 'address_type': 'CITY' })
 					.then(res => {
+						let cityArr = [];
 						res.forEach(item => {
 							let marSize = item.sales / item.salesSom;
 							let cityItem = {
@@ -286,8 +314,9 @@ export default Controller.extend({
 			})
 
 			//Regional Analysis数据
-			this.store.query('productaggregation', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '10', 'ym': '201802', 'ym_type': 'MAT', 'address_type': 'CITY', })
+			this.store.query('productaggregation', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '10', 'ym': '201802', 'ym_type': 'MAT', 'address_type': 'REGION', })
 			.then(data => {
+				//堆叠柱状图
 				let increastData = data.sortBy('ym'),
 					cities = data.uniqBy('address').sortBy('address'),
 					productList = increastData.uniqBy('productName'),
@@ -327,5 +356,34 @@ export default Controller.extend({
 				this.set('stackXdata', cities.map(ele=>ele.address));
 				this.set('stackData', result);
 			})
+			this.store.query('marketaggregation', { 
+				'company_id': '5ca069e2eeefcc012918ec73', 
+				'market': 'ONC_other', 
+				'orderby': '-SALES', 
+				'take': '10', 
+				'skip': '0', 
+				'ym': '201802', 
+				'ym_type': 'MAT', 
+				'address_type': 'REGION' })
+					.then(res => {
+						let cityArr = [];
+						res.forEach(item => {
+							let marSize = item.sales / item.salesSom;
+							let cityItem = {
+								city: item.address,
+								// reliable: item.sales,
+								tier: 0,
+								size: marSize,
+								mGrowth: item.salesYearGrowth,
+								Psales: item.sales,
+								share: item.salesSom,
+								Pchange: item.salesSomYearGrowth,
+								// pGrowth: item,
+								ei: item.salesEI,
+							}
+							cityArr.push(cityItem);
+							this.set('cityPer', cityArr)
+						})
+					})
 	})
 });
