@@ -46,7 +46,7 @@ export default Controller.extend({
 		},]));
 		this.set('chartColor', A(['rgb(115,171,255)', 'rgb(121,226,242)', 'rgb(121,242,192)', 'rgb(54,179,126)', 'rgb(255,227,128)', 'rgb(255,171,0)', 'rgb(192,182,242)', 'rgb(101,84,192)', 'rgb(255,189,173)', 'rgb(255,143,115)', 'rgb(35,85,169)',]));
 		this.set('baseNumber', 250)
-		this.set('citybaseNumber', 100)
+		this.set('citybaseNumber', 20)
 
 	},
 	allData: observer('marketValue', 'defaultYearMonth', 'defaultRegion', 'defaultProvince', 'defaultCity', 'overallInfo', function () {
@@ -98,7 +98,7 @@ export default Controller.extend({
 				this.set('totalProObj', totalPro)
 				//气泡图
 				let salesSortData = res.sortBy('sales');
-				this.set('citybaseNumber', 50)
+				// this.set('citybaseNumber', 50)
 				salesSortData.map(item =>{
 					let arr = [];
 					let shareItem = [item.salesSom, item.salesYearGrowth, item.sales, item.productName];

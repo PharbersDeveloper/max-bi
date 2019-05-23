@@ -52,7 +52,7 @@ export default Controller.extend({
 		let result = this.store.query('availableDate', {
 			'info-id': this.curInfoId, 
 			'date-type': this.curDateType, 
-			'orderby': 'DATE',
+			'orderby': '-DATE',
 		});
 		result.then(res => {
 			this.set('curDate', res.firstObject);
@@ -412,7 +412,7 @@ export default Controller.extend({
 			}
 			flag1 = true;
 			if(flag1 && flag2 && flag3) {
-				window.console.log(tempObj);
+				// window.console.log(tempObj);
 				this.set('cityPerformenceData', tempObj);
 			}
 		})
@@ -424,7 +424,7 @@ export default Controller.extend({
 			}
 			flag2 = true;
 			if(flag1 && flag2 && flag3) {
-				window.console.log(tempObj);
+				// window.console.log(tempObj);
 				this.set('cityPerformenceData', tempObj);
 			}
 		})
@@ -444,7 +444,7 @@ export default Controller.extend({
 			})
 			flag3 = true;
 			if(flag1 && flag2 && flag3) {
-				window.console.log(tempObj);
+				// window.console.log(tempObj);
 				this.set('cityPerformenceData', tempObj);
 			}
 		})
