@@ -9,7 +9,26 @@
                     {{#bp-layout direction='row' main='between'}}
                         <p class="header-title">县域渠道</p>
                         {{#bp-layout direction='row'}}
-                            {{#bp-button type='default'}}生成PPT报告{{/bp-button}}
+                            {{#if isLoading}}
+                                {{!-- {{#bp-layout direction='row' cross='center' classNames='loading-btn'}}
+                                    {{#bp-button disabled=true classNames='login-btn loading'}}
+                                        即刻获取
+                                        <div class="spinner-border" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    {{/bp-button}}
+                                {{/bp-layout}} --}}
+                                {{#bp-button classNames='download-btn' type='default' disabled=true onClick=(action 'downloadFile')}}
+                                    生成PPT报告
+                                    <div class="spinner-border" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                {{/bp-button}}
+                            {{else}}
+                                {{#bp-button classNames='download-btn' type='default' onClick=(action 'downloadFile')}}
+                                    生成PPT报告
+                                {{/bp-button}}
+                            {{/if}}
                         {{/bp-layout}}
                     {{/bp-layout}}
                     {{#bs-button active=notCollapsed onClick=(action "toggle")}}

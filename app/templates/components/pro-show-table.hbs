@@ -5,9 +5,9 @@
 			<table class="table stall-point-table bg-white">
 				<thead class="table-head">
 					<th>省份</th>
-					<th>Market Size</th>
+					<th>Market Size(Million)</th>
 					<th>Market Growth</th>
-					<th>Product Sales</th>
+					<th>Product Sales(Million)</th>
 					<th>Product Share</th>
 					<th>Product Share Change</th>
 					{{!-- <th>Product Growth</th> --}}
@@ -17,9 +17,9 @@
 					{{#each tableData as |item|}}
 						<tr class="title m-2">
 							<td>{{item.province}}</td>
-							<td>{{item.marketSize}}</td>
+							<td>{{num2mil-fixed2 item.marketSize}}</td>
 							<td>{{percent-num item.markerGrowth}}%</td>
-							<td>{{item.productSales}}</td>
+							<td>{{num2mil-fixed2 item.productSales}}</td>
 							<td>{{percent-num item.productShare}}%</td>
 							<td>{{percent-num item.productSalesChange}}%</td>
 							{{!-- <td>{{item.productGrowth}}</td> --}}
@@ -36,9 +36,9 @@
 					<th>City</th>
 					{{!-- <th>Reliable City</th> --}}
 					<th>City Tier</th>
-					<th>Market Size</th>
+					<th>Market Size(Million)</th>
 					<th>Market Growth</th>
-					<th>Product Sales</th>
+					<th>Product Sales(Million)</th>
 					<th>Product Share</th>
 					<th>Product Change</th>
 					{{!-- <th>Product Growth</th> --}}
@@ -49,9 +49,9 @@
 						<tr class="title m-2">
 							<td>{{item.city}}</td>
 							<td>{{item.tier}}</td>
-							<td>{{item.size}}</td>
+							<td>{{num2mil-fixed2 item.size}}</td>
 							<td>{{percent-num item.mGrowth}}%</td>
-							<td>{{item.Psales}}</td>
+							<td>{{num2mil-fixed2 item.Psales}}</td>
 							<td>{{percent-num item.share}}%</td>
 							<td>{{percent-num item.Pchange}}%</td>
 							<td>{{num-fixed4 item.ei}}</td>
@@ -116,14 +116,14 @@
 							<td>{{num-fixed4 item.ei}}</td>
 						</tr>
 					{{/each}}
-					<tr class="title m-2">
+					{{!-- <tr class="title m-2">
 						<td class="total">总计</td>
 						<td class="total">{{num2mil-fixed2 totalProObj.totalSales}}</td>
 						<td class="total">{{percent-num totalProObj.totalMarketShare}}%</td>
 						<td class="total">{{percent-num totalProObj.totalMs}}%</td>
 						<td class="total">{{percent-num totalProObj.totalGrowth}}%</td>
 						<td class="total">{{num-fixed4 totalProObj.totalEi}}</td>
-					</tr>
+					</tr> --}}
 				</tbody>
 			</table>
 		{{/bp-layout}}

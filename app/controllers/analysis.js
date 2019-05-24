@@ -23,7 +23,6 @@ export default Controller.extend({
 			} else {
 				this.set('dateType', 4)
 			}
-			window.console.log(this.dateType);
 		},
 		toggle() {
 			if (this.collapsed) {
@@ -45,29 +44,21 @@ export default Controller.extend({
 			date: [],
 			data: []
 		},]));
-		// this.set('lineColor',  A(['rgb(115,171,255)', 'rgb(255,227,128)', 'rgb(73,229,245)','rgb(52,246,188)', 'rgb(54,179,126)']));
-		// this.set('legendPosition', { x: 'center', y: 'center', });
-		// this.set('scatterData', A([
-		// 	[[66666, 57, 100000, '']],
-		// 	[[12225, 81, 100000, '']],
-		// 	[[55555, 57, 100000, '']],
-		// 	[[33333, 45, 100000, '']],
-		// 	[[22222, 57, 255555, '']]
-		// ]));
-		// this.set('stackData', A([
-		// 	{ name: '111', data: [5, 20, 36, 10, 10, 20] },
-		// 	{ name: '222', data: [40, 22, 18, 35, 42, 40] },
-		// 	{ name: '333', data: [40, 22, 18, 35, 42, 40] },
-		// ]));
 		this.set('chartColor', A(['rgb(115,171,255)', 'rgb(121,226,242)', 'rgb(121,242,192)', 'rgb(54,179,126)', 'rgb(255,227,128)', 'rgb(255,171,0)', 'rgb(192,182,242)', 'rgb(101,84,192)', 'rgb(255,189,173)', 'rgb(255,143,115)', 'rgb(35,85,169)',]));
 		this.set('baseNumber', 250)
-		this.set('citybaseNumber', 100)
+		this.set('citybaseNumber', 20)
 
 	},
-	allData: observer('marketValue', 'defaultYearMonth', 'defaultRegion', 'defaultProvince', 'defaultCity', function () {
+	allData: observer('marketValue', 'defaultYearMonth', 'defaultRegion', 'defaultProvince', 'defaultCity', 'overallInfo', function () {
 		if (isEmpty(this.marketValue) || isEmpty(this.defaultYearMonth) || isEmpty(this.defaultRegion) || isEmpty(this.defaultProvince) || isEmpty(this.defaultCity)) {
 			return;
 		}
+		this.store.queryRecord('overview', {
+			'company_id': '5ca069e2eeefcc012918ec73',
+			'market': this.marketValue.market,
+		}).then(res =>{
+			this.set('overallInfo', res);
+		})
 		//City Analysis数据
 		this.store.query('productaggregation', { 
 			'company_id': '5ca069e2eeefcc012918ec73', 
@@ -107,8 +98,7 @@ export default Controller.extend({
 				this.set('totalProObj', totalPro)
 				//气泡图
 				let salesSortData = res.sortBy('sales');
-				let maxValue = salesSortData.lastObject.sales/1200;
-				this.set('citybaseNumber', 50)
+				// this.set('citybaseNumber', 50)
 				salesSortData.map(item =>{
 					let arr = [];
 					let shareItem = [item.salesSom, item.salesYearGrowth, item.sales, item.productName];
@@ -136,7 +126,7 @@ export default Controller.extend({
 							let cityItem = {
 								city: item.address,
 								// reliable: item.sales,
-								tier: 0,
+								tier: item.tier,
 								size: marSize,
 								mGrowth: item.salesYearGrowth,
 								Psales: item.sales,
@@ -152,14 +142,14 @@ export default Controller.extend({
 				//多条折线图
 				this.store.query('productaggregation', {
 					'company_id': '5ca069e2eeefcc012918ec73',
-					'market': 'ONC_other',
+					'market': this.marketValue.market,
+					'gte[ym]': this.defaultYearMonth.slice(0,4) + '01',
+					'lte[ym]': this.defaultYearMonth,
 					'orderby': 'SALES_RANK',
-					'gte[ym]': '201801',
-					'lte[ym]': '201812',
 					'ym_type': 'YTD',
-					'address': '上海市',
+					'address': this.defaultCity.title,
 					'address_type': 'CITY',
-					'current[ym]': '201801',
+					'current[ym]': this.defaultYearMonth,
 					'lte[sales_rank]': '10'
 				})
 					.then(res => {
@@ -206,7 +196,15 @@ export default Controller.extend({
 			})
 
 		//Regional Analysis数据
-		this.store.query('productaggregation', { 'company_id': '5ca069e2eeefcc012918ec73', 'market': 'ONC_other', 'orderby': '-SALES', 'take': '10', 'skip': '10', 'ym': '201802', 'ym_type': 'YTD', 'address_type': 'REGION', })
+		this.store.query('productaggregation', { 
+			'company_id': '5ca069e2eeefcc012918ec73', 
+			'market': this.marketValue.market, 
+			'orderby': '-SALES', 
+			'take': '10', 
+			'skip': '10', 
+			'ym': this.defaultYearMonth, 
+			'ym_type': 'YTD', 
+			'address_type': 'REGION',})
 			.then(data => {
 				//堆叠柱状图
 				let increastData = data.sortBy('ym'),
@@ -253,11 +251,11 @@ export default Controller.extend({
 		//region表格
 		this.store.query('productaggregation', {
 			'company_id': '5ca069e2eeefcc012918ec73',
-			'market': 'ONC_other',
+			'market': this.marketValue.market,
 			'orderby': '-SALES',
 			'take': '10',
 			'skip': '0',
-			'ym': '201802',
+			'ym': this.defaultYearMonth,
 			'ym_type': 'YTD',
 			'address_type': 'REGION'
 		})
@@ -289,14 +287,14 @@ export default Controller.extend({
 		//region多折线图
 		this.store.query('productaggregation', {
 			'company_id': '5ca069e2eeefcc012918ec73',
-			'market': 'ONC_other',
+			'market': this.marketValue.market,
 			'orderby': 'SALES_RANK',
-			'current[ym]': '201801',
-			'gte[ym]': '201701',
-			'lte[ym]': '201812',
+			'current[ym]': this.defaultYearMonth,
+			'gte[ym]': this.defaultYearMonth.slice(0,4) + '01',
+			'lte[ym]': this.defaultYearMonth,
 			'ym_type': 'YTD',
 			'address_type': 'REGION',
-			'address': '北京',
+			'address': this.defaultRegion.title,
 			'lte[sales_rank]': '10'
 		})
 			.then(data => {
@@ -317,11 +315,11 @@ export default Controller.extend({
 		//overall两个卡片数据
 		this.store.query('productaggregation', {
 			'company_id': '5ca069e2eeefcc012918ec73',
-			'market': 'ONC_other',
+			'market': this.marketValue.market,
 			'orderby': 'SALES_RANK',
 			'take': '1',
 			'skip': '0',
-			'ym': '201802',
+			'ym': this.defaultYearMonth,
 			'ym_type': 'YTD',
 			'address_type': 'NATIONAL'
 		})
@@ -357,11 +355,11 @@ export default Controller.extend({
 		//overall表格
 		this.store.query('productaggregation', {
 			'company_id': '5ca069e2eeefcc012918ec73',
-			'market': 'ONC_other',
+			'market': this.marketValue.market,
 			'orderby': '-SALES',
 			'take': '10',
 			'skip': '0',
-			'ym': '201802',
+			'ym': this.defaultYearMonth,
 			'ym_type': 'YTD',
 			'address_type': 'NATIONAL'
 		})
@@ -393,11 +391,11 @@ export default Controller.extend({
 		//overall多折线图
 		this.store.query('productaggregation', {
 			'company_id': '5ca069e2eeefcc012918ec73',
-			'market': 'ONC_other',
+			'market': this.marketValue.market,
 			'orderby': 'SALES_RANK',
-			'current[ym]': '201801',
-			'gte[ym]': '201801',
-			'lte[ym]': '201812',
+			'current[ym]': this.defaultYearMonth,
+			'gte[ym]': this.defaultYearMonth.slice(0,4) + '01',
+			'lte[ym]': this.defaultYearMonth,
 			'ym_type': 'YTD',
 			'address_type': 'NATIONAL',
 			'lte[sales_rank]': '10'
@@ -418,11 +416,6 @@ export default Controller.extend({
 				this.set('overallCompetitiveLnadscape', overallCompetitiveLnadscape);
 			})
 	}),
-
-	// provinceMapData: alias('provinceData.provinceMapData'),
-	// provinceMapMaxValue: alias('provinceData.provinceMapMaxValue'),
-	// provinceProductPerformanceData: alias('provinceData.provinceProductPerformanceData'),
-	// provinceCompetitiveLnadscape: alias('provinceData.provinceCompetitiveLnadscape'),
 	provinceData: observer('marketValue.market', 'defaultYearMonth', 'defaultProvince.id', function () {
 		const store = this.store;
 
@@ -442,12 +435,6 @@ export default Controller.extend({
 				provinceProductPerformanceData,
 				provinceCompetitiveLnadscape
 			})
-			// return {
-			// 	provinceMapData,
-			// 	provinceMapMaxValue,
-			// 	provinceProductPerformanceData,
-			// 	provinceCompetitiveLnadscape
-			// };
 			return null;
 		}
 
@@ -506,8 +493,8 @@ export default Controller.extend({
 					'company_id': '5ca069e2eeefcc012918ec73',
 					market,
 					orderby: 'SALES_RANK',
-					'gte[ym]': '201801',
-					'lte[ym]': '201812',
+					'gte[ym]': ym.slice(0,4) + '01',
+					'lte[ym]': ym,
 					'ym_type': 'YTD',
 					address,
 					'address_type': 'PROVINCE',
@@ -527,7 +514,6 @@ export default Controller.extend({
 						data: currentProductData.map(ele => ele.sales),
 					}
 				});
-
 				this.setProperties({
 					provinceMapData,
 					provinceMapMaxValue,

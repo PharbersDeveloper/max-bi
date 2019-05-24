@@ -48,6 +48,8 @@
     "qunit-dom": "^0.7.1"
   },
   "dependencies": {
+    "bower-components": "^1.0.0",
+		"ali-oss": "^6.0.1",
     "bp-components": "*",
     "ember-cli-sass": "^8.0.1",
     "sass": "^1.14.0"
