@@ -246,6 +246,7 @@ export default Controller.extend({
 		result.then(res => {
 			let tempRecords = A([]);
 			let finalArr = A([]);
+			let sortArr = A([]);
 			res.forEach((elem, index, arr) => {
 				// let tempObj = {};
 				let tempArr = A([]);
@@ -266,6 +267,7 @@ export default Controller.extend({
 					result.forEach(ele => {
 						if(ele.valueType == 1) {
 							tempArr[2] = ele.value;
+							sortArr.pushObject(ele.value);
 						} else if(ele.valueType == 2) {
 							tempArr[1] = ele.value;
 						} else if(ele.valueType == 3) {
@@ -274,7 +276,11 @@ export default Controller.extend({
 					})
 					finalArr.pushObject(A([tempArr]))
 					if(finalArr.length == arr.length) {
+						sortArr.sort(this.sortNumber);
+						let baseNumber = Math.sqrt(sortArr[0]) / 116;
 						// window.console.log(finalArr);
+						// window.console.log(sortArr);
+						this.set('baseNumber', baseNumber);
 						this.set('bubbleMapListData', finalArr);
 					}
 				})
@@ -620,5 +626,8 @@ export default Controller.extend({
 		let url = client.signatureUrl(accept + '/' + uuid, {expires: 43200});
 		window.console.log(url)
 		return url;
+	},
+	sortNumber(a,b){
+		return b - a;
 	},
 });
