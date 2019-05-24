@@ -7,13 +7,13 @@ export default Route.extend({
 
 	beforeModel({ targetName }) {
 		window.console.log("target route:" + targetName);
-		if(targetName === 'oauth-callback') {
+		if (targetName === 'oauth-callback') {
 			return;
 		}
 
-		if(this.oauth_service.judgeAuth()) {
+		if (this.oauth_service.judgeAuth()) {
 			window.console.log("have auth");
-			if(targetName === 'index') {
+			if (targetName === 'index') {
 				this.transitionTo('choose-channel');
 			}
 		} else {

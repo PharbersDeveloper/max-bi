@@ -45,7 +45,6 @@ export default Controller.extend({
 			data: []
 		},]));
 		this.set('chartColor', A(['rgb(115,171,255)', 'rgb(121,226,242)', 'rgb(121,242,192)', 'rgb(54,179,126)', 'rgb(255,227,128)', 'rgb(255,171,0)', 'rgb(192,182,242)', 'rgb(101,84,192)', 'rgb(255,189,173)', 'rgb(255,143,115)', 'rgb(35,85,169)',]));
-		this.set('baseNumber', 250)
 		this.set('citybaseNumber', 20)
 
 	},
@@ -56,20 +55,21 @@ export default Controller.extend({
 		this.store.queryRecord('overview', {
 			'company_id': '5ca069e2eeefcc012918ec73',
 			'market': this.marketValue.market,
-		}).then(res =>{
+		}).then(res => {
 			this.set('overallInfo', res);
 		})
 		//City Analysis数据
-		this.store.query('productaggregation', { 
-			'company_id': '5ca069e2eeefcc012918ec73', 
-			'market': this.marketValue.market, 
-			'orderby': '-SALES', 
-			'take': '10', 
-			'skip': '0', 
-			'ym': this.defaultYearMonth, 
-			'ym_type': 'YTD', 
-			'address': this.defaultCity.title, 
-			'address_type': 'CITY' })
+		this.store.query('productaggregation', {
+			'company_id': '5ca069e2eeefcc012918ec73',
+			'market': this.marketValue.market,
+			'orderby': '-SALES',
+			'take': '10',
+			'skip': '0',
+			'ym': this.defaultYearMonth,
+			'ym_type': 'YTD',
+			'address': this.defaultCity.title,
+			'address_type': 'CITY'
+		})
 			.then(res => {
 				let proArr = [];
 				let shareArr = [];
@@ -97,9 +97,12 @@ export default Controller.extend({
 				}, { totalSales: 0, totalMarketShare: 0, totalMs: 0, totalGrowth: 0, totalEi: 0 });
 				this.set('totalProObj', totalPro)
 				//气泡图
-				let salesSortData = res.sortBy('sales');
-				// this.set('citybaseNumber', 50)
-				salesSortData.map(item =>{
+				let salesSortData = res.sortBy('sales'),
+					baseNumber = Math.sqrt(salesSortData.lastObject.sales) / 116
+
+				// 将最大值除以设计能接受的 起泡图的 symbolSize 的值，就等于 baseNumber
+				this.set('citybaseNumber', baseNumber)
+				salesSortData.map(item => {
 					let arr = [];
 					let shareItem = [item.salesSom, item.salesYearGrowth, item.sales, item.productName];
 					arr.push(shareItem);
@@ -107,18 +110,19 @@ export default Controller.extend({
 					arr = [];
 					this.set('scatterData', shareArr);
 				})
-				
+
 				//表格2
-				
-				this.store.query('marketaggregation', { 
-					'company_id': '5ca069e2eeefcc012918ec73', 
-					'market': this.marketValue.market, 
-					'orderby': '-SALES', 
-					'take': '10', 
-					'skip': '0', 
-					'ym': this.defaultYearMonth, 
-					'ym_type': 'YTD', 
-					'address_type': 'CITY'})
+
+				this.store.query('marketaggregation', {
+					'company_id': '5ca069e2eeefcc012918ec73',
+					'market': this.marketValue.market,
+					'orderby': '-SALES',
+					'take': '10',
+					'skip': '0',
+					'ym': this.defaultYearMonth,
+					'ym_type': 'YTD',
+					'address_type': 'CITY'
+				})
 					.then(res => {
 						let cityArr = [];
 						res.forEach(item => {
@@ -143,7 +147,7 @@ export default Controller.extend({
 				this.store.query('productaggregation', {
 					'company_id': '5ca069e2eeefcc012918ec73',
 					'market': this.marketValue.market,
-					'gte[ym]': this.defaultYearMonth.slice(0,4) + '01',
+					'gte[ym]': this.defaultYearMonth.slice(0, 4) + '01',
 					'lte[ym]': this.defaultYearMonth,
 					'orderby': 'SALES_RANK',
 					'ym_type': 'YTD',
@@ -196,15 +200,16 @@ export default Controller.extend({
 			})
 
 		//Regional Analysis数据
-		this.store.query('productaggregation', { 
-			'company_id': '5ca069e2eeefcc012918ec73', 
-			'market': this.marketValue.market, 
-			'orderby': '-SALES', 
-			'take': '10', 
-			'skip': '10', 
-			'ym': this.defaultYearMonth, 
-			'ym_type': 'YTD', 
-			'address_type': 'REGION',})
+		this.store.query('productaggregation', {
+			'company_id': '5ca069e2eeefcc012918ec73',
+			'market': this.marketValue.market,
+			'orderby': '-SALES',
+			'take': '10',
+			'skip': '10',
+			'ym': this.defaultYearMonth,
+			'ym_type': 'YTD',
+			'address_type': 'REGION',
+		})
 			.then(data => {
 				//堆叠柱状图
 				let increastData = data.sortBy('ym'),
@@ -290,7 +295,7 @@ export default Controller.extend({
 			'market': this.marketValue.market,
 			'orderby': 'SALES_RANK',
 			'current[ym]': this.defaultYearMonth,
-			'gte[ym]': this.defaultYearMonth.slice(0,4) + '01',
+			'gte[ym]': this.defaultYearMonth.slice(0, 4) + '01',
 			'lte[ym]': this.defaultYearMonth,
 			'ym_type': 'YTD',
 			'address_type': 'REGION',
@@ -394,7 +399,7 @@ export default Controller.extend({
 			'market': this.marketValue.market,
 			'orderby': 'SALES_RANK',
 			'current[ym]': this.defaultYearMonth,
-			'gte[ym]': this.defaultYearMonth.slice(0,4) + '01',
+			'gte[ym]': this.defaultYearMonth.slice(0, 4) + '01',
 			'lte[ym]': this.defaultYearMonth,
 			'ym_type': 'YTD',
 			'address_type': 'NATIONAL',
@@ -493,7 +498,7 @@ export default Controller.extend({
 					'company_id': '5ca069e2eeefcc012918ec73',
 					market,
 					orderby: 'SALES_RANK',
-					'gte[ym]': ym.slice(0,4) + '01',
+					'gte[ym]': ym.slice(0, 4) + '01',
 					'lte[ym]': ym,
 					'ym_type': 'YTD',
 					address,
